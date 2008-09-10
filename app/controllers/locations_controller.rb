@@ -16,7 +16,7 @@ class LocationsController < ApplicationController
   end
 
   def show
-    Location.find_by_guid(params[:id])
+    location = Location.find_by_guid(params[:id])
     render :text => location.to_json
   end
 end
