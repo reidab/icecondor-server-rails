@@ -16,7 +16,8 @@ class LocationsController < ApplicationController
   end
 
   def show
-    location = Location.find_by_guid(params[:id])
+    location = Location.find(:first, :conditions => {:guid => params[:id]},
+                                     :order => "created_at desc")
     render :text => location.to_json
   end
 end
