@@ -8,7 +8,8 @@ class LocationsController < ApplicationController
     location = Location.new(:guid => params[:location][:guid],
                             :geom => Point.from_x_y_z(params[:location][:long],
                                                       params[:location][:lat],
-                                                      params[:location][:altitude],123))
+                                                      params[:location][:altitude],
+                                                      4326))
     location.save!
     flash[:notice] = "new location record saved."
     redirect_to locations_path
