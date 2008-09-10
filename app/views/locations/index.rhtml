@@ -1,0 +1,10 @@
+<%= flash[:notice] %> <br/>
+location records: <%= @location_count %> <br/>
+<% form_for :location do |f| %>
+  id: <%= text_field(:location, :guid, :size => 10) %>
+  lat: <%= text_field(:location, :lat, :size => 7) %>
+  long: <%= text_field(:location, :long, :size => 7) %>
+  alt: <%= text_field(:location, :altitude, :size => 3) %>
+
+  <%= f.submit %>
+<% end %>
