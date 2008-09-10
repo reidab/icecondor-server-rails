@@ -14,4 +14,9 @@ class LocationsController < ApplicationController
     redirect_to locations_path
 
   end
+
+  def show
+    Location.find_by_guid(params[:id])
+    render :text => location.to_json
+  end
 end
