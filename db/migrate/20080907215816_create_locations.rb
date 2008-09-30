@@ -3,7 +3,7 @@ class CreateLocations < ActiveRecord::Migration
     create_table "locations", :force => true do |t|
       t.column "guid", :string
       t.column "time", :timestamp
-      t.column "geom", :point, :null=>false, :srid => 123, :with_z => true
+      t.column "geom", :point, :null=>false, :srid => 4326, :with_z => true
       t.timestamps
     end
 

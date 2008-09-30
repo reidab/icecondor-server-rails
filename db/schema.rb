@@ -11,12 +11,18 @@
 
 ActiveRecord::Schema.define(:version => 20080907215816) do
 
+  create_table "gtest", :force => true do |t|
+    t.column "name", :string, :limit => 20
+    t.column "geom", :line_string
+    t.column "geomz", :line_string, :with_m => true
+  end
+
   create_table "locations", :force => true do |t|
     t.column "guid", :string
     t.column "time", :timestamp
     t.column "created_at", :timestamp
     t.column "updated_at", :timestamp
-    t.column "geom", :point, :srid => 123, :with_z => true, :null => false
+    t.column "geom", :point, :srid => 4326, :with_z => true, :null => false
   end
 
   add_index "locations", ["geom"], :name => "index_locations_on_geom", :spatial=> true 

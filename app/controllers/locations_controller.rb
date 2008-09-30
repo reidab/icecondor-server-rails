@@ -1,6 +1,13 @@
 class LocationsController < ApplicationController
 
-  def index
+  def index #search
+    if params[:lat] && params[:long]
+      #replace this with calculations of a bounding box/circle
+      #of radius r
+      @locations = Location.find_all_by_geom([[params[:long].to_i-1,params[:lat].to_i-1],
+                                              [params[:long].to_i+1,params[:lat].to_i+1],4326])
+      render :text => @locations.to_json
+    end
     @location_count = Location.count
   end
 

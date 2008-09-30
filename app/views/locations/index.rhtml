@@ -1,5 +1,8 @@
 <%= flash[:notice] %> <br/>
 location records: <%= @location_count %> <br/>
+<% if @locations %>
+location records found for <%= params[:lat] %> <%= params[:long] %>: <%= @locations.size %> <br/>
+<% end %>
 <% form_for :location do |f| %>
   id: <%= text_field(:location, :guid, :size => 10) %>
   lat: <%= text_field(:location, :lat, :size => 7) %>
