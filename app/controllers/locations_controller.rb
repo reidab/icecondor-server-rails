@@ -13,8 +13,8 @@ class LocationsController < ApplicationController
 
   def create
     location = Location.new(:guid => params[:location][:guid],
-                            :geom => Point.from_x_y_z(params[:location][:long],
-                                                      params[:location][:lat],
+                            :geom => Point.from_x_y_z(params[:location][:longitude],
+                                                      params[:location][:latitude],
                                                       params[:location][:altitude],
                                                       4326))
     location.save!
