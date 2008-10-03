@@ -7,7 +7,9 @@ class CreateLocations < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index "locations", "geom", :spatial=>true
+    if Location.connection.adapter_name != "MySQL"
+      add_index "locations", "geom", :spatial=>true
+    end
   end
 
   def self.down
