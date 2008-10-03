@@ -18,9 +18,12 @@ class LocationsController < ApplicationController
                                                       params[:location][:altitude],
                                                       4326))
     location.save!
-    flash[:notice] = "new location record saved."
-    redirect_to locations_path
-
+    if request.xhr?
+      head :ok
+    else
+      flash[:notice] = "new location record saved."
+      redirect_to locations_path
+    end
   end
 
   def show
