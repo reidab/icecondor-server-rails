@@ -2,6 +2,18 @@
 location records: <%= @location_count %> <br/>
 <% if @locations %>
 location records found for <%= params[:lat] %> <%= params[:long] %>: <%= @locations.size %> <br/>
+
+<%
+map = GoogleMap.new
+@locations.each do |loc|
+  map.markers << GoogleMapMarker.new(:map => map,
+                                     :lat => loc.geom.x,
+                                     :lng => loc.geom.y)
+end
+%>
+<%= map.to_html %>
+<div style="width: 500px; height: 500px;"><%= map.div %></div>
+
 <% end %>
 <% form_for :location do |f| %>
   id: <%= text_field(:location, :guid, :size => 10) %>

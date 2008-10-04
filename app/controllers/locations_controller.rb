@@ -7,6 +7,8 @@ class LocationsController < ApplicationController
       @locations = Location.find_all_by_geom([[params[:long].to_i-1,params[:lat].to_i-1],
                                               [params[:long].to_i+1,params[:lat].to_i+1],4326])
       render :text => @locations.to_json
+    else
+      @locations = Location.find(:all)
     end
     @location_count = Location.count
   end

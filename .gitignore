@@ -1,3 +1,4 @@
+config/googlemaps.yml
 config/database.yml
 .DS_Store
 doc/api

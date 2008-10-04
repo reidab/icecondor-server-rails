@@ -1,0 +1,14 @@
+<%= flash[:notice] %> <br/>
+
+<p><%= pluralize(@locations.size, "location") %> found:</p>
+<%
+map = GoogleMap.new
+@locations.each do |loc|
+  map.markers << GoogleMapMarker.new(:map => map,
+                                     :lat => loc.geom.y,
+                                     :lng => loc.geom.x,
+                                     :html => "(#{loc.geom.y}, #{loc.geom.x})")
+end
+%>
+<%= map.to_html %>
+<div style="width: 500px; height: 500px;"><%= map.div %></div>
