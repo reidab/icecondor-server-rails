@@ -11,20 +11,25 @@ class LocationsController < ApplicationController
       @locations = Location.find(:all)
     end
     @location_count = Location.count
+    @new_location = Location.new
+  end
+
+  def new
+    @location = Location.new
   end
 
   def create
-    location = Location.new(:guid => params[:location][:guid],
-                            :geom => Point.from_x_y_z(params[:location][:longitude],
-                                                      params[:location][:latitude],
-                                                      params[:location][:altitude],
-                                                      4326))
-    location.save!
+    @location = Location.new(params[:location])
+    saved = @location.save
     if request.xhr?
-      head :ok
+      head(saved ? :ok : :bad_request)
     else
-      flash[:notice] = "new location record saved."
-      redirect_to locations_path
+      if saved
+        flash[:notice] = "new location record saved."
+        redirect_to locations_path
+      else
+        render :action => "new"
+      end
     end
   end
 

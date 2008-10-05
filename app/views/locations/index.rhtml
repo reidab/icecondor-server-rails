@@ -3,23 +3,14 @@ location records: <%= @location_count %> <br/>
 <% if @locations %>
 location records found for <%= params[:lat] %> <%= params[:long] %>: <%= @locations.size %> <br/>
 
-<%
-map = GoogleMap.new
-@locations.each do |loc|
-  map.markers << GoogleMapMarker.new(:map => map,
-                                     :lat => loc.geom.x,
-                                     :lng => loc.geom.y)
-end
-%>
-<%= map.to_html %>
-<div style="width: 500px; height: 500px;"><%= map.div %></div>
+<%= google_map(@locations, :width => "500px", :height => "500px") %>
 
 <% end %>
-<% form_for :location do |f| %>
-  id: <%= text_field(:location, :guid, :size => 10) %>
-  lat: <%= text_field(:location, :lat, :size => 7) %>
-  long: <%= text_field(:location, :long, :size => 7) %>
-  alt: <%= text_field(:location, :altitude, :size => 3) %>
+<% form_for @new_location do |f| %>
+  id: <%= f.text_field(:guid, :size => 10) %>
+  lat: <%= f.text_field(:latitude, :size => 7) %>
+  long: <%= f.text_field(:longitude, :size => 7) %>
+  alt: <%= f.text_field(:altitude, :size => 3) %>
 
   <%= f.submit %>
 <% end %>

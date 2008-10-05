@@ -1,0 +1,25 @@
+
+<%= flash[:notice] %> <br/>
+
+<h1>New Location</h1>
+
+<% form_for(@location) do |f| %>
+  <%= f.error_messages %>
+
+  id: <%= f.text_field :guid, :size => 10 %>
+  long: <%= f.text_field :longitude, :size => 12 %>
+  lat: <%= f.text_field :latitude, :size => 12 %>
+  alt: <%= f.text_field :altitude, :size => 3 %>
+
+  <%= f.submit %>
+<% end %>
+
+<p>Click the map to fill in coordinates:</p>
+<%= google_map(@location, :width => "500px", :height => "500px", 
+               :inject_on_load => <<__JS__) 
+GEvent.addListener(google_map, "click", function(overlay, latlng) {
+  $('location_latitude').value = latlng.lat();
+  $('location_longitude').value = latlng.lng();
+});
+__JS__
+%>

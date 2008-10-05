@@ -16,9 +16,7 @@ module MapHelper
     partial = options.delete(:partial)
     options[:controls] ||= [:zoom, :scale, :type] # the default, minus :overview
 
-    puts "#{locations.inspect}"
     locations = [locations].flatten.select { |location| location.valid_location? }
-    puts "#{locations.size}"
     if locations.empty?
       options[:center] = DEFAULT_CENTER
       options[:zoom] = DEFAULT_ZOOM
