@@ -5,7 +5,9 @@ describe Location do
     @valid_attributes = {
       :guid => "value for guid",
       :time => Time.now,
-      :geom => Point.from_x_y_z(-122.5, 45.5, 10)
+      :longitude => -122.5,
+      :latitude => 45.5,
+      :altitude => 10.0
     }
   end
 
