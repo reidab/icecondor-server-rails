@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  guid: MyString
+  time: 2008-10-04 12:18:05
+  geom: <%= Point.from_x_y_z(-122.5, 45.5, 10).to_fixture_format %>
+
+two:
+  guid: MyString
+  time: 2008-10-04 12:18:05
+  geom: <%= Point.from_x_y_z(-122.5, 45.51, 10).to_fixture_format %>
