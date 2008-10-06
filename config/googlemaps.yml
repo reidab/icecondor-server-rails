@@ -1,0 +1,15 @@
+#
+# Google map generation uses an API key from this file.
+#
+
+development: 
+  # A key from the gmaps_on_rails plugin's readme, for "http://localhost:3000/"
+  google: "ABQIAAAA3HdfrnxFAPWyY-aiJUxmqRTJQa0g3IQ9GZqIMmInSLzwtGDKaBQ0KYLwBEKSM7F9gCevcsIf6WPuIQ"
+
+production: 
+  # icecondor.com
+  google: "ABQIAAAACJEf2ysot72CifSXizx8wBQMcTNjAvFLP-BGfglBATIbiOgR_xSS-IiuwCzlecg87zerH9VOoM-SBg"
+
+# (No test key needed: the tests stub things out so that we test our
+# own code without calling Google.)
+
