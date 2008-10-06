@@ -11,7 +11,7 @@ class GoogleMap
   
   def initialize(options = {})
     self.dom_id = 'google_map'
-    self.api_key = 'ABQIAAAAFA5cLN86WfuEmz-00UbcFRTJQa0g3IQ9GZqIMmInSLzwtGDKaBRad7rJS4twN1aObKTOksqc7arwNA'
+    self.api_key = GOOGLE_APPLICATION_ID
     self.markers = []
     self.controls = [ :zoom, :overview, :scale, :type ]
     options.each_pair { |key, value| send("#{key}=", value) }
