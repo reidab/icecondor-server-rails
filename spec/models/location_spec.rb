@@ -21,9 +21,23 @@ describe Location do
   end
 
   it "should update the latitude" do
-    new_latitude = 80
+    new_latitude = 45 
     location = Location.create!(@valid_attributes)
     location.latitude = new_latitude
     location.latitude.should == new_latitude
+  end
+
+  it "should update the longitude" do
+    new_longitude = 122
+    location = Location.create!(@valid_attributes)
+    location.latitude = new_longitude
+    location.latitude.should == new_longitude
+  end
+
+  it "should update the altitude" do
+    new_altitude = 1000
+    location = Location.create!(@valid_attributes)
+    location.latitude = new_altitude
+    location.latitude.should == new_altitude
   end
 end
