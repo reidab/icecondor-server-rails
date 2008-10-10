@@ -34,7 +34,7 @@ protected
 
 private
   def geom_assign(attribute, value)
-    self.geom ||= Point.new(WGS84_SRID)
+    self.geom ||= Point.new(WGS84_SRID, true)
     self.geom.send("#{attribute}=".to_sym, value)
   end
 end
