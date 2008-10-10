@@ -12,11 +12,18 @@ describe Location do
   end
 
   it "should create a new instance given valid attributes" do
-    Location.create!(@valid_attributes)
+    location = Location.create!(@valid_attributes)
   end
 
   it "should require a valid lat/long" do
     location =  Location.create(:guid => "foo", :time => Time.now)
     location.should have(1).error_on(:geom)
+  end
+
+  it "should update the latitude" do
+    new_latitude = 80
+    location = Location.create!(@valid_attributes)
+    location.latitude = new_latitude
+    location.latitude.should == new_latitude
   end
 end
