@@ -24,8 +24,9 @@ module MapHelper
 
     # Make the map and our marker(s)
     map = GoogleMap.new(options)
-    icon = GoogleMapSmallIcon.new('red')
+    colors = ['red', 'blue', 'orange', 'yellow', 'black', 'brown', 'green']
     locations.each do |location|
+      icon = GoogleMapSmallIcon.new(colors[location.guid.hash % colors.size])
       html = render(:partial => partial, :object => location) if partial
       map.markers << GoogleMapMarker.new(:map => map,
         :lat => location.latitude, :lng => location.longitude,
