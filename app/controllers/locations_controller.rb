@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
                                               [params[:long].to_i+1,params[:lat].to_i+1],4326])
       render :text => @locations.to_json
     else
-      @locations = Location.find(:all)
+      @locations = Location.recent
     end
     @location_count = Location.count
     @new_location = Location.new
