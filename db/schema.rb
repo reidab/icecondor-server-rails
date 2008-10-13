@@ -9,14 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080907215816) do
+ActiveRecord::Schema.define(:version => 20081013003103) do
 
   create_table "locations", :force => true do |t|
     t.column "guid", :string
-    t.column "time", :datetime
+    t.column "timestamp", :datetime
     t.column "geom", :point, :null => false
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+    t.column "accuracy", :float
+    t.column "altitude_accuracy", :float
+    t.column "heading", :float
+    t.column "velocity", :float
   end
 
 end

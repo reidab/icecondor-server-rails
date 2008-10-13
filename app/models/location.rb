@@ -29,7 +29,7 @@ protected
     # the updated & create times if they're saved at the same time.
     self.updated_at ||= Time.now
     self.created_at ||= self.updated_at
-    self.time ||= self.updated_at
+    self.timestamp ||= self.updated_at
   end
 
 private
