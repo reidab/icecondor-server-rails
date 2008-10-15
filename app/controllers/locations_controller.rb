@@ -13,8 +13,8 @@ class LocationsController < ApplicationController
     @location_count = Location.count
     @new_location = Location.new
     respond_to do |wants|
-      wants.json { render :text => @locations.to_json }
-      wants.xml { render :text => @locations.to_xml }
+      wants.json { render :json => @locations }
+      wants.xml { render :xml => @locations }
     end
   end
 

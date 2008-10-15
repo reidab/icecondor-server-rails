@@ -13,14 +13,16 @@ ActiveRecord::Schema.define(:version => 20081013003103) do
 
   create_table "locations", :force => true do |t|
     t.column "guid", :string
-    t.column "timestamp", :datetime
-    t.column "geom", :point, :null => false
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.column "timestamp", :timestamp
+    t.column "created_at", :timestamp
+    t.column "updated_at", :timestamp
+    t.column "geom", :point, :srid => 4326, :with_z => true, :null => false
     t.column "accuracy", :float
     t.column "altitude_accuracy", :float
     t.column "heading", :float
     t.column "velocity", :float
   end
+
+  add_index "locations", ["geom"], :name => "index_locations_on_geom", :spatial=> true 
 
 end
