@@ -12,6 +12,9 @@ class LocationsController < ApplicationController
     end
     @location_count = Location.count
     @new_location = Location.new
+    if request.xhr?
+      render :text => @locations.to_json
+    end
   end
 
   def new
