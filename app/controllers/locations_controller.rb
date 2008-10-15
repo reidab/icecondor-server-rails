@@ -14,6 +14,7 @@ class LocationsController < ApplicationController
     @new_location = Location.new
     respond_to do |wants|
       wants.json { render :text => @locations.to_json }
+      wants.xml { render :text => @locations.to_xml }
     end
   end
 
