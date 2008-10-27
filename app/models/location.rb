@@ -18,6 +18,14 @@ class Location < ActiveRecord::Base
     !(geom.nil? or (geom.x == "0.0" and geom.y == "0.0"))
   end
 
+  def self.last_updates(last_users_count, last_updates_per_user_count)
+    last_users = Location.find(:all, :select => 'DISTINCT guid', :limit => last_users_count)
+    last_usernames = last_users.map{|l| l.guid}
+    last_usernames.map do |u| 
+      Location.find(:all, :conditions => {:guid => u}, :order => 'created_at desc', :limit => last_updates_per_user_count)
+    end.flatten
+  end
+
 protected
   def validate
     self.errors.add_to_base("Fill in the lat/long fields (or click the map)") \
