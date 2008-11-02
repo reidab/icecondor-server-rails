@@ -19,7 +19,7 @@ class Location < ActiveRecord::Base
   end
 
   def self.last_updates(last_users_count, last_updates_per_user_count)
-    last_users = Location.find(:all, :select => 'DISTINCT guid', :limit => last_users_count)
+    last_users = Location.find(:all, :select => "guid,max(created_at)", :limit => last_users_count, :order => "max desc", :group => "guid")
     last_usernames = last_users.map{|l| l.guid}
     last_usernames.map do |u| 
       Location.find(:all, :conditions => {:guid => u}, :order => 'created_at desc', :limit => last_updates_per_user_count)
