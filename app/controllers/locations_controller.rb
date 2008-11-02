@@ -7,14 +7,19 @@ class LocationsController < ApplicationController
       @locations = Location.find_all_by_geom([[params[:long].to_i-1,params[:lat].to_i-1],
                                               [params[:long].to_i+1,params[:lat].to_i+1],4326])
       render :text => @locations.to_json
+    elsif params[:id]
+      limit = params[:limit] ? params[:limit] : 10
+      @locations = Location.find(:all, :conditions => {:guid => params[:id]}, 
+                                       :order => 'id desc', :limit => limit)
     else
       @locations = Location.recent
     end
     @location_count = Location.count
-    @new_location = Location.new
+    @new_location = Location.new({:guid => params[:id]})
     respond_to do |wants|
       wants.json { render :json => @locations }
       wants.xml { render :xml => @locations }
+      wants.html { render }
     end
   end
 

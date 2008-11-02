@@ -1,0 +1,26 @@
+<%= flash[:notice] %> <br/>
+total location records: <%= @location_count %> <br/>
+<% if @locations %>
+location records found for <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %>: <%= @locations.size %> <br/>
+
+<%= google_map(@locations, :width => "100%", :height => "500px",
+                           :controls => [:zoom],
+                           :inject_on_load => <<__JS__, :partial => "dashboard/location")
+  function resize_map() { 
+    $('google_map').style.height = "" + window.innerHeight + "px";
+  }
+  Event.observe(document.onresize ? document : window, "resize", resize_map);
+  resize_map();
+__JS__
+%>
+
+
+<% end %>
+<% form_for @new_location do |f| %>
+  id: <%= f.text_field(:guid, :size => 10) %>
+  lat: <%= f.text_field(:latitude, :size => 7) %>
+  long: <%= f.text_field(:longitude, :size => 7) %>
+  alt: <%= f.text_field(:altitude, :size => 3) %>
+
+  <%= f.submit %>
+<% end %>
