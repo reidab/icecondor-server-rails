@@ -1,6 +1,6 @@
 <%= flash[:notice] %> <br/>
 <% if @locations %>
-last <%= @locations.size %> location records found for <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> <br/>
+last <%= @locations.size %> locations found for <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> - most recent communication was <%= time_ago_in_words(@locations.first.created_at) %> <br/>
 
 <%= google_map(@locations, :width => "90%", :height => "400px",
                            :controls => [:zoom],
