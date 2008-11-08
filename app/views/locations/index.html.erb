@@ -1,4 +1,6 @@
+<% if flash[:notice] %>
 <%= flash[:notice] %> <br/>
+<% end %>
 <% if @locations %>
 last <%= @locations.size %> locations found for <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> - most recent communication was <%= time_ago_in_words(@locations.first.created_at) %> <br/>
 
@@ -31,6 +33,7 @@ __JS__
     <td> <%= location.created_at %> </td>
     <td> <%= location.geom.y %> </td>
     <td> <%= location.geom.x %> </td>
+    <td> <%= location.accuracy %> </td>
   </tr>
 <% end %>
 </table>
