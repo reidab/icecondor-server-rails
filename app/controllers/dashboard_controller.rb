@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
   def index
-    @locations = Location.last_updates(3,10)
+    @locations = Location.last_updates(5,3)
   end
 
 end
