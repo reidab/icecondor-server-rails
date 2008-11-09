@@ -1,6 +1,7 @@
 module MapHelper
   DEFAULT_CENTER = [45.523037,-122.667637]
   DEFAULT_ZOOM = 11
+  COLORS = ['red', 'blue', 'orange', 'yellow', 'black', 'brown', 'green']
 
   # Return markup containing a Google map with markers for these Locations, 
   # or a default map if no locations are present. "locations" can be one 
@@ -24,9 +25,8 @@ module MapHelper
 
     # Make the map and our marker(s)
     map = GoogleMap.new(options)
-    colors = ['red', 'blue', 'orange', 'yellow', 'black', 'brown', 'green']
     locations.each do |location|
-      icon = GoogleMapSmallIcon.new(colors[location.guid.hash % colors.size])
+      icon = GoogleMapSmallIcon.new(COLORS[location.guid.hash % COLORS.size])
       html = render(:partial => partial, :object => location) if partial
       map.markers << GoogleMapMarker.new(:map => map,
         :lat => location.latitude, :lng => location.longitude,

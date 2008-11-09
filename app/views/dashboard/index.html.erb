@@ -52,7 +52,10 @@ div.topfive {
 <div class="topfive">
     <table>
     <% @locations.each do |ary| %>
-      <tr><td><%= link_to ary.last.guid, "locations.html?id=#{ary.last.guid}" %></td><td> <%= time_ago_in_words(ary.first.timestamp) %> </td></tr>
+      <tr>
+          <td><%= image_tag "http://labs.google.com/ridefinder/images/mm_20_#{MapHelper::COLORS[ary.last.guid.hash % MapHelper::COLORS.size]}.png" %></td>
+          <td><%= link_to ary.last.guid, "locations.html?id=#{ary.last.guid}" %></td>
+          <td> <%= time_ago_in_words(ary.first.timestamp) %> </td></tr>
     <% end %>
     </table>
 </div>
