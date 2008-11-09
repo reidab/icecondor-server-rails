@@ -30,19 +30,31 @@ div.heading {
   margin: 10px 10px 17px 10px;
   font-size: 16pt;
 }
+div.topfive {
+  position: absolute;
+  z-index: 10;
+  background: white;
+  opacity: 0.75;
+  border: 1px solid #555;
+  margin-left: 500px;
+  margin-top: 10px;
+}
 </style>
 <% end %>
 
 <div class="heading">
   <p>
-    <a href="http://donpark.org/wiki/icecondor">IceCondor</a> Recent Users <br/>
-    <table>
-    <% @locations.each do |ary| %>
-      <tr><td><%= ary.last.guid %></td><td> <%= time_ago_in_words(ary.first.timestamp) %> </td></tr>
-    <% end %>
-    </table>
+    <a href="http://donpark.org/wiki/icecondor">IceCondor</a> <br/>
   </p>
   <%= flash[:notice] %>
+</div>
+
+<div class="topfive">
+    <table>
+    <% @locations.each do |ary| %>
+      <tr><td><%= link_to ary.last.guid, "locations.html?id=#{ary.last.guid}" %></td><td> <%= time_ago_in_words(ary.first.timestamp) %> </td></tr>
+    <% end %>
+    </table>
 </div>
 <%= google_map(@locations, :width => "100%", :height => "500px", 
                :controls => [:zoom],
