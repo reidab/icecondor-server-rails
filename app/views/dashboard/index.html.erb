@@ -35,8 +35,12 @@ div.heading {
 
 <div class="heading">
   <p>
-    <a href="http://donpark.org/wiki/icecondor">IceCondor</a>
-    <%= pluralize(@locations.size, "recent location") %>
+    <a href="http://donpark.org/wiki/icecondor">IceCondor</a> Recent Users <br/>
+    <table>
+    <% @locations.each do |ary| %>
+      <tr><td><%= ary.last.guid %></td><td> <%= time_ago_in_words(ary.first.timestamp) %> </td></tr>
+    <% end %>
+    </table>
   </p>
   <%= flash[:notice] %>
 </div>

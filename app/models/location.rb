@@ -18,12 +18,15 @@ class Location < ActiveRecord::Base
     !(geom.nil? or (geom.x == "0.0" and geom.y == "0.0"))
   end
 
-  def self.last_updates(last_users_count, last_updates_per_user_count)
-    last_users = Location.find(:all, :select => "guid,max(created_at)", :limit => last_users_count, :order => "max desc", :group => "guid")
+  def self.last_users_reporting(count)
+    last_users = Location.find(:all, :select => "guid,max(created_at)", :limit => count, :order => "max desc", :group => "guid")
     last_usernames = last_users.map{|l| l.guid}
-    last_usernames.map do |u| 
+  end
+
+  def self.last_updates(usernames, last_updates_per_user_count)
+    usernames.map do |u| 
       Location.find(:all, :conditions => {:guid => u}, :order => 'created_at desc', :limit => last_updates_per_user_count)
-    end.flatten
+    end
   end
 
 protected
