@@ -1,0 +1,10 @@
+<h3>Recent Users</h3>
+
+<table>
+<% @locations.each do |location_set| 
+   location = location_set.first%>
+  <tr>
+    <td> <%= location.guid %> </td>
+  </tr>
+<% end %>
+</table>
