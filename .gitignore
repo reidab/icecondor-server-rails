@@ -5,3 +5,4 @@ doc/app
 doc/plugins
 log/*.log
 tmp/**/*
+db/schema.rb
