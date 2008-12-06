@@ -16,6 +16,7 @@ last <%= @locations.size %> locations found for
   function initialize() {
     if (GBrowserIsCompatible()) {
       var map = new GMap2(document.getElementById("map_canvas"));
+      map.addControl( new GSmallMapControl() );
 <% 
   # center the map on the locations
   min_lat = 90; min_long = 180; 
