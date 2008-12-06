@@ -16,10 +16,11 @@ class LocationsController < ApplicationController
     end
     @location_count = Location.count
     @new_location = Location.new({:guid => params[:id]})
+
     respond_to do |wants|
       wants.json { render :json => @locations }
       wants.xml { render :xml => @locations }
-      wants.html { render }
+      wants.html { render :layout => "googlemaps" }
     end
   end
 

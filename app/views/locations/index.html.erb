@@ -1,30 +1,71 @@
 <% if flash[:notice] %>
 <%= flash[:notice] %> <br/>
 <% end %>
-<% if @locations %>
-last <%= @locations.size %> locations found for <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> - most recent communication was <%= time_ago_in_words(@locations.first.created_at) %> <br/>
 
-<%= google_map(@locations, :width => "90%", :height => "400px",
-                           :controls => [:zoom],
-                           :inject_on_load => <<__JS__, :partial => "dashboard/location")
-  function resize_map() { 
-    $('google_map').style.height = "" + window.innerHeight + "px";
-  }
-  Event.observe(document.onresize ? document : window, "resize", resize_map);
-  resize_map();
-__JS__
+<p>
+last <%= @locations.size %> locations found for 
+<%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> 
+- most recent communication was 
+<%= time_ago_in_words(@locations.first.created_at) %> 
+</p>
+
+<!-- Google Maps -->
+<div id="map_canvas" style="width: 90%; height: 400px"></div>
+
+<script type="text/javascript">
+  function initialize() {
+    if (GBrowserIsCompatible()) {
+      var map = new GMap2(document.getElementById("map_canvas"));
+<% 
+  # center the map on the locations
+  min_lat = 90; min_long = 180; 
+  max_lat = -90; max_long = -180; 
+  @locations.each do |location| 
+    max_lat = location.geom.y unless max_lat > location.geom.y
+    max_long = location.geom.x unless max_long > location.geom.x
+    min_lat = location.geom.y unless min_lat < location.geom.y
+    min_long = location.geom.x unless min_long < location.geom.x
+  end 
 %>
 
+      // center and zoom
+      var zoom_level;
+      zoom_level = map.getBoundsZoomLevel(new GLatLngBounds(new GLatLng(<%=min_lat%>, <%=min_long%>), new GLatLng(<%=max_lat%>, <%=max_long%>)));
+      var center_spot;
+      center_spot = map.setCenter(new GLatLng(<%=(min_lat + max_lat) / 2.0 %>, <%=(min_long + max_long) / 2.0 %>));
+      map.setCenter(center_spot, zoom_level);
 
-<% end %>
-<!-- <% form_for @new_location do |f| %>
-  id: <%= f.text_field(:guid, :size => 10) %>
-  lat: <%= f.text_field(:latitude, :size => 7) %>
-  long: <%= f.text_field(:longitude, :size => 7) %>
-  alt: <%= f.text_field(:altitude, :size => 3) %>
+      // lay down the dots
+      var point;
+      var marker;
+      var scale;
+      var tinyIcon;
+      <% @locations.each_with_index do |location,i| %>
+      point = new GLatLng(<%=location.geom.y%>, <%=location.geom.x%>)
+      tinyIcon = new GIcon();
+      <% if i == 0 %>
+      tinyIcon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
+      scale = 1.1;
+      <% else %>
+      tinyIcon.image = "http://labs.google.com/ridefinder/images/mm_20_blue.png";
+      scale = 1.0 - (<%=i < 10 ? i+1 : 9%>*0.1);
+      <% end %>
+      tinyIcon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+      tinyIcon.iconSize = new GSize(12*scale, 20*scale);
+      tinyIcon.shadowSize = new GSize(22, 20);
+      tinyIcon.iconAnchor = new GPoint(6, 20);
+      tinyIcon.infoWindowAnchor = new GPoint(5, 1);
 
-  <%= f.submit %>
-<% end %> -->
+
+      // Set up our GMarkerOptions object literal
+      markerOptions = { icon:tinyIcon };
+
+      marker = new GMarker(point, markerOptions);
+      map.addOverlay(marker);
+      <% end %>
+    }
+  }
+</script>
 
 <table>
 <% @locations.each do |location| %>
