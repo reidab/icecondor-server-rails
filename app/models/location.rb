@@ -19,6 +19,7 @@ class Location < ActiveRecord::Base
   end
 
   def self.last_users_reporting(count)
+    # Postgresql-specific SQL syntax
     last_users = Location.find(:all, :select => "guid,max(created_at)", :limit => count, :order => "max desc", :group => "guid")
     last_usernames = last_users.map{|l| l.guid}
   end
