@@ -1,0 +1,8 @@
+Ubuntu setup for PostGIS
+sudo apt-get install postgresql-8.3-postgis
+createdb icecondor_development
+createlang plpgsql icecondor_development
+psql -d icecondor_development -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql
+psql -d icecondor_development -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql
+
+then rake db:migrate will work

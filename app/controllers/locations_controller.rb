@@ -21,6 +21,7 @@ class LocationsController < ApplicationController
       wants.json { render :json => @locations }
       wants.xml { render :xml => @locations }
       wants.html { render :layout => "googlemaps" }
+      wants.iphone { render :layout => "iphone" }
     end
   end
 
