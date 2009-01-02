@@ -1,0 +1,21 @@
+<style>
+  div#loginbox {text-align:right; height: 1.5em}
+  div#loginbox img {border-width:0px;}
+</style>
+<script>
+  function show_openid_field() {
+    Element.replace('openidlink', '<%= text_field_tag 'openid_identifier' %>');
+  }
+</script>
+<div id="loginbox" 
+  <% form_tag do %>
+  <% if logged_in? %>
+    hello <%= current_user %>
+  <% else %>
+    <%= image_tag 'openid_small_logo.png' %> 
+    <a id="openidlink" href="#" onclick="show_openid_field()">
+    Login with OpenID 
+    </a>
+  <% end %>
+  <% end %>
+</div>
