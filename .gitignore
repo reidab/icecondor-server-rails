@@ -6,3 +6,6 @@ doc/plugins
 log/*.log
 tmp/**/*
 db/schema.rb
+config/newrelic.yml
+vendor/plugins/newrelic_rpm/*
+
