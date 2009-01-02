@@ -4,7 +4,9 @@
 
 development: 
   # A key from the gmaps_on_rails plugin's readme, for "http://localhost:3000/"
-  google: "ABQIAAAA3HdfrnxFAPWyY-aiJUxmqRTJQa0g3IQ9GZqIMmInSLzwtGDKaBQ0KYLwBEKSM7F9gCevcsIf6WPuIQ"
+ # google: "ABQIAAAA3HdfrnxFAPWyY-aiJUxmqRTJQa0g3IQ9GZqIMmInSLzwtGDKaBQ0KYLwBEKSM7F9gCevcsIf6WPuIQ"
+ # http://sparky.local
+  google: "ABQIAAAACJEf2ysot72CifSXizx8wBRLxebcRdfqent4_VXqwxz-vmXXwRR2kQABuY_S3YIrB5Eu-LsWrj9W6w"
 
 production: 
   # icecondor.com
