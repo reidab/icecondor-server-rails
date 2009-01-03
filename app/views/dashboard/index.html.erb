@@ -16,6 +16,9 @@ div.heading {
   margin-left: 40px;
   margin-top: 10px;
 }
+p#subtitle {
+  font-size: 80%;
+}
 
 .heading a {
   font-size: 26pt;
@@ -40,6 +43,11 @@ div.topfive {
   margin-right: 30px;
   margin-top: 10px;
 }
+div.topfive p{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 5px;
+}
 </style>
 <% end %>
 
@@ -49,10 +57,16 @@ div.topfive {
   <p>
     <a href="http://donpark.org/wiki/icecondor">IceCondor</a> <br/>
   </p>
+  <p id="subtitle">
+   Continuous location tracking.
+  </p>
   <%= flash[:notice] %>
 </div>
 
 <div class="topfive">
+    <p>
+      Recent Updates
+    </p>
     <table>
     <% @locations.each do |ary| %>
       <tr>
