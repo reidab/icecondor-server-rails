@@ -9,6 +9,9 @@
 </head>
 <body>
   <%= render :partial => "layouts/statusbar" %>
+  <% if flash[:error] %>
+    <%= flash[:error] %>
+  <% end %>
   <%= yield %>
 </body>
 </html>
