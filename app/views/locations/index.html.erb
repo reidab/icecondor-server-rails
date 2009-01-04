@@ -2,7 +2,7 @@
 <%= flash[:notice] %> <br/>
 <% end %>
 
-<p>
+<p style="margin-top: 0px;">
 last <%= @locations.size %> locations found for 
 <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> 
 - most recent communication was 
@@ -10,7 +10,7 @@ last <%= @locations.size %> locations found for
 </p>
 
 <!-- Google Maps -->
-<div id="map_canvas" style="width: 90%; height: 500px"></div>
+<div id="map_canvas" style="width: 90%; height: 500px; margin-left:auto; margin-right: auto"></div>
 
 <script type="text/javascript">
   function initialize() {
@@ -68,14 +68,3 @@ last <%= @locations.size %> locations found for
   }
 </script>
 
-<table>
-<% @locations.each do |location| %>
-  <tr>
-    <td> <%= location.guid %> </td>
-    <td> <%= location.created_at %> </td>
-    <td> <%= location.geom.y %> </td>
-    <td> <%= location.geom.x %> </td>
-    <td> <%= location.accuracy %> </td>
-  </tr>
-<% end %>
-</table>
