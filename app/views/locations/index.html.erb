@@ -41,7 +41,7 @@ last <%= @locations.size %> locations for
       var marker;
       var scale;
       var tinyIcon;
-      <% @locations.each_with_index do |location,i| %>
+      <% @locations.reverse.each_with_index do |location,i| %>
       point = new GLatLng(<%=location.geom.y%>, <%=location.geom.x%>)
       tinyIcon = new GIcon();
       <% if i == 0 %>
