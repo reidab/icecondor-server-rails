@@ -11,14 +11,13 @@
   <%= link_to 'IceCondor', :root %>
   </span>
   <span style="text-align: right">
-  <% form_tag do %>
+  <% form_tag({:controller => :login}) do %>
   <% if logged_in? %>
     hello <%= current_user %>
   <% else %>
     <%= image_tag 'openid_small_logo.png' %> 
-    <a id="openidlink" href="#" onclick="show_openid_field()">
-    Login with OpenID 
-    </a>
+    <%= link_to 'Login with OpenID', "#" , {:id => 'openidlink', 
+                                            :onclick => "show_openid_field()"} %>
   <% end %>
   <% end %>
   </span>
