@@ -10,7 +10,9 @@
 <body>
   <%= render :partial => "layouts/statusbar" %>
   <% if flash[:error] %>
+    <div style="background:red">
     <%= flash[:error] %>
+    </div>
   <% end %>
   <%= yield %>
 </body>
