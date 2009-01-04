@@ -49,7 +49,7 @@ last <%= @locations.size %> locations for
       scale = 1.1;
       <% else %>
       tinyIcon.image = "http://labs.google.com/ridefinder/images/mm_20_blue.png";
-      scale = 1.0 - (<%=i < 8 ? i+1 : 8%>*0.1);
+      scale = 1.0 - (<%=i < 4 ? i+1 : 4%>*0.1);
       <% end %>
       tinyIcon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
       tinyIcon.iconSize = new GSize(12*scale, 20*scale);
