@@ -45,13 +45,13 @@ last <%= @locations.size %> locations for
       point = new GLatLng(<%=location.geom.y%>, <%=location.geom.x%>)
       tinyIcon = new GIcon();
       <% if location == @locations.first %>
-      tinyIcon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
+      tinyIcon.image = "<%= url_for "images/gmaps/mm_20_red.png"%>";
       scale = 1.1;
       <% else %>
-      tinyIcon.image = "http://labs.google.com/ridefinder/images/mm_20_blue.png";
+      tinyIcon.image = "<%= url_for "images/gmaps/mm_20_blue.png"%>";
       scale = 1.0 - (<%=i < 4 ? i+1 : 4%>*0.1);
       <% end %>
-      tinyIcon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+      tinyIcon.shadow = "<%= url_for "images/gmaps/mm_20_shadow.png"%>";
       tinyIcon.iconSize = new GSize(12*scale, 20*scale);
       tinyIcon.shadowSize = new GSize(22*scale, 20*scale);
       tinyIcon.iconAnchor = new GPoint(6, 20);
@@ -60,7 +60,6 @@ last <%= @locations.size %> locations for
 
       // Set up our GMarkerOptions object literal
       markerOptions = { icon:tinyIcon };
-
       marker = new GMarker(point, markerOptions);
       map.addOverlay(marker);
       <% end %>
