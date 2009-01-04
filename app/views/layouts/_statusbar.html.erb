@@ -1,7 +1,4 @@
 <style>
-  div#loginbox { text-align:right; 
-                 height: 1.5em;
-               }
   div#loginbox img {border-width:0px;}
 </style>
 <script>
@@ -9,7 +6,11 @@
     Element.replace('openidlink', '<%= text_field_tag 'openid_identifier' %>');
   }
 </script>
-<div id="loginbox" 
+<div id="loginbox">
+  <span style="float: left">
+  <%= link_to 'IceCondor', :root %>
+  </span>
+  <span style="text-align: right">
   <% form_tag do %>
   <% if logged_in? %>
     hello <%= current_user %>
@@ -20,4 +21,5 @@
     </a>
   <% end %>
   <% end %>
+  </span>
 </div>
