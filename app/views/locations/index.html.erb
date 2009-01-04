@@ -3,10 +3,10 @@
 <% end %>
 
 <p style="margin-top: 0px;">
-last <%= @locations.size %> locations found for 
+last <%= @locations.size %> locations for 
 <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> 
 - most recent communication was 
-<%= time_ago_in_words(@locations.first.created_at) %> 
+<%= time_ago_in_words(@locations.first.created_at) %> ago.
 </p>
 
 <!-- Google Maps -->
