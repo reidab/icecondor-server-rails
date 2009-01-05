@@ -14,6 +14,16 @@
     <%= flash[:error] %>
     </div>
   <% end %>
+  <% if flash[:alert] %>
+    <div style="background:yellow">
+    <%= flash[:alert] %>
+    </div>
+  <% end %>
+  <% if flash[:success] %>
+    <div style="background:green">
+    <%= flash[:success] %>
+    </div>
+  <% end %>
   <%= yield %>
 </body>
 </html>
