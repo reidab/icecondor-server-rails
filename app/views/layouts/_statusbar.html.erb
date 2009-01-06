@@ -13,7 +13,7 @@
   <span style="text-align: right">
   <% form_tag({:controller => :login}) do %>
   <% if logged_in? %>
-    hello <%= current_user %>
+    <%= current_user %>
     <%= link_to 'Logout', "#", {:id => 'logoutlink',
                                 :onclick => "submit()"} %>
   <% else %>
