@@ -11,11 +11,9 @@
   <%= link_to 'IceCondor', :root %>
   </span>
   <span style="text-align: right">
-  <% form_tag({:controller => :login}) do %>
+  <% form_tag({:controller => :login}, {:id => 'loginform'}) do %>
   <% if logged_in? %>
     <%= current_user %>
-    <%= link_to 'Logout', "#", {:id => 'logoutlink',
-                                :onclick => "submit()"} %>
   <% else %>
     <%= image_tag 'openid_small_logo.png' %> 
     <%= link_to 'Login with OpenID', "#" , {:id => 'openidlink', 
