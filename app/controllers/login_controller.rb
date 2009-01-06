@@ -18,7 +18,7 @@ class LoginController < ApplicationController
         return
       end
       return_to = url_for :action => 'complete', :only_path => false
-      realm = url_for :action => 'index', :only_path => false
+      realm = url_for :root
 
       if oidreq.send_redirect?(realm, return_to, params[:immediate])
         redirect_to oidreq.redirect_url(realm, return_to, params[:immediate])
@@ -44,6 +44,7 @@ class LoginController < ApplicationController
     when OpenID::Consumer::SUCCESS
       flash[:success] = ("Verification of #{oidresp.display_identifier}"\
                          " succeeded.")
+      login(oidresp.display_identifier)
     when OpenID::Consumer::SETUP_NEEDED
       flash[:alert] = "Immediate request failed - Setup Needed"
     when OpenID::Consumer::CANCEL
