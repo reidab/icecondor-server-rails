@@ -23,27 +23,6 @@ describe Location do
     location.should have(1).error_on(:geom)
   end
 
-  it "should update the latitude" do
-    new_latitude = 45 
-    location = locations(:fu0)
-    location.latitude = new_latitude
-    location.latitude.should == new_latitude
-  end
-
-  it "should update the longitude" do
-    new_longitude = 122
-    location = locations(:fu0)
-    location.latitude = new_longitude
-    location.latitude.should == new_longitude
-  end
-
-  it "should update the altitude" do
-    new_altitude = 1000
-    location = locations(:fu0)
-    location.altitude = new_altitude
-    location.altitude.should == new_altitude
-  end
-
   it "should update the time" do
     new_time = Time.parse('2008-10-12T05:15:00')
     location = locations(:fu0)
