@@ -2,29 +2,27 @@ class SessionController < ApplicationController
   include OpenidUtility
 
   def login
-    if request.post?
-      begin
-        params[:openid_identifier]
-        identifier = params[:openid_identifier]
-        if identifier.nil?
-          flash[:error] = "Enter an OpenID identifier"
-          redirect_to :root
-          return
-        end
-        oidreq = consumer.begin(identifier)
-      rescue OpenID::OpenIDError => e
-        flash[:error] = "Discovery failed for #{identifier}: #{e}"
+    begin
+      params[:openid_identifier]
+      identifier = params[:openid_identifier]
+      if identifier.nil?
+        flash[:error] = "Enter an OpenID identifier"
         redirect_to :root
         return
       end
-      return_to = url_for :action => 'complete', :only_path => false
-      realm = url_for :root
+      oidreq = consumer.begin(identifier)
+    rescue OpenID::OpenIDError => e
+      flash[:error] = "Discovery failed for #{identifier}: #{e}"
+      redirect_to :root
+      return
+    end
+    return_to = url_for :action => 'complete', :only_path => false
+    realm = root_url
 
-      if oidreq.send_redirect?(realm, return_to, params[:immediate])
-        redirect_to oidreq.redirect_url(realm, return_to, params[:immediate])
-      else
-        render :text => oidreq.html_markup(realm, return_to, params[:immediate], {'id' => 'openid_form'})
-      end
+    if oidreq.send_redirect?(realm, return_to, params[:immediate])
+      redirect_to oidreq.redirect_url(realm, return_to, params[:immediate])
+    else
+      render :text => oidreq.html_markup(realm, return_to, params[:immediate], {'id' => 'openid_form'})
     end
   end
 
