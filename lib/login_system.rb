@@ -11,7 +11,7 @@ module LoginSystem
     session[:userid]
   end
 
-  def login(openid)
+  def current_user_openid=(openid)
     session[:userid] = openid
   end
 

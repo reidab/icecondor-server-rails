@@ -11,7 +11,7 @@
   <%= link_to 'IceCondor', :root %>
   </span>
   <span style="text-align: right">
-  <% form_tag({:controller => :login}, {:id => 'loginform'}) do %>
+  <% form_tag({:controller => :session, :action => :login}, {:id => 'loginform'}) do %>
   <% if logged_in? %>
     <%= current_user %>
   <% else %>
