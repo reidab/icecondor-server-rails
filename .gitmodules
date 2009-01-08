@@ -1,3 +1,6 @@
 [submodule "vendor/plugins/spatial_adapter"]
 	path = vendor/plugins/spatial_adapter
 	url = git://github.com/melriffe/spatial_adapter.git
+[submodule "vendor/plugins/oauth-plugin"]
+	path = vendor/plugins/oauth-plugin
+	url = git://github.com/pelle/oauth-plugin.git
