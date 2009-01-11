@@ -42,7 +42,8 @@ class LocationsController < ApplicationController
       userid = user.id
       Openidentity.create(:url => guid, :user => user)
     end
-    params.merge!({:user_id => userid})
+    params[:location].merge!({:user_id => userid})
+    logger.info params.inspect
     @location = Location.new(params[:location])
     saved = @location.save
     if request.xhr?
