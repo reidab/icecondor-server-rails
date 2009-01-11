@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Location do
-  fixtures :locations
+  fixtures :locations, :users
 
   before(:each) do
     @valid_attributes = {
-      :guid => "value for guid",
+      :user_id => users(:u1).id,
       :timestamp => Time.now,
       :longitude => -122.5,
       :latitude => 45.5,
@@ -19,7 +19,7 @@ describe Location do
   end
 
   it "should require a valid lat/long" do
-    location =  Location.create(:guid => "foo", :timestamp => Time.now)
+    location =  Location.create(:user => users(:u1), :timestamp => Time.now)
     location.should have(1).error_on(:geom)
   end
 

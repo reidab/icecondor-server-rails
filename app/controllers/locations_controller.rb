@@ -9,13 +9,17 @@ class LocationsController < ApplicationController
       render :text => @locations.to_json
     elsif params[:id]
       limit = params[:limit] ? params[:limit] : 10
-      @locations = Location.find(:all, :conditions => {:guid => params[:id]}, 
+      user_id = Openidentity.find_by_url(params[:id])
+      if user_id
+        @locations = Location.find(:all, :conditions => {:user_id => user_id}, 
                                        :order => 'id desc', :limit => limit)
+      else
+        @locations = []
+      end
     else
       @locations = Location.recent
     end
     @location_count = Location.count
-    @new_location = Location.new({:guid => params[:id]})
 
     respond_to do |wants|
       wants.json { render :json => @locations }
@@ -29,6 +33,16 @@ class LocationsController < ApplicationController
   end
 
   def create
+    guid = params[:location].delete(:guid)
+    @openid = Openidentity.find_by_url(guid)
+    if @openid
+      userid = @openid.user_id
+    else
+      user = User.create
+      userid = user.id
+      Openidentity.create(:url => guid, :user => user)
+    end
+    params.merge!({:user_id => userid})
     @location = Location.new(params[:location])
     saved = @location.save
     if request.xhr?

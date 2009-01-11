@@ -1,31 +1,31 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 fu0:
-  guid: FixtureUser
+  user_id: 1
   timestamp: 2008-10-04 12:18:05
   geom: <%= Point.from_coordinates([-122.5, 45.5, 10],Location::WGS84_SRID, true).to_fixture_format %>
 
 #fu1:
-#  guid: FixtureUser
+#  user_id: 1
 #  timestamp: 2008-10-04 12:18:05
 #  geom: <%= Point.from_x_y_z(-122.5, 45.51, 10).to_fixture_format %>
 
 #fu2:
-#  guid: FixtureUser
+#  user_id: 1
 #  timestamp: 2008-10-04 12:18:05
 #  geom: <%= Point.from_x_y_z(-122.5, 45.52, 10).to_fixture_format %>
 
 #fu3:
-#  guid: FixtureUser
+#  user_id: 1
 #  timestamp: 2008-10-04 12:18:05
 #  geom: <%= Point.from_x_y_z(-122.51, 45.52, 10).to_fixture_format %>
 
 #fp0:
-#  guid: FixturePerson
+#  user_id: 2
 #  timestamp: 2008-10-04 13:18:05
 #  geom: <%= Point.from_x_y_z(-122.40, 45.40, 10).to_fixture_format %>
 
 #fp1:
-#  guid: FixturePerson
+#  user_id: 2
 #  timestamp: 2008-10-04 13:18:05
 #  geom: <%= Point.from_x_y_z(-122.40, 45.41, 10).to_fixture_format %>

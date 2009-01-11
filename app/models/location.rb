@@ -1,6 +1,8 @@
 class Location < ActiveRecord::Base
   WGS84_SRID = 4326
 
+  belongs_to :user
+
   validates_presence_of :geom
   before_save :coordinate_times
 
@@ -20,13 +22,13 @@ class Location < ActiveRecord::Base
 
   def self.last_users_reporting(count)
     # Postgresql-specific SQL syntax
-    last_users = Location.find(:all, :select => "guid,max(created_at)", :limit => count, :order => "max desc", :group => "guid")
+    last_users = Location.find(:all, :select => "user_id,max(created_at)", :limit => count, :order => "max desc", :group => "user_id")
     last_usernames = last_users.map{|l| l.guid}
   end
 
   def self.last_updates(usernames, last_updates_per_user_count)
     usernames.map do |u| 
-      Location.find(:all, :conditions => {:guid => u}, :order => 'created_at desc', :limit => last_updates_per_user_count)
+      Location.find(:all, :conditions => {:user_id => u}, :order => 'created_at desc', :limit => last_updates_per_user_count)
     end
   end
 
