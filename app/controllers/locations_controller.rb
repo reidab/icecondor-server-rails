@@ -9,9 +9,9 @@ class LocationsController < ApplicationController
       render :text => @locations.to_json
     elsif params[:id]
       limit = params[:limit] ? params[:limit] : 10
-      user_id = Openidentity.find_by_url(params[:id])
-      if user_id
-        @locations = Location.find(:all, :conditions => {:user_id => user_id}, 
+      @user_id = Openidentity.find_by_url(params[:id])
+      if @user_id
+        @locations = Location.find(:all, :conditions => {:user_id => @user_id}, 
                                        :order => 'id desc', :limit => limit)
       else
         @locations = []

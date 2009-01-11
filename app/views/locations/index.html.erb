@@ -67,3 +67,4 @@ last <%= @locations.size %> locations for
   }
 </script>
 
+Total records: <%= Locations.count(:conditions => {:user_id => @user_id}) %>
