@@ -15,4 +15,7 @@ module LoginSystem
     session[:userid] = openid
   end
 
+  def login_required
+    logged_in?
+  end
 end
