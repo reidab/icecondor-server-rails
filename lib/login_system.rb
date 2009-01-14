@@ -4,10 +4,11 @@ module LoginSystem
   end
 
   def logged_in?
-    !session[:userid].nil?
+    !current_user.nil?
   end
 
   def current_user
+    session[:userid] = @current_user if @current_user # compatibility hack for oauth plugin
     session[:userid]
   end
 
@@ -16,6 +17,21 @@ module LoginSystem
   end
 
   def login_required
+    authorized? || access_denied
+  end
+
+  def authorized?
     logged_in?
+  end
+
+  def access_denied
+    respond_to do |format|
+      format.html do
+        redirect_to :root
+      end
+      format.any(:json, :xml) do
+        request_http_basic_authentication 'Web Password'
+      end
+    end
   end
 end
