@@ -17,6 +17,5 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   include LoginSystem
-  include XrdsHeader
 end
 
