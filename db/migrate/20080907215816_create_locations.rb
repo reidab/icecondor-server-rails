@@ -1,6 +1,6 @@
 class CreateLocations < ActiveRecord::Migration
   def self.up
-    create_table "locations", :force => true do |t|
+    create_table "locations" do |t|
       t.column "guid", :string
       t.column "time", :timestamp
       t.column "geom", :point, :null=>false, :srid => 4326, :with_z => true
