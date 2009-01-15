@@ -42,7 +42,7 @@ class SessionController < ApplicationController
     when OpenID::Consumer::SUCCESS
       flash[:success] = ("Verification of #{oidresp.display_identifier}"\
                          " succeeded.")
-      current_user_openid = oidresp.display_identifier
+      self.current_user = oidresp.display_identifier
     when OpenID::Consumer::SETUP_NEEDED
       flash[:alert] = "Immediate request failed - Setup Needed"
     when OpenID::Consumer::CANCEL

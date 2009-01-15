@@ -8,12 +8,16 @@ module LoginSystem
   end
 
   def current_user
-    session[:userid] = @current_user if @current_user # compatibility hack for oauth plugin
-    session[:userid]
+    User.find_by_id(session[:userid])
   end
 
-  def current_user_openid=(openid)
-    session[:userid] = openid
+  def current_user=(user)
+    case user.class
+    when Fixnum
+      session[:userid] = user
+    when User
+      session[:userid] = user.id
+    end
   end
 
   def login_required
