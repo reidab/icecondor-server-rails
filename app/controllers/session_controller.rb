@@ -16,7 +16,7 @@ class SessionController < ApplicationController
       redirect_to :root
       return
     end
-    return_to = url_for :action => 'complete', :only_path => false
+    return_to = url_for :action => 'complete', :only_path => false, :next_url => params[:next_url]
     realm = root_url
 
     if oidreq.send_redirect?(realm, return_to, params[:immediate])
@@ -49,7 +49,7 @@ class SessionController < ApplicationController
       flash[:alert] = "OpenID transaction cancelled."
     else
     end
-    redirect_to :root
+    redirect_to (params[:next_url] || :root)
   end
 
 end

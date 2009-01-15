@@ -27,7 +27,10 @@ module LoginSystem
   def access_denied
     respond_to do |format|
       format.html do
-        redirect_to :root
+        flash[:alert] = "Please login first"
+        next_url = url_for :controller => :oauth, :action => :authorize,
+                                         :oauth_token => params[:oauth_token]
+        redirect_to :controller => :session, :action => :login_screen, :next_url => next_url
       end
       format.any(:json, :xml) do
         request_http_basic_authentication 'Web Password'
