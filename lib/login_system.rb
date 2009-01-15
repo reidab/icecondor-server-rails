@@ -4,15 +4,41 @@ module LoginSystem
   end
 
   def logged_in?
-    !session[:userid].nil?
+    !current_user.nil?
   end
 
   def current_user
-    session[:userid]
+    User.find_by_id(session[:userid])
   end
 
-  def current_user_openid=(openid)
-    session[:userid] = openid
+  def current_user=(user)
+    case user.class
+    when Fixnum
+      session[:userid] = user
+    when User
+      session[:userid] = user.id
+    end
   end
 
+  def login_required
+    authorized? || access_denied
+  end
+
+  def authorized?
+    logged_in?
+  end
+
+  def access_denied
+    respond_to do |format|
+      format.html do
+        flash[:alert] = "Please login first"
+        next_url = url_for :controller => :oauth, :action => :authorize,
+                                         :oauth_token => params[:oauth_token]
+        redirect_to :controller => :session, :action => :login_screen, :next_url => next_url
+      end
+      format.any(:json, :xml) do
+        request_http_basic_authentication 'Web Password'
+      end
+    end
+  end
 end
