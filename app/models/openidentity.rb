@@ -20,5 +20,6 @@ class Openidentity < ActiveRecord::Base
     if uri.path.blank?
       return uri.to_s+"/"
     end
+    uri.to_s
   end
 end
