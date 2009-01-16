@@ -16,7 +16,7 @@ class SessionController < ApplicationController
       redirect_to :root
       return
     end
-    return_to = url_for :action => 'complete', :only_path => false
+    return_to = url_for :action => 'complete', :only_path => false, :next_url => params[:next_url]
     realm = root_url
 
     if oidreq.send_redirect?(realm, return_to, params[:immediate])
@@ -42,14 +42,15 @@ class SessionController < ApplicationController
     when OpenID::Consumer::SUCCESS
       flash[:success] = ("Verification of #{oidresp.display_identifier}"\
                          " succeeded.")
-      self.current_user_openid = oidresp.display_identifier
+      user = Openidentity.lookup_or_create(oidresp.display_identifier).user
+      self.current_user = user
     when OpenID::Consumer::SETUP_NEEDED
       flash[:alert] = "Immediate request failed - Setup Needed"
     when OpenID::Consumer::CANCEL
       flash[:alert] = "OpenID transaction cancelled."
     else
     end
-    redirect_to :root
+    redirect_to (params[:next_url] || :root)
   end
 
 end
