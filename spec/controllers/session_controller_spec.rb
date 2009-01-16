@@ -23,8 +23,13 @@ describe SessionController do
     consumer = mock("openid consumer")
     consumer.should_receive(:complete).and_return(openid_response)
     controller.should_receive(:consumer).and_return(consumer)
+    new_openid = mock_model(Openidentity)
+    new_user = mock_model(User)
+    new_openid.should_receive(:user).and_return(new_user)
+    Openidentity.should_receive(:lookup_or_create).and_return(new_openid)
+    User.should_receive(:find_by_id).with(new_user.id).and_return(new_user)
 
     post :complete
-    controller.current_user.should == openid
+    controller.current_user.should == new_user
   end
 end

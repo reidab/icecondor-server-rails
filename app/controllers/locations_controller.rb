@@ -33,17 +33,9 @@ class LocationsController < ApplicationController
   end
 
   def create
-    guid = params[:location].delete(:guid)
-    @openid = Openidentity.find_by_url(guid)
-    if @openid
-      userid = @openid.user_id
-    else
-      user = User.create
-      userid = user.id
-      Openidentity.create(:url => guid, :user => user)
-    end
-    params[:location].merge!({:user_id => userid})
-    logger.info params.inspect
+    url = params[:location].delete(:guid)
+    @openid = Openidentity.lookup_or_create(url)
+    params[:location].merge!({:user => @openid.user})
     @location = Location.new(params[:location])
     saved = @location.save
     if request.xhr?
