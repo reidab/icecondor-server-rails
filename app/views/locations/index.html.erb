@@ -7,6 +7,8 @@ last <%= @locations.size %> locations for
 <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> 
 - most recent communication was 
 <%= time_ago_in_words(@locations.first.created_at) %> ago.
+<br/>
+<span id="nearest_address" />
 </p>
 
 <!-- Google Maps -->
@@ -17,6 +19,7 @@ last <%= @locations.size %> locations for
     if (GBrowserIsCompatible()) {
       var map = new GMap2(document.getElementById("map_canvas"));
       map.addControl( new GSmallMapControl() );
+      geocoder = new GClientGeocoder();
 <% 
   # center the map on the locations
   min_lat = 90; min_long = 180; 
@@ -47,6 +50,7 @@ last <%= @locations.size %> locations for
       <% if location == @locations.first %>
       tinyIcon.image = "<%= url_for "images/gmaps/mm_20_red.png"%>";
       scale = 1.1;
+      geocoder.getLocations(point, showAddress);
       <% else %>
       tinyIcon.image = "<%= url_for "images/gmaps/mm_20_blue.png"%>";
       scale = 1.0 - (<%=i < 4 ? i+1 : 4%>*0.1);
@@ -63,6 +67,14 @@ last <%= @locations.size %> locations for
       marker = new GMarker(point, markerOptions);
       map.addOverlay(marker);
       <% end %>
+    }
+  }
+  function showAddress(response) {
+    if (!response || response.Status.code != 200) {
+        alert("Status Code:" + response.Status.code);
+          } else {
+        place = response.Placemark[0];
+        $('nearest_address').innerHTML = "nearest street address: " + place.address;
     }
   }
 </script>
