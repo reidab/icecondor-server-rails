@@ -1,6 +1,7 @@
 class LocationsController < ApplicationController
 
   def index #search
+    @locations = []
     if params[:lat] && params[:long]
       #replace this with calculations of a bounding box/circle
       #of radius r
@@ -13,8 +14,6 @@ class LocationsController < ApplicationController
       if @user_id
         @locations = Location.find(:all, :conditions => {:user_id => @user_id}, 
                                        :order => 'id desc', :limit => limit)
-      else
-        @locations = []
       end
     else
       @locations = Location.recent
