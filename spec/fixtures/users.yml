@@ -3,3 +3,8 @@ u1:
 
 quentin:
   id: 2
+  username: "quentin"
+
+danny:
+  id: 3
+  username: "danny"
