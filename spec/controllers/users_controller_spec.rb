@@ -8,13 +8,7 @@ describe UsersController do
     user = users(:quentin)
     login(user)
     get :show, :id => user.username
-    response.should render_template('users/show_owner')
+    response.should render_template('users/show')
   end
 
-  it "should display the public page for visitors" do
-    user = users(:quentin)
-    login(user)
-    get :show, :id => users(:danny).username
-    response.should render_template('users/show_public')
-  end
 end
