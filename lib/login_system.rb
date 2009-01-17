@@ -8,7 +8,6 @@ module LoginSystem
   end
 
   def current_user
-puts "finding #{session[:userid]}"
     User.find_by_id(session[:userid])
   end
 
