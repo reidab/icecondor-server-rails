@@ -3,7 +3,7 @@ class Location < ActiveRecord::Base
 
   belongs_to :user
 
-  validates_presence_of :geom
+  validates_presence_of :geom, :user
   before_save :coordinate_times
 
   named_scope :recent, :limit => 25, :order => "updated_at desc"
