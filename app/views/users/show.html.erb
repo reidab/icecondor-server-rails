@@ -1,10 +1,8 @@
 <% user = current_user %>
-<% username = user.username || user.openidentities.first %>
 
 <div class="center" style="width: 80%">
- Profile for <%= username %>
+ <h4> Profile for <%= user.username %> </h4>
 
- <hr/>
- <h4> Stats </h4>
+ <h5> Stats </h5>
  Total updates: <%= Location.count_for_user(user) %>
 </div>
