@@ -11,17 +11,17 @@
   <%= render :partial => "layouts/statusbar" %>
   <% if flash[:error] %>
     <div style="background:red">
-    <%= flash[:error] %>
+    <%=h flash[:error] %>
     </div>
   <% end %>
   <% if flash[:alert] %>
     <div style="background:yellow">
-    <%= flash[:alert] %>
+    <%=h flash[:alert] %>
     </div>
   <% end %>
   <% if flash[:success] %>
     <div style="background:green">
-    <%= flash[:success] %>
+    <%=h flash[:success] %>
     </div>
   <% end %>
   <%= yield %>
