@@ -29,4 +29,8 @@ describe Location do
     location.timestamp = new_time
     location.timestamp.should == new_time
   end
+
+  it "should count the location records for a given user" do
+    Location.count_for_user(users(:quentin)).should == 1
+  end
 end

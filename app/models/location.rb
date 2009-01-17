@@ -32,6 +32,10 @@ class Location < ActiveRecord::Base
     end
   end
 
+  def self.count_for_user(user)
+    count(:conditions => {:user_id => user.id}) 
+  end
+
 protected
   def validate
     self.errors.add_to_base("Fill in the lat/long fields (or click the map)") \
