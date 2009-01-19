@@ -18,5 +18,16 @@ class ApplicationController < ActionController::Base
 
   include LoginSystem
   include XrdsHeader
+  
+  protected
+  def validate_id_as_username
+    @user = User.find_by_username(params[:id])
+    if @user 
+      return true
+    else
+      flash[:error] = "#{params[:id]} is an unknown identity"
+      redirect_to :root
+    end
+  end
 end
 

@@ -11,7 +11,7 @@ class Openidentity < ActiveRecord::Base
   end
 
   def self.create_id_and_user_with_url(url)
-      new_user = User.create!
+      new_user = User.create!(:username => generate_username(url))
       Openidentity.create!(:user => new_user, :url => cannonical(url))
   end
 
@@ -22,5 +22,9 @@ class Openidentity < ActiveRecord::Base
       return uri.to_s+"/"
     end
     uri.to_s
+  end
+
+  def self.generate_username(url)
+    URI.parse(url).host.gsub('.', '')
   end
 end
