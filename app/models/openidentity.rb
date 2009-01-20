@@ -25,6 +25,17 @@ class Openidentity < ActiveRecord::Base
   end
 
   def self.generate_username(url)
-    URI.parse(url).host.gsub('.', '')
+    uri = URI.parse(url)
+    case uri
+    when URI::HTTP, URI::HTTPS
+      username = uri.host + uri.path
+    when URI::Generic
+      if uri.path.blank?
+        username = uri.opaque
+      else
+        username = uri.path
+      end
+    end
+    username.gsub('.', '').gsub('/','')
   end
 end
