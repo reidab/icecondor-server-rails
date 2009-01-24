@@ -1,4 +1,5 @@
 module LoginSystem
+  protected
   def self.included(base)
     base.send :helper_method, :logged_in?, :current_user
   end
