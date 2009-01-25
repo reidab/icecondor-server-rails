@@ -1,3 +1,3 @@
-<%= link_to location.guid, "locations.html?id=#{location.guid}" %> <br/>
+<%= link_to location.user.openidentities.first, "locations.html?id=#{location.user.openidentities.first}" %> <br/>
 <span title="<%=location.timestamp%>"><%= time_ago_in_words(location.timestamp) %> ago </span><br/>
 accurate to within <%= location.accuracy %> meters <br/>
