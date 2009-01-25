@@ -10,4 +10,10 @@ describe Openidentity do
     Openidentity.generate_username(url).should == "uuid:c7b082ce-d75a-424d-afd7-6da2dc81dbdc"
   end
 
+  it "should canonicalize a URL" do
+    url="http://notrailingslash.com"
+    Openidentity.cannonical(url).should == url+"/"
+    url="notaurl"
+    Openidentity.cannonical(url).should == url
+  end
 end
