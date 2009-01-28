@@ -9,9 +9,6 @@ last <%= @locations.size %> locations for
 - most recent communication was 
 <%= time_ago_in_words(@locations.first.created_at) %> ago.
 <br/>
-Heading in degrees: <%= @locations.first.heading %>
-Velocity in meters/second: <%= @locations.first.velocity %>
-<br/>
 <span id="nearest_address" />
 </p>
 <% else %>
