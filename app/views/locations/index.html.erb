@@ -9,9 +9,6 @@ last <%= @locations.size %> locations for
 - most recent communication was 
 <%= time_ago_in_words(@locations.first.created_at) %> ago.
 <br/>
-Heading in degrees: <%= @locations.first.heading %>
-Velocity in meters/second: <%= @locations.first.velocity %>
-<br/>
 <span id="nearest_address" />
 </p>
 <% else %>
@@ -52,27 +49,26 @@ Velocity in meters/second: <%= @locations.first.velocity %>
       var scale;
       var tinyIcon;
       <% @locations.each_with_index do |location,i| %>
-      point = new GLatLng(<%=location.geom.y%>, <%=location.geom.x%>)
-      tinyIcon = new GIcon();
-      <% if location == @locations.first %>
-      tinyIcon.image = "<%= url_for "images/gmaps/mm_20_red.png"%>";
-      scale = 1.1;
-      geocoder.getLocations(point, showAddress);
-      <% else %>
-      tinyIcon.image = "<%= url_for "images/gmaps/mm_20_blue.png"%>";
-      scale = 1.0 - (<%=i < 4 ? i+1 : 4%>*0.1);
-      <% end %>
-      tinyIcon.shadow = "<%= url_for "images/gmaps/mm_20_shadow.png"%>";
-      tinyIcon.iconSize = new GSize(12*scale, 20*scale);
-      tinyIcon.shadowSize = new GSize(22*scale, 20*scale);
-      tinyIcon.iconAnchor = new GPoint(6, 20);
-      tinyIcon.infoWindowAnchor = new GPoint(5, 1);
+        point = new GLatLng(<%=location.geom.y%>, <%=location.geom.x%>)
+        tinyIcon = new GIcon();
+        <% if location == @locations.first %>
+          tinyIcon.image = "<%= url_for "images/gmaps/mm_20_red.png"%>";
+          scale = 1.1;
+          geocoder.getLocations(point, showAddress);
+        <% else %>
+          tinyIcon.image = "<%= url_for "images/gmaps/mm_20_blue.png"%>";
+          scale = 1.0 - (<%=i < 4 ? i+1 : 4%>*0.1);
+        <% end %>
+        tinyIcon.shadow = "<%= url_for "images/gmaps/mm_20_shadow.png"%>";
+        tinyIcon.iconSize = new GSize(12*scale, 20*scale);
+        tinyIcon.shadowSize = new GSize(22*scale, 20*scale);
+        tinyIcon.iconAnchor = new GPoint(6, 20);
+        tinyIcon.infoWindowAnchor = new GPoint(5, 1);
 
-
-      // Set up our GMarkerOptions object literal
-      markerOptions = { icon:tinyIcon };
-      marker = new GMarker(point, markerOptions);
-      map.addOverlay(marker);
+        // Set up our GMarkerOptions object literal
+        markerOptions = { icon:tinyIcon };
+        marker = new GMarker(point, markerOptions);
+        map.addOverlay(marker);
       <% end %>
     }
   }
@@ -85,5 +81,15 @@ Velocity in meters/second: <%= @locations.first.velocity %>
     }
   }
 </script>
+
+<div id="speed_graph" style="width: 90%; margin-left:auto; margin-right: auto">
+  <!-- Google Charts -->
+  <% 
+  chart_points = @locations.map(&:velocity).map{|v| v.nil? ? 0 : v} 
+  max = chart_points.max
+  min = chart_points.min
+  %>
+  <img src="http://chart.apis.google.com/chart?cht=lc&chs=600x60&chd=t:<%=chart_points.join(',')%>&chds=<%=min%>,<%=max%>&chl=velocity+in+m/s&chxt=y&chxr=0,<%=min%>,<%=max%>" />
+</div>
 
 Total records: <%= Location.count(:conditions => {:user_id => @user_id}) %>
