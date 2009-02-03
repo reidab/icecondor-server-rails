@@ -33,8 +33,9 @@ module LoginSystem
     respond_to do |format|
       format.html do
         flash[:alert] = "Please login first"
-        next_url = url_for :controller => :oauth, :action => :authorize,
-                                         :oauth_token => params[:oauth_token]
+        # ruby 1.8 hack, select does not return a hash
+        oauth_extras = params.reject{|k,v| !k.match(/^oauth/)}
+        next_url = url_for({:controller => :oauth, :action => :authorize}.merge(oauth_extras))
         redirect_to :controller => :session, :action => :login_screen, :next_url => next_url
       end
       format.any(:json, :xml) do
