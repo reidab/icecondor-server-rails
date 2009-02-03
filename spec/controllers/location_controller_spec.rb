@@ -24,7 +24,9 @@ describe LocationsController do
     latitude = 45.5118191242218
     longitude = -122.63253271579742
     token_string = "bogus"
-    record = {"client"=>{"version"=>"20081227"}, "location"=>{"timestamp"=>"2009-01-09T18:43:56+0000", "latitude"=>latitude, "altitude"=>"35.0", "accuracy"=>"3072.0", "longitude"=>longitude}, "oauth_token"=>token_string}
+    record = {"client"=>{"version"=>"20081227"}, "location"=>{"timestamp"=>"2009-01-09T18:43:56+0000", "latitude"=>latitude, "altitude"=>"35.0", "accuracy"=>"3072.0", "longitude"=>longitude}}
+    record.merge!({"oauth_token"=>token_string}) # make it an OAUTH request
+    record.merge!({"format"=>"json"}) # the client requests json
     controller.should_receive(:oauthenticate).and_return(true)
     token = mock("token")
     user = mock_model(User)
@@ -34,6 +36,8 @@ describe LocationsController do
     lambda do
       post :create, record
     end.should change(Location, :count).by(1)
+    response.should be_success
+    response.body.should match(/id/)
   end
 
   it "should display a user's location summary" do

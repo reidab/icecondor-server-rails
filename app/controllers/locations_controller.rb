@@ -32,6 +32,7 @@ class LocationsController < ApplicationController
   end
 
   def create
+    # support OAUTH and unauthenticated updates for now
     if params[:oauth_token] && oauthenticate
       token = OauthToken.find_by_token(params[:oauth_token])
       user = token.user
@@ -39,17 +40,19 @@ class LocationsController < ApplicationController
       url = params[:location].delete(:guid)
       user = Openidentity.lookup_or_create(url).user
     end
+
     params[:location].merge!({:user => user})
     @location = Location.new(params[:location])
     saved = @location.save
-    if request.xhr?
-      head(saved ? :ok : :bad_request)
-    else
+
+    respond_to do |format|
       if saved
         flash[:notice] = "new location record saved."
-        redirect_to locations_path
+        format.html { redirect_to locations_path }
+        format.json { render :text => {:id => @location.id}.to_json }
       else
-        render :action => "new"
+        format.html { render :action => "new" }
+        format.json { render :text => "", :status => 500 }
       end
     end
   end
