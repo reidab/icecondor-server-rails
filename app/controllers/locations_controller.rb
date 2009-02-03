@@ -34,12 +34,12 @@ class LocationsController < ApplicationController
   def create
     if params[:oauth_token] && oauthenticate
       token = OauthToken.find_by_token(params[:oauth_token])
-      @openid = token.user.openidentities.first
+      user = token.user
     else
       url = params[:location].delete(:guid)
-      @openid = Openidentity.lookup_or_create(url)
+      user = Openidentity.lookup_or_create(url).user
     end
-    params[:location].merge!({:user => @openid.user})
+    params[:location].merge!({:user => user})
     @location = Location.new(params[:location])
     saved = @location.save
     if request.xhr?
