@@ -91,13 +91,13 @@ describe OauthController, "token authorization" do
   it "should redirect to default callback" do
     do_post
     response.should be_redirect
-    response.should redirect_to("http://application/callback?oauth_token=#{@request_token.token}")
+    response.should redirect_to("http://application/callback?oauth_token=#{@request_token.token}&openid=http://mock_openid")
   end
 
   it "should redirect to callback in query" do
     do_post_with_callback
     response.should be_redirect
-    response.should redirect_to("http://application/alternative?oauth_token=#{@request_token.token}")
+    response.should redirect_to("http://application/alternative?oauth_token=#{@request_token.token}&openid=http://mock_openid")
   end
 
   it "should be successful on authorize without any application callback" do

@@ -16,6 +16,9 @@ describe LocationsController do
     location.geom.x.should == longitude
   end
 
+  it "should process an OAUTH authenticated location update" do
+  end
+
   it "should display a user's location summary" do
     get :index, {:id => 'bob'}
   end

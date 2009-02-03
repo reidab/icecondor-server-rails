@@ -5,6 +5,11 @@ module OAuthControllerSpecHelper
     controller.stub!(:current_user).and_return(@user)
     @tokens=[]
     @tokens.stub!(:find).and_return(@tokens)
+    openidentities = mock("openidentities")
+    openid = mock("openid")
+    openid.stub!(:url).and_return("http://mock_openid")
+    openidentities.stub!(:first).and_return(openid)
+    @user.stub!(:openidentities).and_return(openidentities)
     @user.stub!(:tokens).and_return(@tokens)
     User.stub!(:find_by_id).and_return(@user)
   end
