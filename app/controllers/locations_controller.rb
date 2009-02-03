@@ -32,8 +32,13 @@ class LocationsController < ApplicationController
   end
 
   def create
-    url = params[:location].delete(:guid)
-    @openid = Openidentity.lookup_or_create(url)
+    if params[:oauth_token] && oauthenticate
+      token = OauthToken.find_by_token(params[:oauth_token])
+      @openid = token.user.openidentities.first
+    else
+      url = params[:location].delete(:guid)
+      @openid = Openidentity.lookup_or_create(url)
+    end
     params[:location].merge!({:user => @openid.user})
     @location = Location.new(params[:location])
     saved = @location.save
