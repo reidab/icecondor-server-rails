@@ -19,6 +19,9 @@ div.heading {
 p#subtitle {
   font-size: 80%;
 }
+p#subtitle a {
+  font-size: 80%;
+}
 
 .heading a {
   font-size: 26pt;
@@ -57,6 +60,9 @@ div.topfive p{
   </p>
   <p id="subtitle">
    Continuous location tracking.
+  </p>
+  <p id="subtitle">
+  Android G1 users <%= link_to "download here", :controller => :dashboard, :action => :clients %>
   </p>
   <%= flash[:notice] %>
 </div>
