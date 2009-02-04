@@ -37,14 +37,12 @@ p#subtitle a {
   font-size: 16pt;
 }
 div.topfive {
-  position: relative; 
-  float: right; 
+  position: fixed; 
   z-index: 10;
   background: white;
   opacity: 0.75;
   border: 1px solid #555;
-  margin-right: 30px;
-  margin-top: 40%;
+  bottom: 0px;
 }
 div.topfive p{
   margin-bottom: 0px;
@@ -59,9 +57,7 @@ div.topfive p{
     <a href="http://donpark.org/wiki/icecondor">IceCondor</a> <br/>
   </p>
   <p id="subtitle">
-   Continuous location tracking.
-  </p>
-  <p id="subtitle">
+  Continuous location tracking. <br/>
   Android G1 users <%= link_to "download here", :controller => :dashboard, :action => :clients %>
   </p>
   <%= flash[:notice] %>
