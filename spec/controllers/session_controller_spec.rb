@@ -31,4 +31,9 @@ describe SessionController do
 
     post :complete
   end
+
+  it "should logout the user" do
+    controller.should_receive(:reset_session)
+    get :logout
+  end
 end

@@ -53,4 +53,10 @@ class SessionController < ApplicationController
     redirect_to (params[:next_url] || :root)
   end
 
+  def logout
+    reset_session
+    flash[:notice] = "logged out"
+    redirect_to :root
+  end
+
 end

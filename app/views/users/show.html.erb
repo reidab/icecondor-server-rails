@@ -6,3 +6,5 @@
  <h5> Stats </h5>
  Total updates: <%= Location.count_for_user(user) %>
 </div>
+
+<%= link_to logout, :controller => :sessions, :action => :logout %>
