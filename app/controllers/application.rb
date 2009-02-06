@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
 
   include LoginSystem
   include XrdsHeader
+  include ExceptionNotifiable
   
   protected
   def validate_id_as_username
