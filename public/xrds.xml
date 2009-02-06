@@ -30,7 +30,7 @@
       </Service>
       <Service priority="10">
         <Type>http://oauth.net/discovery/1.0/consumer-identity/static</Type>
-        <LocalID>0685bd9184jfhq22</LocalID>
+        <LocalID>icecondor-nest-2009-01</LocalID>
       </Service>
     </XRD>
     <XRD xmlns="xri://$XRD*($v*2.0)" version="2.0">
