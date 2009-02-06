@@ -1,11 +1,10 @@
 <h1>Authorize access to your account</h1>
-<p>IceCondor is an android application that you are running 
-on your phone. The android application is trying to save
+<p>IceCondor, the  android application, is trying to save
 GPS position data to your account on icecondor.com. Having
 position data recorded to icecondor.com means you can share
 that information with others.</p>
-<p>Would you like to authorize the storage of position records in 
-your web account on icecondor.com?</p>
+<p>Would you like to authorize the storage of position records 
+from your phone into your web account on icecondor.com?</p>
 <%form_tag authorize_url do %>
 <%=hidden_field_tag "oauth_token",@token.token%>
 <%-if params[:oauth_callback]-%>
