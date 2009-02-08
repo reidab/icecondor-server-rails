@@ -8,4 +8,8 @@ describe User do
     User.find_by_openid(url).should == users(:quentin)
   end
 
+  it "should create a user with default settings" do
+    user = User.create!(:username => "testing")
+    user.access_status.should == "private"
+  end
 end
