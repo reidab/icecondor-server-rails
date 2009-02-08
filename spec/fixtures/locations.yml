@@ -2,18 +2,18 @@
 
 fu0:
   user_id: 1
-  timestamp: 2008-10-04 12:18:05
+  timestamp: "2008-10-04 12:18:05"
   geom: <%= Point.from_coordinates([-122.5, 45.5, 10],Location::WGS84_SRID, true).to_fixture_format %>
 
-fu1:
+quentin_at_store:
   user_id: 2
-  timestamp: "2008-10-04 12:18:05"
-  geom: <%= Point.from_coordinates([-122.5, 45.51, 10],Location::WGS84_SRID, true).to_fixture_format %>
+  timestamp: "2008-10-04 13:20:00"
+  geom: <%= Point.from_coordinates([-122.6, 45.51, 10],Location::WGS84_SRID, true).to_fixture_format %>
 
-#fu2:
-#  user_id: 1
-#  timestamp: 2008-10-04 12:18:05
-#  geom: <%= Point.from_x_y_z(-122.5, 45.52, 10).to_fixture_format %>
+sally_at_work:
+  user_id: 4
+  timestamp: "2008-10-05 14:10:00"
+  geom: <%= Point.from_coordinates([-122.622, 45.48, 10],Location::WGS84_SRID, true).to_fixture_format %>
 
 #fu3:
 #  user_id: 1
