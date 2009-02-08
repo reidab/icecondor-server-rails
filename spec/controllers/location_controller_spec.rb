@@ -1,6 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe LocationsController do
+  fixtures :users, :openidentities
+  include SessionSpecHelper
+
   it "should process a 2008-style location update" do
     identity = "http://testperson/"
     latitude = 45.5118191242218
@@ -50,7 +53,7 @@ describe LocationsController do
   end
 
   it "should display a protected user's own location" do
-    login :sally
+    login users(:sally)
     get :index, {:id => 'http://sallysecret/'}
     response.should be_success
   end

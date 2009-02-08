@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UsersController do
   include SessionSpecHelper
-  fixtures :users
+  fixtures :users, :openidentities
 
   it "should display the owner page for owners" do
     user = users(:quentin)
