@@ -22,13 +22,14 @@ class Location < ActiveRecord::Base
 
   def self.last_users_reporting(count)
     # Postgresql-specific SQL syntax
-    last_locations = Location.find(:all, :select => "user_id,max(id)", :limit => count, :order => "max desc", :group => "user_id")
-    last_usernames = last_locations.map{|l| l.user.id}
+    last_locations = Location.find(:all, :select => "user_id,max(id)", :limit => count, :order => "max desc", :group => "user_id", :include => :user)
+    last_usernames = last_locations.map{|l| l.user}
   end
 
-  def self.last_updates(usernames, last_updates_per_user_count)
-    usernames.map do |u| 
-      Location.find(:all, :conditions => {:user_id => u}, :order => 'id desc', :limit => last_updates_per_user_count)
+  def self.last_updates(users, last_updates_per_user_count)
+    users.reject!{|u| u.access_status != "public"}
+    users.map do |u| 
+      Location.find(:all, :conditions => {:user_id => u.id}, :order => 'id desc', :limit => last_updates_per_user_count)
     end
   end
 
