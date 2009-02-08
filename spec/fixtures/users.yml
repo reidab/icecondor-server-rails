@@ -8,3 +8,8 @@ quentin:
 danny:
   id: 3
   username: "danny"
+
+sally:
+  id: 4
+  username: "sallysecret"
+  access_status: "protected"

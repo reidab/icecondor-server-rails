@@ -3,17 +3,26 @@ class LocationsController < ApplicationController
   def index #search
     @locations = []
     if params[:lat] && params[:long]
-      #replace this with calculations of a bounding box/circle
-      #of radius r
+      #replace this with calculations of a bounding box/circle of radius r
       @locations = Location.find_all_by_geom([[params[:long].to_i-1,params[:lat].to_i-1],
                                               [params[:long].to_i+1,params[:lat].to_i+1],4326])
       render :text => @locations.to_json
     elsif params[:id]
       limit = params[:limit] ? params[:limit] : 10
-      @user_id = Openidentity.find_by_url(params[:id])
-      if @user_id
-        @locations = Location.find(:all, :conditions => {:user_id => @user_id}, 
-                                       :order => 'id desc', :limit => limit)
+      openid = Openidentity.find_by_url(params[:id])
+      if openid
+        user = openid.user
+        @user_id = user.id
+        # access control
+        if (user.access_status == "public") || 
+           (user.access_status == "protected" && user == current_user)
+          @locations = Location.find(:all, :conditions => {:user_id => @user_id}, 
+                                         :order => 'id desc', :limit => limit)
+        else
+          flash[:notice] = "This user's location is protected."
+          redirect_to :controller => :session, :action => :login
+          return
+        end
       end
     else
       @locations = Location.recent

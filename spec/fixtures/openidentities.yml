@@ -12,3 +12,8 @@ danny:
  id: 3
  user_id: 3
  url: "http://danny/"
+
+sally:
+ id: 4
+ user_id: 4
+ url: "http://sallysecret/"

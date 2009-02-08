@@ -43,4 +43,15 @@ describe LocationsController do
   it "should display a user's location summary" do
     get :index, {:id => 'bob'}
   end
+
+  it "should redirect to login when an unlogged in session asks for a protect user's location" do
+    get :index, {:id => 'http://sallysecret/'}
+    response.should redirect_to(:controller => :session, :action => :login)
+  end
+
+  it "should display a protected user's own location" do
+    login :sally
+    get :index, {:id => 'http://sallysecret/'}
+    response.should be_success
+  end
 end
