@@ -1,6 +1,6 @@
 class SessionController < ApplicationController
   include OpenidUtility
-  layout :false
+  layout nil
 
   def login
     begin
