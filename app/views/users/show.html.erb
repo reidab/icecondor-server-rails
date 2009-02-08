@@ -2,6 +2,22 @@
 
 <div class="center" style="width: 80%">
  <h4> Profile for <%= user.username %> </h4>
+ OpenId: 
+ <% user.openidentities.each do |openid| %>
+   <%= openid.url %> <br/>
+ <% end %>
+
+ <p>
+  Access Status: <b><%= user.access_status %></b> <br/>
+  <% form_for :user, user, :url=>{:controller => :users, :action => user.username}, :html => { :method => :put } do |f| %>
+  Change status:
+    <%=  radio_button_tag "user[access_status]", :public %> public
+    <%=  radio_button_tag "user[access_status]", :private %> private
+    <%= submit_tag %>
+  <% end %>
+  Private - Only you can see your location<br/>
+  Public - Anyone can see your location<br/>
+ </p>
 
  <h5> Stats </h5>
  Total updates: <%= Location.count_for_user(user) %>

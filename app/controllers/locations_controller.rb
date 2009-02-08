@@ -18,7 +18,7 @@ class LocationsController < ApplicationController
                                          :order => 'id desc', :limit => limit)
         else
           flash[:notice] = "This user's location is protected."
-          redirect_to :controller => :session, :action => :login
+          redirect_to :controller => :session, :action => :login_screen
           return
         end
       end
