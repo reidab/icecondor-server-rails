@@ -28,7 +28,7 @@ class Location < ActiveRecord::Base
 
   def self.last_updates(usernames, last_updates_per_user_count)
     usernames.map do |u| 
-      Location.find(:all, :conditions => {:user_id => u}, :order => 'created_at desc', :limit => last_updates_per_user_count)
+      Location.find(:all, :conditions => {:user_id => u}, :order => 'id desc', :limit => last_updates_per_user_count)
     end
   end
 
