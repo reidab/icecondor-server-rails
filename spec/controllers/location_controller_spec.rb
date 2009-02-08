@@ -49,7 +49,7 @@ describe LocationsController do
 
   it "should redirect to login when an unlogged-in session asks for a protected user's location" do
     get :index, {:id => 'http://sallysecret/'}
-    response.should redirect_to(:controller => :session, :action => :login)
+    response.should redirect_to("http://test.host/session/login_screen") #why
   end
 
   it "should display a protected user's own location" do
