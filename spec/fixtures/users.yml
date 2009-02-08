@@ -12,4 +12,4 @@ danny:
 sally:
   id: 4
   username: "sallysecret"
-  access_status: "protected"
+  access_status: "private"
