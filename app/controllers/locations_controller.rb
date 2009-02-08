@@ -9,14 +9,12 @@ class LocationsController < ApplicationController
       render :text => @locations.to_json
     elsif params[:id]
       limit = params[:limit] ? params[:limit] : 10
-      openid = Openidentity.find_by_url(params[:id])
-      if openid
-        user = openid.user
-        @user_id = user.id
+      @user = User.find_by_openid(params[:id])
+      if @user
         # access control
-        if (user.access_status == "public") || 
-           (user.access_status == "protected" && user == current_user)
-          @locations = Location.find(:all, :conditions => {:user_id => @user_id}, 
+        if (@user.access_status == "public") || 
+           (@user.access_status == "protected" && @user == current_user)
+          @locations = Location.find(:all, :conditions => {:user_id => @user.id}, 
                                          :order => 'id desc', :limit => limit)
         else
           flash[:notice] = "This user's location is protected."
