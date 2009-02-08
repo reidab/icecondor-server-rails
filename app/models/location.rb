@@ -22,7 +22,8 @@ class Location < ActiveRecord::Base
 
   def self.last_users_reporting(count)
     # Postgresql-specific SQL syntax
-    last_users = Location.find(:all, :select => "user_id,max(created_at)", :limit => count, :order => "max desc", :group => "user_id")
+    #last_users = Location.find(:all, :select => "user_id,max(created_at)", :limit => count, :order => "max desc", :group => "user_id")
+    last_locations = Location.find(:all, :limit => 100, :order => "created_at desc").uniq(&:user_id)
     last_usernames = last_users.map{|l| l.user.id}
   end
 
