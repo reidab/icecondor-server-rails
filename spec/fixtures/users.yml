@@ -1,13 +1,17 @@
 u1:
   id: 1
+  username: "first"
+  access_status: "public"
 
 quentin:
   id: 2
   username: "quentin"
+  access_status: "public"
 
 danny:
   id: 3
   username: "danny"
+  access_status: "public"
 
 sally:
   id: 4

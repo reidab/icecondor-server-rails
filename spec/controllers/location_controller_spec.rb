@@ -43,8 +43,8 @@ describe LocationsController do
     response.body.should match(/id/)
   end
 
-  it "should display a user's location summary" do
-    get :index, {:id => 'bob'}
+  it "should display a public user's location summary" do
+    get :index, {:id => 'http://first.cc/'}
     response.should be_success
   end
 
@@ -57,5 +57,10 @@ describe LocationsController do
     login users(:sally)
     get :index, {:id => 'http://sallysecret/'}
     response.should be_success
+  end
+
+  it "should redirect to the home page when the id is unknown" do
+    get :index, {:id => 'http://bogusoid'}
+    response.should redirect_to('http://test.host/')
   end
 end

@@ -21,6 +21,10 @@ class LocationsController < ApplicationController
           redirect_to :controller => :session, :action => :login_screen
           return
         end
+      else
+        flash[:notice] = "Records for user #{params[:id]} were not found."
+        redirect_to :root
+        return
       end
     else
       @locations = Location.recent
