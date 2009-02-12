@@ -33,7 +33,7 @@ class LocationsController < ApplicationController
 
     respond_to do |wants|
       wants.json { render :json => @locations }
-      wants.xml { render :xml => @locations }
+      wants.rss
       wants.html { render :layout => "googlemaps" }
     end
   end

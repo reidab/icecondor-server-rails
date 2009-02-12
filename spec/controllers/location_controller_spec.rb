@@ -63,4 +63,9 @@ describe LocationsController do
     get :index, {:id => 'http://bogusoid'}
     response.should redirect_to('http://test.host/')
   end
+
+  it "should display a public user's location summary as an RSS feed" do
+    get :index, {:id => 'http://first.cc/'}, {}, {:format => :rss}
+    response.should be_success
+  end
 end

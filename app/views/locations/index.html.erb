@@ -1,3 +1,7 @@
+<% content_for :header do %>
+  <%= auto_discovery_link_tag(:rss, "locations.rss?id=#{params[:id]}") %>
+<% end %>
+
 <% if flash[:notice] %>
 <%= flash[:notice] %> <br/>
 <% end %>
