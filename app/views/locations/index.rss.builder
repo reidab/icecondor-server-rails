@@ -11,7 +11,8 @@ xml.rss(:version => "2.0",
         xml.title "report from #{location.user.username}"
         xml.description "#{location.user.username} reported"
         xml.pubDate location.created_at.to_s(:rfc822)
-        xml.link locations_url+"?id="+location.user.openidentities.first.url
+        xml.link location_url(location)
+        xml.guid location_url(location)
         xml.geo :lat, "#{location.latitude}"
         xml.geo :long, "#{location.longitude}"
       end
