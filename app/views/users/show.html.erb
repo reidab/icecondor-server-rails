@@ -1,11 +1,12 @@
 <% user = current_user %>
 
 <div class="center" style="width: 80%">
- <h4> Profile for <%= user.username %> </h4>
+ <h4> Profile </h4>
  OpenId: 
  <% user.openidentities.each do |openid| %>
    <%= openid.url %> <br/>
  <% end %>
+  Username: <%= user.username %> <br/>
 
  <p>
   Access Status: <b><%= user.access_status %></b> <br/>
@@ -19,8 +20,12 @@
   Public - Anyone can see your location<br/>
  </p>
 
- <h5> Stats </h5>
- Total updates: <%= Location.count_for_user(user) %>
+ <h4> Map Data </h4>
+  <%= link_to "Your Map Page", "/locations.html?id=#{user.openidentities.first.url}" %> <br/>
+  Number of location records: <%= Location.count_for_user(user) %>  <br/>
 </div>
 
+ <h4> Misc. </h4>
+<div>
 <%= link_to "logout", :controller => :session, :action => :logout %>
+</div>
