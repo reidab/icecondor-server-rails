@@ -23,7 +23,7 @@ p#subtitle a {
   font-size: 80%;
 }
 
-.heading a {
+.heading p#title a {
   font-size: 26pt;
   font-weight: bold;
   color: black;
@@ -33,7 +33,7 @@ p#subtitle a {
 }
 
 .heading p {
-  margin: 10px 10px 17px 10px;
+  margin: 10px 10px 0px 10px;
   font-size: 16pt;
 }
 div.topfive {
@@ -42,7 +42,7 @@ div.topfive {
   background: white;
   opacity: 0.75;
   border: 1px solid #555;
-  bottom: 0px;
+  bottom: 50px;
   margin-left: 40px;
 }
 div.topfive p{
@@ -54,7 +54,7 @@ div.topfive p{
 <% end %>
 
 <div class="heading">
-  <p>
+  <p id="title">
     <a href="http://donpark.org/wiki/icecondor">IceCondor</a> <br/>
   </p>
   <p id="subtitle">
@@ -62,30 +62,22 @@ div.topfive p{
   Android G1 users <%= link_to "download here", :controller => :dashboard, :action => :clients %>
   </p>
   <%= flash[:notice] %>
-</div>
-
-<div class="topfive">
-    <p>
-      Recent Public Updates
-    </p>
+  <p>
+    Recent Public Updates
     <table>
     <% @locations.each do |ary| %>
       <tr>
           <td><%= image_tag "http://labs.google.com/ridefinder/images/mm_20_#{MapHelper::COLORS[ary.last.user.id % MapHelper::COLORS.size]}.png" %></td>
           <td><%= link_to ary.last.user.openidentities.first.url, "locations.html?id=#{ary.last.user.openidentities.first.url}" %></td>
-          <td> <%= time_ago_in_words(ary.first.timestamp) %> </td></tr>
+          <td> <%= time_ago_in_words(ary.first.timestamp) %> ago </td></tr>
     <% end %>
     </table>
+  </p>
 </div>
+
 
 <%= google_map(@locations, :width => "100%", :height => "500px", 
                :controls => [:zoom],
                :inject_on_load => <<__JS__, :partial => "location") 
-function resize_map() { 
-  $('google_map').style.height = "" + window.innerHeight + "px";
-}
-Event.observe(document.onresize ? document : window, "resize", resize_map);
-resize_map();
 __JS__
 %>
-
