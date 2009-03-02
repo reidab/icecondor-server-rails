@@ -1,7 +1,10 @@
 .centered {
-  margin-left: auto;
-  margin-right: auto;
+  text-align:center;
 }
 .footer {
   margin-top: 15px;
+  font-size: 80%;
+}
+.clear {
+  clear: both;
 }
