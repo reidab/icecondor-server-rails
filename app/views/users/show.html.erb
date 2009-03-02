@@ -1,12 +1,9 @@
 <% user = current_user %>
 
-<div class="center" style="width: 80%">
- <h4> Profile </h4>
- OpenId: 
- <% user.openidentities.each do |openid| %>
-   <%= openid.url %> <br/>
- <% end %>
-  Username: <%= user.username %> <br/>
+<div class="centered" style="width: 80%">
+ <h4> Map Data </h4>
+  <%= link_to "Your Map Page", "/locations.html?id=#{user.openidentities.first.url}" %> <br/>
+  Number of location records: <%= Location.count_for_user(user) %>  <br/>
 
  <p>
   Access Status: <b><%= user.access_status %></b> <br/>
@@ -16,16 +13,18 @@
     <%=  radio_button_tag "user[access_status]", :private %> private
     <%= submit_tag %>
   <% end %>
-  Private - Only you can see your location<br/>
-  Public - Anyone can see your location<br/>
+  Private - Only you can see your map page<br/>
+  Public - Anyone can see your map page<br/>
  </p>
 
- <h4> Map Data </h4>
-  <%= link_to "Your Map Page", "/locations.html?id=#{user.openidentities.first.url}" %> <br/>
-  Number of location records: <%= Location.count_for_user(user) %>  <br/>
-</div>
+ <h4> Profile </h4>
+ OpenId: 
+ <% user.openidentities.each do |openid| %>
+   <%= openid.url %> <br/>
+ <% end %>
+  Username: <%= user.username %> <br/>
+
 
  <h4> Misc. </h4>
-<div>
 <%= link_to "logout", :controller => :session, :action => :logout %>
 </div>
