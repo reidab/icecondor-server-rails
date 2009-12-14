@@ -64,7 +64,7 @@
         marker = new GMarker(point, markerOptions);
         map.addOverlay(marker);
       <% end %>
-      new PeriodicalExecuter(pollIcecondor, 5);
+      new PeriodicalExecuter(pollIcecondor, 30);
     }
   }
   function showAddress(response) {
