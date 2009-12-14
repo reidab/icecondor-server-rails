@@ -3,6 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.root :controller => "dashboard"
 
+  # Watch
+  map.watch '/watch',:controller=>'locations',:action=>'watch'
+
   # OAUTH plugin routes
   map.oauth '/oauth',:controller=>'oauth',:action=>'index'
   map.authorize '/oauth/authorize',:controller=>'oauth',:action=>'authorize'

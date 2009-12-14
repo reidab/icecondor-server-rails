@@ -38,6 +38,18 @@ class LocationsController < ApplicationController
     end
   end
 
+  def watch #live
+    @locations = []
+    @user = User.find_by_openid(params[:id])
+    if @user
+      @locations = Location.all(:conditions => {:user_id => @user.id}, :order => 'id desc', :limit => 1)
+    end
+    respond_to do |wants|
+      wants.html { render :layout => "googlemaps" }
+    end
+
+  end
+
   def new
     @location = Location.new
   end

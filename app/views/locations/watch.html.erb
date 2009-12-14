@@ -1,0 +1,91 @@
+<% content_for :header do %>
+<% end %>
+
+<% if flash[:notice] %>
+<%= flash[:notice] %> <br/>
+<% end %>
+
+<p style="margin-top: 0px;">
+<div id="status">Last checkin: <%= time_ago_in_words(@locations.first.timestamp) %></div>
+
+<!-- Google Maps -->
+<div id="map_canvas" style="width: 70%; height: 300px; margin-left:auto; margin-right: auto"></div>
+
+<script type="text/javascript">
+  var map;
+  function initialize() {
+    if (GBrowserIsCompatible()) {
+      map = new GMap2(document.getElementById("map_canvas"));
+      map.addControl( new GSmallMapControl() );
+      geocoder = new GClientGeocoder();
+<% 
+  # center the map on the locations
+  min_lat = 90; min_long = 180; 
+  max_lat = -90; max_long = -180; 
+  @locations.each do |location| 
+    max_lat = location.geom.y unless max_lat > location.geom.y
+    max_long = location.geom.x unless max_long > location.geom.x
+    min_lat = location.geom.y unless min_lat < location.geom.y
+    min_long = location.geom.x unless min_long < location.geom.x
+  end 
+%>
+
+      // center and zoom
+      var zoom_level;
+      zoom_level = map.getBoundsZoomLevel(new GLatLngBounds(new GLatLng(<%=min_lat%>, <%=min_long%>), new GLatLng(<%=max_lat%>, <%=max_long%>)));
+      var center_spot;
+      center_spot = map.setCenter(new GLatLng(<%=(min_lat + max_lat) / 2.0 %>, <%=(min_long + max_long) / 2.0 %>));
+      map.setCenter(center_spot, zoom_level);
+
+      // lay down the dots
+      var point;
+      var marker;
+      var scale;
+      var tinyIcon;
+      <% @locations.each_with_index do |location,i| %>
+        point = new GLatLng(<%=location.geom.y%>, <%=location.geom.x%>)
+        tinyIcon = new GIcon();
+        <% if location == @locations.first %>
+          tinyIcon.image = "<%= url_for "images/gmaps/mm_20_red.png"%>";
+          scale = 1.1;
+          //geocoder.getLocations(point, showAddress);
+        <% else %>
+          tinyIcon.image = "<%= url_for "images/gmaps/mm_20_blue.png"%>";
+          scale = 1.0 - (<%=i < 4 ? i+1 : 4%>*0.1);
+        <% end %>
+        tinyIcon.shadow = "<%= url_for "images/gmaps/mm_20_shadow.png"%>";
+        tinyIcon.iconSize = new GSize(12*scale, 20*scale);
+        tinyIcon.shadowSize = new GSize(22*scale, 20*scale);
+        tinyIcon.iconAnchor = new GPoint(6, 20);
+        tinyIcon.infoWindowAnchor = new GPoint(5, 1);
+
+        // Set up our GMarkerOptions object literal
+        markerOptions = { icon:tinyIcon };
+        marker = new GMarker(point, markerOptions);
+        map.addOverlay(marker);
+      <% end %>
+      new PeriodicalExecuter(pollIcecondor, 5);
+    }
+  }
+  function showAddress(response) {
+    if (!response || response.Status.code != 200) {
+        alert("Status Code:" + response.Status.code);
+          } else {
+        place = response.Placemark[0];
+        $('nearest_address').innerHTML = "nearest street address: " + place.address;
+    }
+  }
+  function pollIcecondor() {
+    $('status').innerHTML = "updated: "+new Date();
+    new Ajax.Request('/locations.json?id=<%=params[:id]%>', {
+      method: 'get',
+      onSuccess: function(response) {
+        var center_spot;
+        center_spot = map.setCenter(new GLatLng(response.responseJSON[0].location['geom']['y'], response.responseJSON[0].location['geom']['x']));
+        map.setCenter(center_spot, 12);
+        $('status').innerHTML = "AJAX updated: last checkin: "+response.responseJSON[0].location['timestamp'];
+      }
+    });
+  }
+</script>
+
