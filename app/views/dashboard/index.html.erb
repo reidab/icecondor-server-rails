@@ -3,7 +3,7 @@
   <tr>
     <td valign="top">
  <p>
-  <%= image_tag 'docs/icon.png'%>
+  <%= image_tag 'docs/icon.png', {:style => "float:left"} %>
 IceCondor is Android phone software to follow people and events in real-time from multiple services.  
  </p>
  <p>
@@ -15,10 +15,16 @@ them as markers on a map. IceCondor works with multiple services including
 <a href="http://brightkite.com">Brightkite</a>, <a href="http://shizzow.com">Shizzow</a>, 
 and <a href="http://upcoming.org">Upcoming.org</a>. 
  </p>
- <p>
+<!-- <p>
 IceCondor can optionally track the phones location with GPS and publish it
 on this site with privacy control. <a href="/dashboard/map">Look here for a map of users with a
 public location</a>.
+ </p> -->
+ <p>
+Watch the <a href="http://www.youtube.com/v/2axxE3V7F1Q">50 second demonstration video</a>.
+ </p>
+ <p>
+ Read the <%= link_to "documentation", :controller => :dashboard, :action => :android %> 
  </p>
     </td>
     <td valign="top">
