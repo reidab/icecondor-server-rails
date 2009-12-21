@@ -15,6 +15,11 @@
     <%=h flash[:error] %>
     </div>
   <% end %>
+  <% if flash[:notice] %>
+    <div style="background:yellow">
+    <%=h flash[:notice] %>
+    </div>
+  <% end %>
   <% if flash[:alert] %>
     <div style="background:yellow">
     <%=h flash[:alert] %>
