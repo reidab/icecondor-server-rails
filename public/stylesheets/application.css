@@ -8,3 +8,11 @@
 .clear {
   clear: both;
 }
+
+.colorbar {
+  background: white;
+}
+
+.bigger {
+  font-size: 200%;
+}

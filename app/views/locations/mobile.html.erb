@@ -1,28 +1,39 @@
+<div style="background: grey">
 <% if flash[:notice] %>
 <%= flash[:notice] %> <br/>
 <% end %>
 
-<p style="margin-top: 0px;">
 <% if @location %>
-last checkin for 
-<%= params[:id] %>
-<br/>
-was <%= time_ago_in_words(@location.created_at) %> ago.
-<br/>
-<span id="nearest_address" >
-Looking up street address...
-</span>
-</p>
+  <p>
+  <%= image_tag 'docs/icon.png', {:width => 35}%> IceCondor last heard from
+  </p>
+  <div class="colorbar bigger">
+    <%= params[:id] %>
+  </div>
+  <p>
+  <%= image_tag 'clock.png' %> At
+  </p>
+  <div class="colorbar bigger">
+    <%= time_ago_in_words(@location.created_at) %> ago.
+  </div>
+  <p>
+  <%= image_tag 'globe.png' %> Near address
+  </p>
+  <div class="colorbar bigger">
+    <span id="nearest_address"/>
+  </div>
 <% else %>
-  No locations updates were found.
+  No locations updates or bad user id.
 <% end %>
+</p>
 
-
+</div>
 <script type="text/javascript">
   function initialize() {
     if (GBrowserIsCompatible()) {
       geocoder = new GClientGeocoder();
       point = new GLatLng(<%=@location.geom.y%>, <%=@location.geom.x%>)
+      $('nearest_address').innerHTML = "looking up street address... ";
       geocoder.getLocations(point, showAddress);
     }
   }
@@ -31,7 +42,7 @@ Looking up street address...
         alert("Status Code:" + response.Status.code);
           } else {
         place = response.Placemark[0];
-        $('nearest_address').innerHTML = "nearest street address: " + place.address;
+        $('nearest_address').innerHTML = place.address;
     }
   }
 </script>
