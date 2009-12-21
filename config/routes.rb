@@ -5,6 +5,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # Watch
   map.watch '/watch',:controller=>'locations',:action=>'watch'
+  # Mobile
+  map.watch '/m',:controller=>'locations',:action=>'mobile'
 
   # OAUTH plugin routes
   map.oauth '/oauth',:controller=>'oauth',:action=>'index'
