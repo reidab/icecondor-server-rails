@@ -16,3 +16,8 @@
 .bigger {
   font-size: 200%;
 }
+
+.tight {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
