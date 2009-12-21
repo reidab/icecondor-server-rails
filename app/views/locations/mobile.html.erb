@@ -1,0 +1,35 @@
+<% if flash[:notice] %>
+<%= flash[:notice] %> <br/>
+<% end %>
+
+<p style="margin-top: 0px;">
+<% if @location %>
+last checkin for 
+<%= params[:id] %>
+<br/>
+was <%= time_ago_in_words(@location.created_at) %> ago.
+<br/>
+<span id="nearest_address" />
+</p>
+<% else %>
+  No locations updates were found.
+<% end %>
+
+
+<script type="text/javascript">
+  function initialize() {
+    if (GBrowserIsCompatible()) {
+      geocoder = new GClientGeocoder();
+      point = new GLatLng(<%=@location.geom.y%>, <%=@location.geom.x%>)
+      geocoder.getLocations(point, showAddress);
+    }
+  }
+  function showAddress(response) {
+    if (!response || response.Status.code != 200) {
+        alert("Status Code:" + response.Status.code);
+          } else {
+        place = response.Placemark[0];
+        $('nearest_address').innerHTML = "nearest street address: " + place.address;
+    }
+  }
+</script>

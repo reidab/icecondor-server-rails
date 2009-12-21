@@ -47,7 +47,16 @@ class LocationsController < ApplicationController
     respond_to do |wants|
       wants.html { render :layout => "googlemaps" }
     end
+  end
 
+  def mobile
+    @user = User.find_by_openid(params[:id])
+    if @user
+      @location = Location.first(:conditions => {:user_id => @user.id}, :order => 'id desc')
+    end
+    respond_to do |wants|
+      wants.html { render :layout => "googlemaps" }
+    end
   end
 
   def new
