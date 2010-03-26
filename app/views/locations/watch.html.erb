@@ -76,13 +76,13 @@
     }
   }
   function pollIcecondor() {
-    $('status').innerHTML = "updated: "+new Date();
+    $('status').innerHTML = "Refreshing...";
     new Ajax.Request('/locations.json?id=<%=params[:id]%>', {
       method: 'get',
       onSuccess: function(response) {
         var center_spot;
         center_spot = map.setCenter(new GLatLng(response.responseJSON[0].location['geom']['y'], response.responseJSON[0].location['geom']['x']));
-        map.setCenter(center_spot, 12);
+        map.setCenter(center_spot, 16);
         $('status').innerHTML = "AJAX updated: last checkin: "+response.responseJSON[0].location['timestamp'];
       }
     });
