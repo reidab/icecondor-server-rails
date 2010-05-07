@@ -10,7 +10,9 @@
 <% if @locations.size > 0 %>
 last <%= @locations.size %> locations for 
 <%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> 
-- most recent communication was 
+- most recent fix was 
+<%= time_ago_in_words(@locations.first.timestamp) %> ago.
+and most recent communication was 
 <%= time_ago_in_words(@locations.first.created_at) %> ago.
 <br/>
 <span id="nearest_address" />
