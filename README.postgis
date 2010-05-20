@@ -1,15 +1,8 @@
-Ubuntu Postgresql 8.3 setup for PostGIS
-sudo apt-get install postgresql-8.3-postgis
+Ubuntu 10.04 setup for PostGIS
+sudo apt-get install postgresql-8.4-postgis
 createdb icecondor_development
 createlang plpgsql icecondor_development
-psql -d icecondor_development -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql
-psql -d icecondor_development -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql
-
-Ubunte Postgresql 8.4 setup for PostGIS
-install postgis 1.4 from source
-createdb icecondor_development
-createlang plpgsql icecondor_development
-psql -d icecondor_development -f /usr/share/postgresql/8.4/contrib/postgis.sql
-psql -d icecondor_development -f /usr/share/postgresql/8.4/contrib/spatial_ref_sys.sql
+sudo -u postgres psql -d icecondor_development -f /usr/share/postgresql/8.4/contrib/postgis.sql
+sudo -u postgres psql -d icecondor_development -f /usr/share/postgresql/8.4/contrib/spatial_ref_sys.sql
 
 then rake db:migrate will work
