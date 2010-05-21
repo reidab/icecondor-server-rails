@@ -2,7 +2,9 @@
 
 <div class="centered" style="width: 80%">
  <h4> Map Data </h4>
-  <%= link_to "Your Map Page", "/locations.html?id=#{user.openidentities.first.url}" %> <br/>
+  <%= link_to "Your Map Page", "/locations?id=#{user.openidentities.first.url}" %> <br/>
+  <%= link_to "Your Mobile Location Page", "/m?id=#{user.openidentities.first.url}" %> <br/>
+  <%= link_to "Your Day Chart Page", "/daychart?id=#{user.openidentities.first.url}" %> <br/>
   Number of location records: <%= Location.count_for_user(user) %>  <br/>
 
  <p>
