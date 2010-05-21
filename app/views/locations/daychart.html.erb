@@ -16,7 +16,7 @@
       // line
       var c = paper.path("M0 200L320 200");
       var marks = <%= @buckets.inspect %>;
-      for (var idx = 0; idx < marks.length; idx++)
+      for (var idx = 0; idx < marks.length; idx++) {
         var c = paper.circle(idx, 190, mark*5);
         c.attr("fill", "blue");
       }
