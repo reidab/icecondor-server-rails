@@ -62,8 +62,8 @@ class LocationsController < ApplicationController
   def daychart
     @user = User.find_by_openid(params[:id])
     if @user
-      @locations = Location.all(:conditions => ["user_id = ? and created_at > ?", @user.id, 1.day.ago], 
-                                :order => 'id desc', :limit => 1)
+      @locations = Location.all(:conditions => ["user_id = ? and timestamp > ?", @user.id, 1.day.ago], 
+                                :order => 'id desc')
     end
     respond_to do |wants|
       wants.html { render :layout => "googlemaps" }
