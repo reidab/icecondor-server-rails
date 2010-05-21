@@ -20,6 +20,11 @@
    </script>
 
 DayChart. <%= @locations.size %> locations from <%= @locations.first.timestamp %> to <%= @locations.last.timestamp %>
-<div id="chart">
+
+<div>
+  <%= @locations.first.timestamp.strftime("%a %I%p") %>
+  <span id="chart">
+  </span>
+  <%= @locations.last.timestamp.strftime("%a %I%p") %>
 </div>
 
