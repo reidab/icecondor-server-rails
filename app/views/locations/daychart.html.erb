@@ -3,21 +3,17 @@
     Event.observe(window, 'load', function() { start() });
 
     function start() {
-      var paper = Raphael(document.getElementById("chart"), 320, 200);
+      var width = 500;
+      var height = 200;
+      var paper = Raphael(document.getElementById("chart"), width, height);
 
-      // circle
-      //var c = paper.circle(50, 50, 40);
-      //c.hover(function (event) {
-      //    this.attr({fill: "red"});
-      //}, function (event) {
-      //    this.attr({fill: "black"});
-      //});
-
-      // line
-      var c = paper.path("M0 200L320 200");
+      var midpoint = height/2;
+      var c = paper.path("M0 "+midpoint+"L"+width+" "+midpoint);
       var marks = <%= @buckets.inspect %>;
       for (var idx = 0; idx < marks.length; idx++) {
-        var c = paper.circle(idx, 190, marks[idx]*5);
+        //var c = paper.circle(idx, 190, marks[idx]*5);
+        var cell_width=width/slots;
+        var c = paper.rect(idx*cell_width, 0, cell_width, marks[idx]*5);
         c.attr("fill", "blue");
       }
     }
