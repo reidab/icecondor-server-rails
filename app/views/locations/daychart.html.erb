@@ -1,0 +1,28 @@
+   <script src="/javascripts/raphael-1.4.3-min.js"></script>
+   <script>
+    Event.observe(window, 'load', function() { start() });
+
+    function start() {
+      var paper = Raphael(document.getElementById("chart"), 320, 200);
+
+      // circle
+      //var c = paper.circle(50, 50, 40);
+      //c.hover(function (event) {
+      //    this.attr({fill: "red"});
+      //}, function (event) {
+      //    this.attr({fill: "black"});
+      //});
+
+      // line
+      var c = paper.path("M0 200L320 200");
+      var marks = [1,2,3,4];
+      for (var mark in marks) {
+        var c = paper.circle(mark*10, 190, 5);
+        c.attr("fill", "blue");
+      }
+    }
+   </script>
+
+DayChart. <%= @locations.size %> locations
+<div id="chart">
+</div>
