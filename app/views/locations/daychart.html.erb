@@ -3,8 +3,9 @@
     Event.observe(window, 'load', function() { start() });
 
     function start() {
-      var width = 500;
+      var width = 800;
       var height = 200;
+      var slots = 288;
       var paper = Raphael(document.getElementById("chart"), width, height);
 
       var midpoint = height/2;
@@ -13,7 +14,8 @@
       for (var idx = 0; idx < marks.length; idx++) {
         //var c = paper.circle(idx, 190, marks[idx]*5);
         var cell_width=width/slots;
-        var c = paper.rect(idx*cell_width, 0, cell_width, marks[idx]*5);
+        var cell_height = marks[idx]*5;
+        var c = paper.rect(idx*cell_width, midpoint-cell_height, cell_width, cell_height);
         c.attr("fill", "blue");
       }
     }
