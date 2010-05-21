@@ -63,7 +63,8 @@ class LocationsController < ApplicationController
     @user = User.find_by_openid(params[:id])
     if @user
       @period_end = Time.now
-      @period_start = period_end - 1.day
+      @period_start = @period_end - 1.day
+      @period_difference = @period_end - @period_start
       @period = 5.minutes
       @periods = 1.day / @period
       @locations = Location.all(:conditions => 
@@ -71,7 +72,7 @@ class LocationsController < ApplicationController
                                    @user.id, @period_start, @period_end], :order => 'id desc')
       @buckets = Array.new(@periods,0)
       @locations.each do |location|
-        bucket = ((location.timestamp - one_day_ago)/@period).floor
+        bucket = ((location.timestamp - @period_start)/@period).floor
         @buckets[bucket] += 1
       end
 
@@ -81,7 +82,7 @@ class LocationsController < ApplicationController
                                       @user.id, @period_start, @period_end], :order => 'id desc')
       @cbuckets = Array.new(@periods,0)
       @communications.each do |communication|
-        cbucket = ((communication.created_at - one_day_ago)/@period).floor
+        cbucket = ((communication.created_at - @period_start)/@period).floor
         @cbuckets[cbucket] += 1
       end
     end
