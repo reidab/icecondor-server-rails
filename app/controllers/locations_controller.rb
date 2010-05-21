@@ -62,26 +62,32 @@ class LocationsController < ApplicationController
   def daychart
     @user = User.find_by_openid(params[:id])
     if @user
-      one_day_ago = 1.day.ago
-      @locations = Location.all(:conditions => ["user_id = ? and timestamp > ?", @user.id, one_day_ago], 
-                                :order => 'id desc')
-      @buckets = Array.new(288,0)
+      @period_end = Time.now
+      @period_start = period_end - 1.day
+      @period = 5.minutes
+      @periods = 1.day / @period
+      @locations = Location.all(:conditions => 
+                                  ["user_id = ? and timestamp >= ? and timestamp <= ?", 
+                                   @user.id, @period_start, @period_end], :order => 'id desc')
+      @buckets = Array.new(@periods,0)
       @locations.each do |location|
-        bucket = ((location.timestamp - one_day_ago)/5.minutes).floor
+        bucket = ((location.timestamp - one_day_ago)/@period).floor
         @buckets[bucket] += 1
       end
 
       # communications
-      @communications = Location.all(:conditions => ["user_id = ? and created_at > ?", 
-                                     @user.id, one_day_ago], :order => 'id desc')
-      @cbuckets = Array.new(288,0)
+      @communications = Location.all(:conditions => 
+                                     ["user_id = ? and created_at >= ? and created_at <= ?", 
+                                      @user.id, @period_start, @period_end], :order => 'id desc')
+      @cbuckets = Array.new(@periods,0)
       @communications.each do |communication|
-        cbucket = ((communication.created_at - one_day_ago)/5.minutes).floor
+        cbucket = ((communication.created_at - one_day_ago)/@period).floor
         @cbuckets[cbucket] += 1
       end
     end
+
     respond_to do |wants|
-      wants.html { render :layout => "googlemaps" }
+      wants.html 
     end
   end
 
