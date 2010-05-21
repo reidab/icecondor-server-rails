@@ -23,6 +23,8 @@
     }
    </script>
 
-DayChart. <%= @locations.size %> locations
+DayChart. <%= @locations.size %> locations from <%= @locations.first.timestamp %> to <%= @locations.last.timestamp %>
 <div id="chart">
 </div>
+
+<%= @buckets %>
