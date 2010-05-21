@@ -70,6 +70,15 @@ class LocationsController < ApplicationController
         bucket = ((location.timestamp - one_day_ago)/5.minutes).floor
         @buckets[bucket] += 1
       end
+
+      # communications
+      @communications = Location.all(:conditions => ["user_id = ? and created_at > ?", 
+                                     @user.id, one_day_ago], :order => 'id desc')
+      @cbuckets = Array.new(288,0)
+      @communications.each do |communication|
+        cbucket = ((communication.created_at - one_day_ago)/5.minutes).floor
+        @cbuckets[cbucket] += 1
+      end
     end
     respond_to do |wants|
       wants.html { render :layout => "googlemaps" }

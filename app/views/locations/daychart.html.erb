@@ -11,12 +11,17 @@
       var midpoint = height/2;
       var c = paper.path("M0 "+midpoint+"L"+width+" "+midpoint);
       var marks = <%= @buckets.inspect %>;
+      var cmarks = <%= @cbuckets.inspect %>;
       for (var idx = 0; idx < marks.length; idx++) {
         //var c = paper.circle(idx, 190, marks[idx]*5);
         var cell_width=width/slots;
         var cell_height = marks[idx]*5;
         var c = paper.rect(idx*cell_width, midpoint-cell_height, cell_width, cell_height);
         c.attr("fill", "blue");
+
+        cell_height = cmarks[idx]*5;
+        c = paper.rect(idx*cell_width, midpoint, cell_width, cell_height);
+        c.attr("fill", "red");
       }
     }
    </script>
