@@ -15,9 +15,9 @@
 
       // line
       var c = paper.path("M0 200L320 200");
-      var marks = [1,2,3,4];
+      var marks = <%= @buckets %>;
       for (var mark in marks) {
-        var c = paper.circle(mark*10, 190, 5);
+        var c = paper.circle(idx, 190, mark*5);
         c.attr("fill", "blue");
       }
     }
@@ -27,4 +27,3 @@ DayChart. <%= @locations.size %> locations from <%= @locations.first.timestamp %
 <div id="chart">
 </div>
 
-<%= @buckets %>

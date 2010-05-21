@@ -62,11 +62,12 @@ class LocationsController < ApplicationController
   def daychart
     @user = User.find_by_openid(params[:id])
     if @user
-      @locations = Location.all(:conditions => ["user_id = ? and timestamp > ?", @user.id, 1.day.ago], 
+      one_day_ago = 1.day.ago
+      @locations = Location.all(:conditions => ["user_id = ? and timestamp > ?", @user.id, one_day_ago], 
                                 :order => 'id desc')
       @buckets = Array.new(288,0)
       @locations.each do |location|
-        bucket = ((location.timestamp - 1.day.ago)/5.minutes).floor
+        bucket = ((location.timestamp - one_day_ago)/5.minutes).floor
         @buckets[bucket] += 1
       end
     end
