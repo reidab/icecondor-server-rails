@@ -8,7 +8,7 @@ class ClientApplication < ActiveRecord::Base
   
   def self.find_token(token_key)
     token=OauthToken.find_by_token(token_key, :include => :client_application)
-    logger.info "Loaded #{token.token} which was authorized by (user_id=#{token.user_id}) on the #{token.authorized_at}"
+    logger.info "Token for user (user_id=#{token.user_id}) authorized at #{token.authorized_at.to_date}"
     return token if token.authorized?
     nil
   end
