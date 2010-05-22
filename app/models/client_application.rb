@@ -16,12 +16,10 @@ class ClientApplication < ActiveRecord::Base
   def self.verify_request(request, options = {}, &block)
     begin
       signature=OAuth::Signature.build(request,options,&block)
-      logger.info "Signature Base String: #{signature.signature_base_string}"
       logger.info "Consumer: #{signature.send :consumer_key}"
       logger.info "Token: #{signature.send :token}"
       return false unless OauthNonce.remember(signature.request.nonce,signature.request.timestamp)
       value=signature.verify
-      logger.info "Signature verification returned: #{value.to_s}"
       value
     rescue OAuth::Signature::UnknownSignatureMethod=>e
       logger.info "ERROR"+e.to_s
