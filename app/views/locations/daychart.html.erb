@@ -28,13 +28,13 @@
 
 DayChart. 
 <%= @period_start %> to <%= @period_end %> in <%= @periods %> periods of <%= @period / 60 %> minutes <br/>
-<%= @locations.size %> locations  <br/>
-<%= @communications.size %> communications  <br/>
+<%= @locations.size %> <span style="color:blue">locations</span>  <br/>
+<%= @communications.size %> <span style="color:red">communications</span>  <br/>
 
 <div>
-  <%= @locations.first.timestamp.strftime("%a %I%p") %>
+  <%= @period_start.strftime("%a %I%p") %>
   <span id="chart">
   </span>
-  <%= @locations.last.timestamp.strftime("%a %I%p") %>
+  <%= @period_end.strftime("%a %I%p") %>
 </div>
 
