@@ -15,7 +15,9 @@ class LocationsController < ApplicationController
         if (@user.access_status == "public") || 
            (@user.access_status == "private" && @user == current_user)
           @locations = Location.find(:all, :conditions => {:user_id => @user.id}, 
-                                         :order => 'id desc', :limit => limit)
+                                         :order => 'timestamp desc', :limit => limit)
+          @communicate = Location.find(:first, :conditions => {:user_id => @user.id},
+                                         :order => 'id desc', :limit => 1)
         else
           flash[:notice] = "This user's location is private."
           redirect_to :controller => :session, :action => :login_screen
