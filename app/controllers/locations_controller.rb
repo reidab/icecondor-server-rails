@@ -54,17 +54,18 @@ class LocationsController < ApplicationController
   def mobile
     @user = User.find_by_openid(params[:id])
     if @user
-      @location = Location.first(:conditions => {:user_id => @user.id}, :order => 'id desc')
+      @location = Location.first(:conditions => {:user_id => @user.id}, 
+                                 :order => 'timestamp desc')
     end
     respond_to do |wants|
-      wants.html { render :layout => "googlemaps" }
+      wants.html
     end
   end
 
   def daychart
     @user = User.find_by_openid(params[:id])
     if @user
-      @period_end = Time.now
+      @period_end = Time.now.utc
       @period_start = @period_end - 1.day
       @period_difference = @period_end - @period_start
       @period = 5.minutes

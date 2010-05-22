@@ -5,7 +5,7 @@
 
 <% if @location %>
   <p class="tight">
-  <%= image_tag 'docs/icon.png', {:width => 35}%> IceCondor last heard from
+  <%= image_tag 'docs/icon.png', {:width => 35}%> IceCondor's last location for
   </p>
   <div class="colorbar bigger">
     <%= params[:id] %>
@@ -14,7 +14,7 @@
   <%= image_tag 'clock.png' %> At
   </p>
   <div class="colorbar bigger">
-    <%= time_ago_in_words(@location.created_at) %> ago.
+    <%= time_ago_in_words(@location.timestamp) %> ago.
   </div>
   <p class="tight">
   <%= image_tag 'globe.png' %> Near address
