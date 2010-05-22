@@ -32,9 +32,9 @@ DayChart.
 <%= @communications.size %> <span style="color:red">communications</span>  <br/>
 
 <div>
-  <%= @period_start.strftime("%a %I%p") %>
+  <%= @period_start.strftime("%a %I:%M%p") %>
   <span id="chart">
   </span>
-  <%= @period_end.strftime("%a %I%p") %>
+  <%= @period_end.strftime("%a %I:%M%p") %>
 </div>
 
