@@ -13,7 +13,7 @@ last <%= @locations.size %> locations for
 - most recent fix was 
 <%= time_ago_in_words(@locations.first.timestamp) %> ago.
 and most recent communication was 
-<%= time_ago_in_words(@locations.first.created_at) %> ago.
+<%= time_ago_in_words(@communicate.created_at) %> ago.
 <br/>
 <span id="nearest_address" />
 </p>
