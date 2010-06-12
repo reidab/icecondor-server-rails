@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :locations
   map.resources :users
-  map.root :controller => "dashboard"
+  map.root :controller => "dashboard", :action => "map"
 
   # Watch
   map.watch '/watch',:controller=>'locations',:action=>'watch'
