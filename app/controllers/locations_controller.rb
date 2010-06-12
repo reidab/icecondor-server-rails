@@ -35,6 +35,7 @@ class LocationsController < ApplicationController
 
     respond_to do |wants|
       wants.json { render :json => @locations }
+      wants.jsonp { render :json => "var data = #{@locations.to_json}; callback(data)" }
       wants.rss
       wants.html { render :layout => "googlemaps" }
     end
