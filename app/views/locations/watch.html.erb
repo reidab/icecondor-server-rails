@@ -31,8 +31,7 @@
 %>
 
       // center and zoom
-      var zoom_level;
-      zoom_level = map.getBoundsZoomLevel(new GLatLngBounds(new GLatLng(<%=min_lat%>, <%=min_long%>), new GLatLng(<%=max_lat%>, <%=max_long%>)));
+      var zoom_level = 16;
       var center_spot;
       center_spot = map.setCenter(new GLatLng(<%=(min_lat + max_lat) / 2.0 %>, <%=(min_long + max_long) / 2.0 %>));
       map.setCenter(center_spot, zoom_level);
