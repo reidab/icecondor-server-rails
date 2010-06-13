@@ -6,7 +6,7 @@
 <% end %>
 
 <p style="margin-top: 0px;">
-<div id="status">Last checkin: <%= time_ago_in_words(@locations.first.timestamp) %></div>
+<div id="status"></div>
 
 <!-- Google Maps -->
 <div id="map_canvas" style="width: 70%; height: 300px; margin-left:auto; margin-right: auto"></div>
@@ -64,6 +64,7 @@
         marker = new GMarker(point, markerOptions);
         map.addOverlay(marker);
       <% end %>
+      pollIcecondor();
       new PeriodicalExecuter(pollIcecondor, 30);
     }
   }
@@ -83,9 +84,20 @@
         var center_spot;
         center_spot = map.setCenter(new GLatLng(response.responseJSON[0].location['geom']['y'], response.responseJSON[0].location['geom']['x']));
         map.setCenter(center_spot, 16);
-        $('status').innerHTML = "AJAX updated: last checkin: "+response.responseJSON[0].location['timestamp'];
+        $('status').innerHTML = "last checkin: "+time_ago(response.responseJSON[0].location['timestamp']);
       }
     });
   }
+
+  function time_ago(date) {
+    var unit = "seconds";
+    var value = ((new Date()) - date) / 1000;
+    if (unit == "seconds" && value > 60) { unit = "minutes"; value = value / 60; }
+    if (unit == "minutes" && value > 60) { unit = "hours"; value = value / 60; }
+    if (unit == "hours" && value > 24) { unit = "days"; value = value / 24; }
+    value = Math.floor(value);
+    return  value+' '+unit;
+  }
+
 </script>
 
