@@ -81,7 +81,7 @@
       method: 'get',
       onSuccess: function(response) {
         var center_spot;
-        center_spot = map.setCenter(new GLatLng(response.responseJSON[0].location['geom']['y'], response.responseJSON[0].location['geom']['x']));
+        center_spot = new GLatLng(response.responseJSON[0].location['geom']['y'], response.responseJSON[0].location['geom']['x']);
         map.setCenter(center_spot, 16);
         $('status').innerHTML = "last checkin: "+time_ago((new Date()).setISO8601(response.responseJSON[0].location['timestamp']));
       }
