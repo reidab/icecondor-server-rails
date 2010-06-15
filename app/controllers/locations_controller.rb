@@ -59,7 +59,7 @@ class LocationsController < ApplicationController
                                  :order => 'timestamp desc')
     end
     respond_to do |wants|
-      wants.html
+      wants.html { render :layout => "googlemaps" }
     end
   end
 
