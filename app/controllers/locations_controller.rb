@@ -131,4 +131,14 @@ class LocationsController < ApplicationController
                                      :order => "created_at desc")
     render :text => location.to_json
   end
+
+  def totalupdatecount
+    result = Location.users_reporting_count_since(params[:ago].to_i.hours)
+    respond_to do |format|
+      format.json { render :text => {result.to_json} }
+    end
+  end
+
+  def uniqueusers
+  end
 end
