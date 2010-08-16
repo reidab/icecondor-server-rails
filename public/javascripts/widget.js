@@ -1,7 +1,7 @@
   // jQuery required
   // Load json data from www.icecondor.com and display it in the #icecondor span
   function pollIcecondor(id, delay) {
-     add_script_tag('http://www.icecondor.com/locations.jsonp?id='+id+'&callback=icPosition');
+     add_script_tag('http://www.icecondor.com/locations.jsonp?id='+id+'&callback=icPosition&limit=1');
   }
 
   function icPosition(data) {
