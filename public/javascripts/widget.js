@@ -1,12 +1,10 @@
   // jQuery required
   // Load json data from www.icecondor.com and display it in the #icecondor span
   function pollIcecondor(id, delay) {
-    setInterval(
-     "add_script_tag('http://www.icecondor.com/locations.jsonp?id="+id+"&callback=callback')",
-     delay * 1000);
+     add_script_tag('http://www.icecondor.com/locations.jsonp?id="+id+"&callback=icPosition');
   }
 
-  function callback(data) {
+  function icPosition(data) {
     var ic = document.getElementById('icecondor');
     ic.innerHTML = "Last IceCondor location updated at "+data[0].location.timestamp;
   }
