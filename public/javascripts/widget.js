@@ -2,7 +2,7 @@
   // Load json data from www.icecondor.com and display it in the #icecondor span
   function pollIcecondor(id, delay) {
     setInterval(
-     "add_script_tag('http://www.icecondor.com/locations.jsonp?id="+id+"')",
+     "add_script_tag('http://www.icecondor.com/locations.jsonp?id="+id+"&callback=callback')",
      delay * 1000);
   }
 
