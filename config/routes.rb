@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   # Day Chart
   map.daychart '/daychart',:controller=>'locations',:action=>'daychart'
   map.totalupdatecount '/totalupdatecount',:controller=>'locations',:action=>'totalupdatecount'
+  map.totalupdatecount '/totaluserscount',:controller=>'locations',:action=>'totaluserscount'
 
   # OAUTH plugin routes
   map.oauth '/oauth',:controller=>'oauth',:action=>'index'

@@ -133,6 +133,13 @@ class LocationsController < ApplicationController
   end
 
   def totalupdatecount
+    result = Location.all_last(params[:ago].to_i.hours)
+    respond_to do |format|
+      format.json { render :text => result.to_json }
+    end
+  end
+
+  def totaluserscount
     result = Location.users_reporting_count_since(params[:ago].to_i.hours)
     respond_to do |format|
       format.json { render :text => result.to_json }

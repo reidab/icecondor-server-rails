@@ -20,6 +20,10 @@ class Location < ActiveRecord::Base
     !(geom.nil? or (geom.x == "0.0" and geom.y == "0.0"))
   end
 
+  def self.all_last(seconds)
+    Location.count(:conditions => ["timestamp > ?", seconds.ago])
+  end
+
   def self.users_reporting_count_since(seconds)
     last_users_since = Location.find(:all, :select => "user_id,max(id)", :order => "max desc", :group => "user_id", :include => :user, :conditions => ["timestamp > ?", seconds.ago])
     {:user_count => last_users_since.size}
