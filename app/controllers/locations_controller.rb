@@ -146,6 +146,10 @@ class LocationsController < ApplicationController
     end
   end
 
-  def uniqueusers
+  def totalnewuserscount
+    result = User.count(:conditions => ["created_at > ?", params[:ago].to_i.hours.ago])
+    respond_to do |format|
+      format.json { render :text => result.to_json }
+    end
   end
 end
