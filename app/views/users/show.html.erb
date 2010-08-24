@@ -1,32 +1,42 @@
 <% user = current_user %>
 
-<div class="centered" style="width: 80%">
- <h4> Map Data </h4>
+<div class="folderfolder">
+ 
+ <div class="folder">
+  <h4> Position </h4>
   <%= link_to "Your Map Page", "/locations?id=#{user.openidentities.first.url}" %> <br/>
   <%= link_to "Your Mobile Location Page", "/m?id=#{user.openidentities.first.url}" %> <br/>
   <%= link_to "Your Day Chart Page", "/daychart?id=#{user.openidentities.first.url}" %> <br/>
   Number of location records: <%= Location.count_for_user(user) %>  <br/>
+ </div>
 
- <p>
-  Access Status: <b><%= user.access_status %></b> <br/>
+ <div class="folder">
+  <h4> Access </h4>
+  Status: <b><%= user.access_status %></b> <br/>
   <% form_for :user, user, :url=>{:controller => :users, :action => user.username}, :html => { :method => :put } do |f| %>
   Change status:
-    <%=  radio_button_tag "user[access_status]", :public %> public
-    <%=  radio_button_tag "user[access_status]", :private %> private
+    <%=  radio_button_tag "user[access_status]", :public, user.access_status == 'public' %> public
+    <%=  radio_button_tag "user[access_status]", :private, user.access_status == 'private' %> private
+    <br/>
     <%= submit_tag %>
   <% end %>
   Private - Only you can see your map page<br/>
   Public - Anyone can see your map page<br/>
- </p>
+ </div>
 
- <h4> Profile </h4>
- OpenId: 
- <% user.openidentities.each do |openid| %>
-   <%= openid.url %> <br/>
- <% end %>
-  Username: <%= user.username %> <br/>
+ <div class="folder">
+  <h4> Profile </h4>
+  OpenId: 
+  <% user.openidentities.each do |openid| %>
+    <%= openid.url %> <br/>
+  <% end %>
+   Username: <%= user.username %> <br/>
+ </div>
 
+ <div class="folder">
+  <h4> Misc. </h4>
+  <%= link_to "logout", :controller => :session, :action => :logout %>
+ </div>
 
- <h4> Misc. </h4>
-<%= link_to "logout", :controller => :session, :action => :logout %>
+ <br clear="all"/>
 </div>
