@@ -3,14 +3,21 @@ class SessionController < ApplicationController
 
   def login
     begin
-      params[:openid_identifier]
       identifier = params[:openid_identifier]
-      if identifier.nil?
+      if identifier =~ RFC822::EMAIL
+        # email
+        finger = Redfinger.finger(identifier)
+        openid_url = finger.open_id.first.to_s
+      else
+        # URL
+        openid_url = params[:openid_identifier]
+      end
+      if openid_url.nil?
         flash[:error] = "Enter an OpenID identifier"
         redirect_to :root
         return
       end
-      oidreq = consumer.begin(identifier)
+      oidreq = consumer.begin(openid_url)
     rescue OpenID::OpenIDError => e
       flash[:error] = "Discovery failed for #{identifier}: #{e}"
       redirect_to :root
