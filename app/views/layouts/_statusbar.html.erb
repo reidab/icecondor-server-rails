@@ -4,6 +4,7 @@
 <script>
   function show_openid_field() {
     Element.replace('openidlink', '<%= text_field_tag 'openid_identifier' %>');
+    $('openid_identifier').focus();
   }
 </script>
 <div id="loginbox">
