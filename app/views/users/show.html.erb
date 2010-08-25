@@ -11,6 +11,15 @@
  </div>
 
  <div class="folder">
+  <h4> Profile </h4>
+  OpenId: 
+  <% user.openidentities.each do |openid| %>
+    <%= openid.url %> <br/>
+  <% end %>
+   Username: <%= user.username %> <br/>
+ </div>
+
+ <div class="folder">
   <h4> Access </h4>
   Status: <b><%= user.access_status %></b> <br/>
   <% form_for :user, user, :url=>{:controller => :users, :action => user.username}, :html => { :method => :put } do |f| %>
@@ -22,15 +31,6 @@
   <% end %>
   Private - Only you can see your map page<br/>
   Public - Anyone can see your map page<br/>
- </div>
-
- <div class="folder">
-  <h4> Profile </h4>
-  OpenId: 
-  <% user.openidentities.each do |openid| %>
-    <%= openid.url %> <br/>
-  <% end %>
-   Username: <%= user.username %> <br/>
  </div>
 
  <div class="folder">
