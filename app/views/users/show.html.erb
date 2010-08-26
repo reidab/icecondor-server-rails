@@ -34,7 +34,7 @@
  </div>
 
  <div class="folder">
-  <h4> GeoFences </h4>
+  <h4> GeoFences <%= link_to "+", new_fence_path %> </h4>
   <ul>
     <% current_user.fences.each do |fence| %>
       <li> <%= fence.name %> </li>

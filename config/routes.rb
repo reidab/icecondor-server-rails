@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :locations
   map.resources :users
+  map.resources :fences
   map.root :controller => "dashboard", :action => "map"
 
   # Watch
