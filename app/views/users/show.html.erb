@@ -36,6 +36,9 @@
  <div class="folder">
   <h4> GeoFences </h4>
   <ul>
+    <% current_user.fences.each do |fence| %>
+      <li> <%= fence.name %> </li>
+    <% end %>
   </ul>
  </div>
 

@@ -3,6 +3,7 @@ class CreateFences < ActiveRecord::Migration
     create_table "fences" do |t|
       t.column "geom", :polygon, :null=>false, :srid => 4326, :with_z => true
       t.integer :user_id
+      t.string :name
       t.timestamps
     end
 
