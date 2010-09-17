@@ -1,1 +1,62 @@
-Define a GeoFence
+<h3>Define a GeoFence. </h3>
+<p>
+  <form action="<%=fences_path%>" method="post" onsubmit="return presave(this)">
+  New Fence Name: <input name="fenceName" /> <br/>
+  <span id="count">0</span> points. <br/>
+  Click on the map at the corners of the area to be fenced. <br/>
+  <input type="submit" value="Save">
+  <input type="submit" value="Reset">
+  </form>
+</p>
+
+<!-- Google Maps -->
+<div id="map_canvas" style="width: 90%; height: 500px; margin-left:auto; margin-right: auto"></div>
+
+<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"
+        type="text/javascript"></script>
+
+<script type="text/javascript">
+ document.observe("dom:loaded",mapstart);
+ var fencePoints = [];
+ var fencePoly;
+
+ function mapstart() {
+    var latlng = new google.maps.LatLng(45.586, -122.668);
+    var myOptions = {
+      zoom: 12,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+  fencePoly = new google.maps.Polygon({
+    strokeColor: "#FF0000",
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: "#FF0000",
+    fillOpacity: 0.35
+  });
+  fencePoly.setMap(map);
+
+  google.maps.event.addListener(map, 'click', mapClick);
+ }
+
+ function mapClick(event) {
+   fencePoints.push(event.latLng);
+   if(fencePoints.length > 1) {
+     fencePoly.setPath(fencePoints);
+   }
+   document.getElementById("count").innerHTML=""+fencePoints.length;
+ }
+
+ function presave(form) {
+   for(var i=0; i<fencePoints.length; i++) {
+     form.appendChild(new Element('input', 
+                                  {'name':'points[]', 
+                                   'value':''+fencePoints[i].lat()+','+fencePoints[i].lng()}));
+   }
+   console.log(fencePoints);
+//   return false;
+ }
+</script>
+
