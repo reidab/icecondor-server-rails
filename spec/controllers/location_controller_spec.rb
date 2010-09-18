@@ -4,25 +4,6 @@ describe LocationsController do
   fixtures :users, :openidentities
   include SessionSpecHelper
 
-  it "should process a 2008-style location update" do
-    identity = "http://testperson/"
-    latitude = 45.5118191242218
-    longitude = -122.63253271579742
-    record = {"client"=>{"version"=>"20081227"}, "location"=>{"timestamp"=>"2009-01-09T18:43:56+0000", "latitude"=>latitude, "guid"=>identity, "altitude"=>"35.0", "accuracy"=>"3072.0", "longitude"=>longitude}}
-    user = mock_model(User)
-    openid = mock_model(Openidentity)
-    openid.should_receive(:user).and_return(user)
-    Openidentity.should_receive(:lookup_or_create).with(identity).and_return(openid)
-
-    lambda do
-      post :create, record
-    end.should change(Location, :count).by(1)
-    location = Location.last
-    location.timestamp.should == Time.parse("2009-01-09T18:43:56+0000")
-    location.geom.y.should == latitude
-    location.geom.x.should == longitude
-  end
-
   it "should process an OAUTH authenticated location update" do
     latitude = 45.5118191242218
     longitude = -122.63253271579742
@@ -30,11 +11,13 @@ describe LocationsController do
     record = {"client"=>{"version"=>"20081227"}, "location"=>{"timestamp"=>"2009-01-09T18:43:56+0000", "latitude"=>latitude, "altitude"=>"35.0", "accuracy"=>"3072.0", "longitude"=>longitude}}
     record.merge!({"oauth_token"=>token_string}) # make it an OAUTH request
     record.merge!({"format"=>"json"}) # the client requests json
-    controller.should_receive(:oauthenticate).and_return(true)
+    controller.should_receive(:oauth_required).and_return(true)
     token = mock("token")
     user = mock_model(User)
+    user.should_receive(:username).and_return("bob")
     token.should_receive(:user).and_return(user)
-    OauthToken.should_receive(:find_by_token).with(token_string).and_return(token)
+    token.should_receive(:token).and_return(token_string)
+    controller.should_receive(:current_token).twice.and_return(token)
 
     lambda do
       post :create, record
