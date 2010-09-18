@@ -108,11 +108,11 @@ class LocationsController < ApplicationController
     saved = @location.save
     logger.info("token: #{current_token.token} user: #{@location.user.username} saved: #{saved}")
 
-    user.fences.each do |fence| 
-      if fence.contains?(user.locations.last)
-        logger.info("fence #{fence.name}: triggered #{fence.action} #{fence.extra}")
+    user.triggers.each do |trigger| 
+      if trigger.fence.contains?(user.locations.last)
+        logger.info("trigger #{trigger.name}: fence #{fence.name}: triggered #{fence.action} #{fence.extra}")
       else
-        logger.info("fence #{fence.name}: silent")
+        logger.info("trigger #{trigger.name}: fence #{fence.name}: silent")
       end
     end
 
