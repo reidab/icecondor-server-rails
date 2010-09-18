@@ -12,7 +12,7 @@ class Fence < ActiveRecord::Base
   end
 
   def contains?(location)
-    area = ActiveRecord::Base.connection.execute("select ST_Intersects(ST_GeomFromEWKT('#{location.geom.as_ewkt}',geom) from fences where id=#{id}")
+    area = ActiveRecord::Base.connection.execute("select ST_Intersects(ST_GeomFromEWKT('#{location.geom.as_ewkt}'),geom) from fences where id=#{id}")
     area[0]["st_intersects"]=='t'
   end
 end
