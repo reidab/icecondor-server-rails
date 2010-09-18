@@ -1,4 +1,5 @@
 class LocationsController < ApplicationController
+  before_filter :oauth_required, :only => [:create]
 
   def index #search
     @locations = []
@@ -101,18 +102,10 @@ class LocationsController < ApplicationController
   end
 
   def create
-    # support OAUTH and unauthenticated updates for now
-    if params[:oauth_token] && oauthenticate
-      token = OauthToken.find_by_token(params[:oauth_token])
-      user = token.user
-    else
-      url = params[:location].delete(:guid)
-      user = Openidentity.lookup_or_create(url).user
-    end
-
-    params[:location].merge!({:user => user})
+    params[:location].merge!({:user => current_token.user})
     @location = Location.new(params[:location])
     saved = @location.save
+    logger.info("token: #{current_token.token} user: #{@location.user.username} saved: #{saved}")
 
     respond_to do |format|
       if saved
