@@ -102,10 +102,19 @@ class LocationsController < ApplicationController
   end
 
   def create
-    params[:location].merge!({:user => current_token.user})
+    user = current_token.user
+    params[:location].merge!({:user => user})
     @location = Location.new(params[:location])
     saved = @location.save
     logger.info("token: #{current_token.token} user: #{@location.user.username} saved: #{saved}")
+
+    user.fences.each do |fence| 
+      if fence.contains?(user.locations.last)
+        logger.info("fence #{fence.name}: triggered #{fence.action} #{fence.extra}")
+      else
+        logger.info("fence #{fence.name}: silent")
+      end
+    end
 
     respond_to do |format|
       if saved
