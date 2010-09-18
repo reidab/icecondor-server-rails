@@ -48,6 +48,15 @@
  </div>
 
  <div class="folder">
+  <h4> Triggers <%= link_to "+", new_trigger_path %> </h4>
+  <ul>
+    <% current_user.triggers.each do |trigger| %>
+      <li> <%= truncate(trigger.name, :length => 20) %> </li>
+    <% end %>
+  </ul>
+ </div>
+
+ <div class="folder">
   <h4> Misc. </h4>
   <%= link_to "logout", :controller => :session, :action => :logout %>
  </div>
