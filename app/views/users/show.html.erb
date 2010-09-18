@@ -37,7 +37,12 @@
   <h4> GeoFences <%= link_to "+", new_fence_path %> </h4>
   <ul>
     <% current_user.fences.each do |fence| %>
-      <li> <%= truncate(fence.name, :length => 20) %> - <%= fence.contains?(current_user.locations.last) ? "Inside" : "Outside" %> - <%= fence.count_points %> pts - <%= "%0.2f" % fence.area_in_sq_ft %> sq.ft.</li>
+      <li> <%= truncate(fence.name, :length => 20) %> 
+           <% if current_user.locations.last %>
+           - <%= fence.contains?(current_user.locations.last) ? "Inside" : "Outside" %> 
+           <% end %>
+           - <%= fence.count_points %> pts 
+           - <%= "%0.2f" % fence.area_in_sq_ft %> sq.ft.</li>
     <% end %>
   </ul>
  </div>
