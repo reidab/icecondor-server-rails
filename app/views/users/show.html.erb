@@ -4,10 +4,17 @@
  
  <div class="folder">
   <h4> Position </h4>
+  <% if current_user.locations.count > 0 %>
+  Last update: <%= time_ago_in_words(current_user.locations.last.created_at) %>  <br/>
+  <% end %>
+  Location records: <%= Location.count_for_user(user) %>  <br/>
+ </div>
+
+ <div class="folder">
+  <h4> Maps </h4>
   <%= link_to "Your Map Page", "/locations?id=#{user.openidentities.first.url}" %> <br/>
   <%= link_to "Your Mobile Location Page", "/m?id=#{user.openidentities.first.url}" %> <br/>
   <%= link_to "Your Day Chart Page", "/daychart?id=#{user.openidentities.first.url}" %> <br/>
-  Number of location records: <%= Location.count_for_user(user) %>  <br/>
  </div>
 
  <div class="folder">
