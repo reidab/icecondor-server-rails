@@ -37,7 +37,7 @@
   <h4> GeoFences <%= link_to "+", new_fence_path %> </h4>
   <ul>
     <% current_user.fences.each do |fence| %>
-      <li> <%= truncate(fence.name, :length => 20) %> </li>
+      <li> <%= truncate(fence.name, :length => 20) %> - <%= fence.count_points %> pts - <%= "%0.2f" % fence.area_in_sq_ft %> sq.ft.</li>
     <% end %>
   </ul>
  </div>
