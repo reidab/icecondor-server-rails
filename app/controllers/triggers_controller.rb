@@ -14,4 +14,16 @@ class TriggersController < ApplicationController
   def edit
     @trigger = Trigger.find(params[:id])
   end
+
+  def update
+    trigger = Trigger.find(params[:id])
+    trigger.update_attributes(params[:trigger])
+    trigger.save!
+    redirect_to edit_trigger_path(trigger)
+  end
+
+  def destroy
+    Trigger.find(params[:id]).destroy
+    redirect_to current_user
+  end
 end

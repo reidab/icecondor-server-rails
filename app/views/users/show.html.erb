@@ -58,7 +58,7 @@
   <h4> Triggers <%= link_to "+", new_trigger_path %> </h4>
   <ul>
     <% current_user.triggers.each do |trigger| %>
-      <li> <%= truncate(trigger.name, :length => 20) %> </li>
+      <li> <%= link_to truncate(trigger.name, :length => 20), edit_trigger_path(trigger) %> </li>
     <% end %>
   </ul>
  </div>

@@ -1,5 +1,16 @@
+Edit a Trigger
 <% semantic_form_for @trigger do |form| %>
-  <%= form.inputs %>
+  <% form.inputs :name => "Details" do %>
+    <%= form.input :name %>
+  <% end %>
+  <% form.inputs :name => "GeoFence" do %>
+    <%= form.input :fence %>
+  <% end %>
+  <% form.inputs :name => "Action" do %>
+    <%= form.input :action, :as => :select, :collection => [["Send Email", "email"]] %>
+    <%= form.input :extra, :label => "Email Address" %>
+  <% end %>
   <%= form.buttons %>
 <% end %>
 
+<%= button_to "Destroy", trigger_path(@trigger), :method => :delete %>
