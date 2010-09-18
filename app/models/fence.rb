@@ -2,7 +2,7 @@ class Fence < ActiveRecord::Base
   belongs_to :user
 
   def area_in_sq_ft
-    area = ActiveRecord::Base.connection.execute("select ST_Area(geom) from fences where id=#{id}")
+    area = ActiveRecord::Base.connection.execute("select ST_Area(ST_Transform(geom,2249)) from fences where id=#{id}")
     area[0]["st_area"].to_f
   end
 

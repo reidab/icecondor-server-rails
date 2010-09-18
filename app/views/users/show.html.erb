@@ -42,7 +42,7 @@
            - <%= fence.contains?(current_user.locations.last) ? "Inside" : "Outside" %> 
            <% end %>
            - <%= fence.count_points %> pts 
-           - <%= "%0.2f" % fence.area_in_sq_ft %> sq.ft.</li>
+           - <%= "%0.2f" % (fence.area_in_sq_ft) %> sq.km.</li>
     <% end %>
   </ul>
  </div>
