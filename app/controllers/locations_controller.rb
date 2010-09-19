@@ -108,14 +108,7 @@ class LocationsController < ApplicationController
     saved = @location.save
     logger.info("token: #{current_token.token} user: #{@location.user.username} saved: #{saved}")
 
-    user.triggers.each do |trigger| 
-      fence = trigger.fence
-      if fence.contains?(user.locations.last)
-        logger.info("trigger #{trigger.name}: fence #{fence.name}: TRIGGERED #{trigger.action} #{trigger.extra}")
-      else
-        logger.info("trigger #{trigger.name}: fence #{fence.name}: SILENT")
-      end
-    end
+    user.triggers.each { |trigger| trigger.check_location(user.locations.last) }
 
     respond_to do |format|
       if saved

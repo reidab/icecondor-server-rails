@@ -15,7 +15,7 @@ describe LocationsController do
     token = mock("token")
     user = mock_model(User)
     user.should_receive(:username).and_return("bob")
-    user.should_receive(:fences).and_return([])
+    user.should_receive(:triggers).and_return([])
     token.should_receive(:user).and_return(user)
     token.should_receive(:token).and_return(token_string)
     controller.should_receive(:current_token).twice.and_return(token)
