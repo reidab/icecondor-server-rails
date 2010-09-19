@@ -111,7 +111,7 @@ class LocationsController < ApplicationController
     user.triggers.each do |trigger| 
       fence = trigger.fence
       if fence.contains?(user.locations.last)
-        logger.info("trigger #{trigger.name}: fence #{fence.name}: triggered #{fence.action} #{fence.extra}")
+        logger.info("trigger #{trigger.name}: fence #{fence.name}: triggered #{trigger.action} #{trigger.extra}")
       else
         logger.info("trigger #{trigger.name}: fence #{fence.name}: silent")
       end
