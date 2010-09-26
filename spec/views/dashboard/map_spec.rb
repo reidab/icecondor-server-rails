@@ -5,6 +5,6 @@ describe "/dashboard/map" do
     assigns[:locations] = []
     template.should_receive(:google_map)
     render "/dashboard/map"
-    response.should have_tag('div.heading')
+    response.should have_tag('p#title')
   end
 end
