@@ -28,6 +28,7 @@ Rails::Initializer.run do |config|
   config.gem "rfc-822"
   config.gem "redfinger"
   config.gem "formtastic"
+  config.gem "postgis_adapter"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
