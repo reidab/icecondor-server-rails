@@ -17,4 +17,8 @@ class Fence < ActiveRecord::Base
     area = ActiveRecord::Base.connection.execute("select ST_Intersects(ST_GeomFromEWKT('#{location.geom.as_ewkt}'),geom) from fences where id=#{id}")
     area[0]["st_intersects"]=='t'
   end
+
+  def as_locationcommonsjson
+    {"name" => name, "geometry" => {"type" => "polygon", "coordinates" => [ geom.first.points.map{|p| [p.y,p.x]} ]}}.to_json
+  end
 end
