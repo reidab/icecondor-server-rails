@@ -39,6 +39,7 @@
   fencePoly.setMap(map);
 
   google.maps.event.addListener(map, 'click', mapClick);
+  google.maps.event.addListener(fencePoly, 'click', mapClick);
  }
 
  function mapClick(event) {
