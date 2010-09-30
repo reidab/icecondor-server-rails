@@ -50,21 +50,22 @@
            - <%= fence.contains?(current_user.locations.last) ? "Inside" : "Outside" %> 
            <% end %>
            - <%= fence.count_points %> pts 
-           - <%= "%0.2f" % (fence.area_in_sq_ft) %> sq.km.</li>
+           - <%= "%0.2f" % (fence.area_in_sq_ft) %> sq.km.
+         <ul>
+           <% fence.triggers.each do |trigger| %>
+             <li> <%= link_to "#{trigger.action} #{trigger.extra}", edit_trigger_path(trigger) %>
+                  <%= link_to "Destroy", trigger_path(trigger), :method => :delete %>
+                  <%= trigger.triggered? ? "Sprung at #{trigger.triggered_at}":"Not triggered" %>
+             </li>
+           <% end %>
+           <li>Add a trigger <%= link_to "+", new_trigger_path(:fence_id=>fence.id), :class => "bigplus" %></li>
+         </ul>
+      </li>
     <% end %>
   </ul>
  </div>
 
  <br clear="all" />
-
- <div class="folder">
-  <h4> Triggers <%= link_to "+", new_trigger_path, :class => "bigplus" %> </h4>
-  <ul>
-    <% current_user.triggers.each do |trigger| %>
-      <li> <%= link_to "\"#{truncate(trigger.name, :length => 20)}\" <br/>#{trigger.fence ? trigger.fence.name : ""} *#{trigger.action} #{trigger.extra} <br/> Triggered?: #{trigger.triggered? ? "Sprung at #{trigger.triggered_at}":"No"} ", edit_trigger_path(trigger) %> </li>
-    <% end %>
-  </ul>
- </div>
 
  <div class="folder">
   <h4> Misc. </h4>

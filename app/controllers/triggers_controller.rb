@@ -24,6 +24,6 @@ class TriggersController < ApplicationController
 
   def destroy
     Trigger.find(params[:id]).destroy
-    redirect_to current_user
+    redirect_to {:controller => :users, :action => :show, :id => current_user.username}
   end
 end
