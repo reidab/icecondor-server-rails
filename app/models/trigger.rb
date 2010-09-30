@@ -1,6 +1,11 @@
 class Trigger < ActiveRecord::Base
   belongs_to :user
   belongs_to :fence  
+  before_create :default_values
+
+  def default_values
+    action ||= "email"
+  end
 
   def check_location(location)
     unless triggered?

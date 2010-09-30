@@ -19,11 +19,11 @@ class TriggersController < ApplicationController
     trigger = Trigger.find(params[:id])
     trigger.update_attributes(params[:trigger])
     trigger.save!
-    redirect_to edit_trigger_path(trigger)
+    redirect_to ({:controller => :users, :action => :show, :id => current_user.username})
   end
 
   def destroy
     Trigger.find(params[:id]).destroy
-    redirect_to {:controller => :users, :action => :show, :id => current_user.username}
+    redirect_to({:controller => :users, :action => :show, :id => current_user.username})
   end
 end

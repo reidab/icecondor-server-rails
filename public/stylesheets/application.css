@@ -86,6 +86,26 @@ div.topfive p{
   float: left;
   margin: 10px;
 }
+.folder h4 {
+  margin-bottom: 5px;
+}
+.folder ul {
+  margin-top: 5px;
+}
+.folder ul ul{
+  margin-top: 0px;
+}
+.folder p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 .bigplus {
   text-decoration: none;
+}
+
+.formtastic ol{
+  list-style-type: none;
+}
+.formtastic ol label {
+  padding-right: 5px
 }
