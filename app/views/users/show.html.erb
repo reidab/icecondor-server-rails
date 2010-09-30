@@ -54,8 +54,15 @@
          <ul>
            <% fence.triggers.each do |trigger| %>
              <li> <%= link_to "#{trigger.action} #{trigger.extra}", edit_trigger_path(trigger) %>
-                  <%= link_to "X", trigger_path(trigger), :method => :delete, :class => "bigplus" %>
-                  <%= trigger.triggered? ? "Sprung at #{trigger.triggered_at}":"Not triggered" %>
+                  <%= link_to "delete", trigger_path(trigger), :method => :delete, :class => "commandword" %>
+                  <% if  trigger.triggered? %>
+                    Sprung at <%= trigger.triggered_at %>
+                  <%= link_to "reset", {:controller => :triggers,
+                                        :action => reset,
+                                        :id => trigger.id}, :class => "commandword" %>
+                  <% else %>
+                    Not triggered
+                  <% end %>
              </li>
            <% end %>
            <li>Add a new trigger <%= link_to "+", triggers_path(:trigger => {:fence_id=>fence.id}), :class => "bigplus", :method => :post %></li>

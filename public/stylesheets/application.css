@@ -109,3 +109,7 @@ div.topfive p{
 .formtastic ol label {
   padding-right: 5px
 }
+.commandword {
+  text-decoration: none;
+  font-size: 50%;
+}
