@@ -58,7 +58,7 @@
                   <% if  trigger.triggered? %>
                     Sprung at <%= trigger.triggered_at %>
                   <%= link_to "reset", {:controller => :triggers,
-                                        :action => reset,
+                                        :action => :reset,
                                         :id => trigger.id}, :class => "commandword" %>
                   <% else %>
                     Not triggered
