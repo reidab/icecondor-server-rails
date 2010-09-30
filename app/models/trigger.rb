@@ -13,6 +13,7 @@ class Trigger < ActiveRecord::Base
         trigger!
         logger.info("trigger #{name}: fence #{fence.name}: TRIGGERED #{action} #{extra}")
       else
+        untrigger!
         logger.info("trigger #{name}: fence #{fence.name}: SILENT")
       end
     end
@@ -27,5 +28,9 @@ class Trigger < ActiveRecord::Base
       update_attribute :triggered_at, now
       UserMailer.deliver_trigger_email(self, extra)
     end
+  end
+
+  def untrigger!
+    update_attribute :triggered_at, nil
   end
 end
