@@ -36,6 +36,7 @@ class SessionController < ApplicationController
   def complete
     # FIXME - url_for some action is not necessarily the current URL.
     current_url = url_for(:action => 'complete', :only_path => false)
+    next_url = params[:next_url]
     parameters = params.reject{|k,v|request.path_parameters[k]}
     oidresp = consumer.complete(parameters, current_url)
     case oidresp.status
@@ -50,6 +51,7 @@ class SessionController < ApplicationController
       flash[:success] = ("Verification of #{oidresp.display_identifier}"\
                          " succeeded.")
       user = Openidentity.lookup_or_create(oidresp.display_identifier).user
+      next_url ||= {:controller => :users, :action => :show, :id => user.username}
       self.current_user = user
     when OpenID::Consumer::SETUP_NEEDED
       flash[:alert] = "Immediate request failed - Setup Needed"
@@ -57,7 +59,7 @@ class SessionController < ApplicationController
       flash[:alert] = "OpenID transaction cancelled."
     else
     end
-    redirect_to (params[:next_url] || :root)
+    redirect_to (next_url || :root)
   end
 
   def logout
