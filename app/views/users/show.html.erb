@@ -25,6 +25,7 @@
   <% end %>
    Username: <%= user.username %> <br/>
  </div>
+ <br clear="all" />
 
  <div class="folder">
   <h4> Access </h4>
@@ -41,7 +42,7 @@
  </div>
 
  <div class="folder">
-  <h4> GeoFences <%= link_to "+", new_fence_path %> </h4>
+  <h4> GeoFences <%= link_to "+", new_fence_path, :class => "bigplus" %> </h4>
   <ul>
     <% current_user.fences.each do |fence| %>
       <li> <%= truncate(fence.name, :length => 20) %> 
@@ -54,8 +55,10 @@
   </ul>
  </div>
 
+ <br clear="all" />
+
  <div class="folder">
-  <h4> Triggers <%= link_to "+", new_trigger_path %> </h4>
+  <h4> Triggers <%= link_to "+", new_trigger_path, :class => "bigplus" %> </h4>
   <ul>
     <% current_user.triggers.each do |trigger| %>
       <li> <%= link_to "\"#{truncate(trigger.name, :length => 20)}\" <br/>#{trigger.fence ? trigger.fence.name : ""} *#{trigger.action} #{trigger.extra} <br/> Triggered?: #{trigger.triggered? ? "Sprung at #{trigger.triggered_at}":"No"} ", edit_trigger_path(trigger) %> </li>
