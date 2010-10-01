@@ -8,13 +8,16 @@ class Trigger < ActiveRecord::Base
   end
 
   def check_location(location)
-    unless triggered?
-      if fence.contains?(location)
-        trigger!
+    if fence.contains?(location)
+      if trigger!
+        action!
         logger.info("trigger #{name}: fence #{fence.name}: TRIGGERED #{action} #{extra}")
       else
-        untrigger!
         logger.info("trigger #{name}: fence #{fence.name}: SILENT")
+      end
+    else
+      if untrigger!
+        logger.info("trigger #{name}: fence #{fence.name}: RESET")
       end
     end
   end
@@ -26,11 +29,16 @@ class Trigger < ActiveRecord::Base
   def trigger!(now=Time.now)
     unless triggered?
       update_attribute :triggered_at, now
-      UserMailer.deliver_trigger_email(self, extra)
     end
   end
 
   def untrigger!
-    update_attribute :triggered_at, nil
+    if triggered?
+      update_attribute :triggered_at, nil
+    end
+  end
+
+  def action!
+    UserMailer.deliver_trigger_email(self, extra)
   end
 end
