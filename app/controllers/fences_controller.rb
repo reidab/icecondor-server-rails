@@ -15,4 +15,9 @@ class FencesController < ApplicationController
                                :geom => Polygon.from_coordinates([points], wgs84_srid, true))
     redirect_to :controller => :users, :action => :show, :id => current_user.username
   end
+
+  def destroy
+    Fence.find(params[:id]).destroy
+    redirect_to({:controller => :users, :action => :show, :id => current_user.username})
+  end
 end
