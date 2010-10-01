@@ -15,6 +15,12 @@ class TriggersController < ApplicationController
     @trigger = Trigger.find(params[:id])
   end
 
+  def reset
+    @trigger = Trigger.find(params[:id])
+    @trigger.untrigger!
+    redirect_to({:controller => :users, :action => :show, :id => current_user.username})
+  end
+
   def update
     trigger = Trigger.find(params[:id])
     trigger.update_attributes(params[:trigger])
