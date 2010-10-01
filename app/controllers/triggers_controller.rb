@@ -12,24 +12,24 @@ class TriggersController < ApplicationController
   end
 
   def edit
-    @trigger = Trigger.find(params[:id])
+    @trigger = current_user.triggers.find(params[:id])
   end
 
   def reset
-    @trigger = Trigger.find(params[:id])
+    @trigger = current_user.triggers.find(params[:id])
     @trigger.untrigger!
     redirect_to({:controller => :users, :action => :show, :id => current_user.username})
   end
 
   def update
-    trigger = Trigger.find(params[:id])
+    trigger = current_user.triggers.find(params[:id])
     trigger.update_attributes(params[:trigger])
     trigger.save!
     redirect_to ({:controller => :users, :action => :show, :id => current_user.username})
   end
 
   def destroy
-    Trigger.find(params[:id]).destroy
+    current_user.triggers.find(params[:id]).destroy
     redirect_to({:controller => :users, :action => :show, :id => current_user.username})
   end
 end
