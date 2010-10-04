@@ -59,4 +59,14 @@ class OauthController < ApplicationController
     redirect_to oauth_clients_url
   end
   
+  def connect #outbound oauth
+    case params[:id]
+    when "foursquare"
+      cred = SETTINGS["foursquare"]["oauth"]
+      oauth = Foursquare::OAuth.new(cred["key"], cred["secret"])
+      request_token = oauth.request_token.token
+      request_secret = oauth.request_token.secret
+      redirect_to oauth.request_token.authorize_url
+    end
+  end
 end
