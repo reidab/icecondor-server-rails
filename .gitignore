@@ -13,3 +13,4 @@ config/initializers/exception_notifier.rb
 *.swp
 .idea/
 nbproject/
+config/settings.yml

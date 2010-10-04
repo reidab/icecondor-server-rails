@@ -1,0 +1,7 @@
+---
+foursquare:
+  oauth:
+    key: ""
+    secret: ""
+exception_notifier:
+  email: "admin@example.com"
