@@ -78,7 +78,10 @@
 
  <div class="folder">
   <h4> Misc. </h4>
-  <%= link_to "logout", :controller => :session, :action => :logout %>
+  <ul>
+  <li><%= link_to "Connect to FourSquare", :controller => :oauth, :action => :connect, :id => "foursquare" %> </li>
+  <li><%= link_to "logout", :controller => :session, :action => :logout %> </li>
+  </ul>
  </div>
 
  <br clear="all"/>
