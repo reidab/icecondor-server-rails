@@ -76,7 +76,7 @@ class OauthController < ApplicationController
     cred = SETTINGS["foursquare"]["oauth"]
     oauth = Foursquare::OAuth.new(cred["key"], cred["secret"])
     access_token, access_secret = oauth.authorize_from_request(session[:request_token], session[:request_secret], params[:oauth_verifier])
-    oauth.authorize_from_access(access_token, access_secret)
+    current_user.tokens.create(:type => :AccessToken, :token => access_token, :secret => access_secret, :client_application => ClientApplication.find_by_name("foursquare"))
     redirect_to :controller => :users, :action => current_user.username
   end
 end
