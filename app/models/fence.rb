@@ -22,4 +22,12 @@ class Fence < ActiveRecord::Base
   def as_locationcommonsjson
     {"name" => name, "geometry" => {"type" => "polygon", "coordinates" => [ geom.first.points.map{|p| [p.y,p.x]} ]}}.to_json
   end
+
+  def centerpoint
+    area = ActiveRecord::Base.connection.execute("select ST_AsEWKT(ST_Centroid(geom)) from fences where id=#{id}")[0]
+    # hack!
+    srid = area["st_asewkt"].match(/SRID=(\d*)/)[1]
+    latlng = area["st_asewkt"].match(/POINT\((.*)\)/)[1].split
+    {:srid => srid, :latitude => latlng[1], :longitude => latlng[0]}
+  end
 end
