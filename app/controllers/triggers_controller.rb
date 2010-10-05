@@ -4,6 +4,8 @@ class TriggersController < ApplicationController
   end
 
   def new
+    @fence = current_user.fences.find(params[:fence_id])
+    @trigger = current_user.triggers.build(params[:trigger])
   end
 
   def create

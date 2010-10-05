@@ -1,4 +1,20 @@
-<form action="<%=triggers_path%>" method="post">
-  Trigger Name: <input name="trigger[name]"> <br/>
-  <input type="submit" value="Save">
-</form>
+Upon entering the GeoFence "<%= @fence.name %>", take the following action:
+<div id="triggerbuttons">
+  <ul>
+    <li>
+      <%= button_to("Send an email", {:action => :create, 
+                                      :trigger => {:action => :email, :fence_id => @fence.id}}, 
+                                     {:class=>"wideroundsubmit"}) %>
+    </li>
+    <li>
+      <%= button_to("Check in to Foursquare", {:action => :create, 
+                                               :trigger => {:action => :foursquare, :fence_id => @fence.id}}, 
+                                              {:class=>"wideroundsubmit"}) %>
+    </li>
+    <li>
+      <%= button_to("Blur my location", {:action => :create, 
+                                         :trigger => {:action => :blur, :fence_id => @fence.id}}, 
+                                        {:class=>"wideroundsubmit"}) %>
+    </li>
+  <ul>
+</div>

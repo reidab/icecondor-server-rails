@@ -1,8 +1,12 @@
 Edit a Trigger
 <% semantic_form_for @trigger do |form| %>
-  <% form.inputs :name => "Action" do %>
-    <%= form.input :action, :as => :select, :collection => [["Send Email", "email"]] %>
-    <%= form.input :extra, :label => "Email Address" %>
+  <% form.inputs :name => "Action #{@trigger.action.titleize}" do %>
+    <% case @trigger.action 
+       when "foursquare" %>
+       <%= form.input :extra, :as => :select, :collection => [["Some Venue", "venue"]] %>
+    <% when "email" %>
+       <%= form.input :extra, :label => "Email Address" %>
+    <% end %>
   <% end %>
   <%= form.buttons %>
 <% end %>
