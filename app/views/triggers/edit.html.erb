@@ -3,6 +3,11 @@ Edit a Trigger
   <% form.inputs :name => "Action #{@trigger.action.titleize}" do %>
     <% case @trigger.action 
        when "foursquare" %>
+       Check into
+       <% centerpoint = @trigger.fence.centerpoint %>
+       <%= current_user.foursquare.venues :geolat => centerpoint[:latitude], 
+                                          :geolong => centerpoint[:longitude], 
+                                          :limit => 10 %>
        <%= form.input :extra, :as => :select, :collection => [["Some Venue", "venue"]] %>
     <% when "email" %>
        <%= form.input :extra, :label => "Email Address" %>

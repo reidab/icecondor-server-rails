@@ -21,12 +21,21 @@ class User < ActiveRecord::Base
   end
 
   def oauth_access_for?(service)
+    true if oauth_token(service)
+  end
+
+  def oauth_token(service)
     client = ClientApplication.find_by_name(service)
     if client
-      if tokens.find_by_client_application_id(client.id)
-        return true
-      end
+      tokens.find_by_client_application_id(client.id)
     end
-    false
+  end
+
+  def foursquare
+    cred = SETTINGS["foursquare"]["oauth"]
+    oauth = Foursquare::OAuth.new(cred["key"], cred["secret"])
+    access_token = oauth_token("foursquare")
+    oauth.authorize_from_access(access_token.token, access_token.secret)
+    Foursquare::Base.new(oauth)
   end
 end
