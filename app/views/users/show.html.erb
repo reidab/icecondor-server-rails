@@ -79,7 +79,15 @@
  <div class="folder">
   <h4> Misc. </h4>
   <ul>
-  <li><%= link_to "Connect to FourSquare", :controller => :oauth, :action => :connect, :id => "foursquare" %> </li>
+  <li>
+    <% if current_user.oauth_access_for?("foursquare") %>
+      FourSquare Connected.
+      <%= link_to "disconnect", {:controller => :oauth, :action => :disconnect, :id => "foursquare"},
+                                {:class => "commandword"} %> 
+    <% else %>
+      <%= link_to "Connect to FourSquare", :controller => :oauth, :action => :connect, :id => "foursquare" %> 
+    <% end %>
+  </li>
   <li><%= link_to "logout", :controller => :session, :action => :logout %> </li>
   </ul>
  </div>

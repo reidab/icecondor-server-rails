@@ -72,11 +72,20 @@ class OauthController < ApplicationController
     end
   end
 
+  def disconnect #outbound oauth
+    case params[:id]
+    when "foursquare"
+      token = current_user.tokens.find_by_client_application_id(ClientApplication.find_by_name("foursquare").id)
+      token.destroy
+      redirect_to :controller => :users, :action => current_user.username
+    end
+  end
+
   def foursquare_callback
     cred = SETTINGS["foursquare"]["oauth"]
     oauth = Foursquare::OAuth.new(cred["key"], cred["secret"])
     access_token, access_secret = oauth.authorize_from_request(session[:request_token], session[:request_secret], params[:oauth_verifier])
-    current_user.tokens.create(:type => :AccessToken, :token => access_token, :secret => access_secret, :client_application => ClientApplication.find_by_name("foursquare"))
+    current_user.tokens.create(:type => :AccessToken, :token => access_token, :secret => access_secret, :client_application => ClientApplication.find_by_name("foursquare"), :authorized_at => Time.now)
     redirect_to :controller => :users, :action => current_user.username
   end
 end

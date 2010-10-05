@@ -19,4 +19,14 @@ class User < ActiveRecord::Base
   def set_defaults
     self.access_status ||= "private"
   end
+
+  def oauth_access_for?(service)
+    client = ClientApplication.find_by_name(service)
+    if client
+      if tokens.find_by_client_application_id(client.id)
+        return true
+      end
+    end
+    false
+  end
 end
