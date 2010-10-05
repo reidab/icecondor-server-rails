@@ -64,6 +64,8 @@ class OauthController < ApplicationController
     when "foursquare"
       cred = SETTINGS["foursquare"]["oauth"]
       oauth = Foursquare::OAuth.new(cred["key"], cred["secret"])
+      # get the request token
+      oauth.request_token(:oauth_callback => url_for(:controller => :oauth, :action => :foursquare_callback))
       session[:request_token] = oauth.request_token.token
       session[:request_secret] = oauth.request_token.secret
       redirect_to oauth.request_token.authorize_url
@@ -73,7 +75,8 @@ class OauthController < ApplicationController
   def foursquare_callback
     cred = SETTINGS["foursquare"]["oauth"]
     oauth = Foursquare::OAuth.new(cred["key"], cred["secret"])
-    access_token, access_secret = oauth.authorize_from_request(session[:request_token], session[:request_secret], verifier)
+    access_token, access_secret = oauth.authorize_from_request(session[:request_token], session[:request_secret], params[:oauth_verifier])
     oauth.authorize_from_access(access_token, access_secret)
+    redirect_to :controller => :users, :action => current_user.username
   end
 end
