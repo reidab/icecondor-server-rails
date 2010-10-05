@@ -65,10 +65,15 @@ class OauthController < ApplicationController
       cred = SETTINGS["foursquare"]["oauth"]
       oauth = Foursquare::OAuth.new(cred["key"], cred["secret"])
       # get the request token
+      begin
       oauth.request_token(:oauth_callback => url_for(:controller => :oauth, :action => :foursquare_callback))
       session[:request_token] = oauth.request_token.token
       session[:request_secret] = oauth.request_token.secret
       redirect_to oauth.request_token.authorize_url
+      rescue OAuth::Unauthorized => e
+        flash[:error] = "FourSquare OAUTH failed #{e}"
+        redirect_to :controller => :users, :action => current_user.username
+      end
     end
   end
 
