@@ -39,6 +39,12 @@ class Trigger < ActiveRecord::Base
   end
 
   def action!
-    UserMailer.deliver_trigger_email(self, extra)
+    case action
+    when "email"
+      UserMailer.deliver_trigger_email(self, extra)
+    when "foursquare"
+      user.foursquare.checkin({:vid => extra})
+    when "blur"
+    end
   end
 end
