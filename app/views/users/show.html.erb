@@ -8,6 +8,14 @@
   Last update: <%= time_ago_in_words(current_user.locations.last.created_at) %>  <br/>
   <% end %>
   Location records: <%= number_with_delimiter(Location.count_for_user(user)) %>  <br/>
+  <% if current_user.locations.last 
+       ifences = current_user.inside_fences%>
+      Inside Fence<%= ifences.size > 1 ? 's' : '' %>: 
+      <%= ifences.map{|inside_fence| inside_fence.name}.join(',') %> <br/>
+      <% if current_user.blur? %>
+        Position Blur is on.
+      <% end %>
+  <% end %>
  </div>
 
  <div class="folder">

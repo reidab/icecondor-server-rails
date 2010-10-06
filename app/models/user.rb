@@ -38,4 +38,12 @@ class User < ActiveRecord::Base
     oauth.authorize_from_access(access_token.token, access_token.secret)
     Foursquare::Base.new(oauth)
   end
+
+  def inside_fences
+    fences.select{|fence| fence.contains?(locations.last)}
+  end
+
+  def blur?
+    inside_fences.any?{|fence| fence.triggers.any?{|trigger| trigger.action == "blur"}} 
+  end
 end
