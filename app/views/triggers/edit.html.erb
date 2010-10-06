@@ -3,12 +3,15 @@ Edit a Trigger
   <% form.inputs :name => "Action #{@trigger.action.titleize}" do %>
     <% case @trigger.action 
        when "foursquare" %>
-       Check into
+       Check into a venue near the "<%=@trigger.fence.name%>" geofence.
+       <ul>
        <% centerpoint = @trigger.fence.centerpoint %>
-       <%= current_user.foursquare.venues :geolat => centerpoint[:latitude], 
+       <% venues = current_user.foursquare.venues(:geolat => centerpoint[:latitude], 
                                           :geolong => centerpoint[:longitude], 
-                                          :limit => 10 %>
-       <%= form.input :extra, :as => :select, :collection => [["Some Venue", "venue"]] %>
+                                          :limit => 10)["groups"].first["venues"]%>
+       <% venues.map! {|venue| [venue["name"]+" / "+venue["address"], venue["id"]] } %>
+       </ul>
+       <%= form.input :extra, :label => "Venue", :as => :select, :collection => venues %>
     <% when "email" %>
        <%= form.input :extra, :label => "Email Address" %>
     <% end %>
