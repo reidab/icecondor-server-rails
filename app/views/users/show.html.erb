@@ -42,8 +42,7 @@
   Change status:
     <%=  radio_button_tag "user[access_status]", :public, user.access_status == 'public' %> public
     <%=  radio_button_tag "user[access_status]", :private, user.access_status == 'private' %> private
-    <br/>
-    <%= submit_tag %>
+    <%= submit_tag "Save"%>
   <% end %>
   Private - Only you can see your map page<br/>
   Public - Anyone can see your map page<br/>
