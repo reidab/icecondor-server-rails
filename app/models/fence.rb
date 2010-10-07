@@ -1,6 +1,6 @@
 class Fence < ActiveRecord::Base
   belongs_to :user
-  has_many :triggers
+  has_many :triggers, :dependent => :destroy
 
   def area_in_sq_ft
     area = ActiveRecord::Base.connection.execute("select ST_Area(geom) from fences where id=#{id}")
