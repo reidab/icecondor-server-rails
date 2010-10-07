@@ -107,8 +107,9 @@ class LocationsController < ApplicationController
     @location = Location.new(params[:location])
     saved = @location.save
     logger.info("token: #{current_token.token} user: #{@location.user.username} saved: #{saved}")
+    last = user.locations.last
 
-    user.triggers.each { |trigger| trigger.check_location(user.locations.last) }
+    user.triggers.each { |trigger| trigger.check_location(last) } if saved.id == last.id
 
     respond_to do |format|
       if saved
