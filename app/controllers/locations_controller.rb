@@ -104,7 +104,7 @@ class LocationsController < ApplicationController
   def create
     user = current_token.user
     params[:location].merge!({:user => user})
-    @location = Location.build(params[:location])
+    @location = Location.new(params[:location])
     saved = @location.save
     last = user.locations.last
     logger.info("token: #{current_token.token} user: #{@location.user.username} saved: #{saved} #{@location.id == last.id ? "" : "Historical"}")
