@@ -104,12 +104,12 @@ class LocationsController < ApplicationController
   def create
     user = current_token.user
     params[:location].merge!({:user => user})
-    @location = Location.new(params[:location])
+    @location = Location.build(params[:location])
     saved = @location.save
-    logger.info("token: #{current_token.token} user: #{@location.user.username} saved: #{saved}")
     last = user.locations.last
+    logger.info("token: #{current_token.token} user: #{@location.user.username} saved: #{saved} #{@location.id == last.id ? "" : "Historical"}")
 
-    user.triggers.each { |trigger| trigger.check_location(last) } if saved.id == last.id
+    user.triggers.each { |trigger| trigger.check_location(last) } if saved && @location.id == last.id
 
     respond_to do |format|
       if saved

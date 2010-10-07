@@ -14,15 +14,20 @@ describe LocationsController do
     controller.should_receive(:oauth_required).and_return(true)
     token = mock("token")
     user = mock_model(User)
+    locations = mock("locations")
+    location = mock_model(Location)
     user.should_receive(:username).and_return("bob")
     user.should_receive(:triggers).and_return([])
+    user.should_receive(:locations).and_return(locations)
     token.should_receive(:user).and_return(user)
     token.should_receive(:token).and_return(token_string)
+    locations.should_receive(:last).and_return(location)
     controller.should_receive(:current_token).twice.and_return(token)
+    Location.should_receive(:build).with(record["location"].merge!({"user"=>user})).and_return(location)
+    location.should_receive(:save).and_return(true)
+    location.should_receive(:user).and_return(user)
 
-    lambda do
-      post :create, record
-    end.should change(Location, :count).by(1)
+    post :create, record
     response.should be_success
     response.body.should match(/id/)
   end
