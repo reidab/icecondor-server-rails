@@ -155,3 +155,8 @@ div.topfive p{
 #triggerbuttons ul li {
   padding: 15px;
 }
+.inside {
+  background: #dddddd;
+}
+.outside {
+}
