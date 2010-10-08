@@ -1,0 +1,12 @@
+h1. IceCondor
+
+IceCondor is the server-side support for continuous location tracking
+cellphone apps. It gives the phones a place to push their position data
+to. It lets the user define geofences on a map, and perform triggers
+when entering a fence.
+
+h2. Prerequisites
+
+ * Ruby
+ * Postgresql plus PostGIS
+
