@@ -63,7 +63,7 @@
          <ul id="triggerlist">
            <li>Triggers <%= link_to("+", new_trigger_path(:fence_id=>fence.id), :class => "bigplus") %></li>
            <% fence.triggers.each do |trigger| %>
-             <li> <%= link_to "#{trigger.action} #{trigger.extra}", edit_trigger_path(trigger) %>
+             <li> <%= link_to "#{trigger.action} #{trigger.extra_display}", edit_trigger_path(trigger) %>
                   <%= link_to "delete", trigger_path(trigger), :method => :delete, :class => "commandword" %>
                   <% if  trigger.triggered? %>
                     Sprung at <%= trigger.triggered_at %>

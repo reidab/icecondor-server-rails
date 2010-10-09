@@ -25,6 +25,7 @@ class TriggersController < ApplicationController
 
   def update
     trigger = current_user.triggers.find(params[:id])
+    params[:trigger][:extra], params[:trigger][:fsq_name] = JSON.parse(params[:venue])
     trigger.update_attributes(params[:trigger])
     trigger.save!
     redirect_to ({:controller => :users, :action => :show, :id => current_user.username})

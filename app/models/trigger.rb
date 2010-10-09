@@ -43,8 +43,16 @@ class Trigger < ActiveRecord::Base
     when "email"
       UserMailer.deliver_trigger_email(self, extra)
     when "foursquare"
-      user.foursquare.checkin({:vid => extra})
+      user.foursquare.checkin({:vid => extra, :shout => fsq_shout})
     when "blur"
+    end
+  end
+
+  def extra_display
+    case action
+    when "foursquare"
+      fsq_name
+    else extra
     end
   end
 end

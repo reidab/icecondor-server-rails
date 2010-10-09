@@ -9,9 +9,10 @@ Edit a Trigger
        <% venues = current_user.foursquare.venues(:geolat => centerpoint[:latitude], 
                                           :geolong => centerpoint[:longitude], 
                                           :limit => 10)["groups"].first["venues"]%>
-       <% venues.map! {|venue| [venue["name"]+" / "+venue["address"], venue["id"]] } %>
+       <% venues.map! {|venue| [venue["name"]+" / "+venue["address"], [venue["id"], venue["name"]].to_json] } %>
        </ul>
-       <%= form.input :extra, :label => "Venue", :as => :select, :collection => venues %>
+       Venue: <%= select_tag 'venue', options_for_select(venues) %>
+       <%= form.input :fsq_shout, :label => "Shout" %>
     <% when "email" %>
        <%= form.input :extra, :label => "Email Address" %>
     <% end %>
