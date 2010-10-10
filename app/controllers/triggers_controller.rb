@@ -25,7 +25,7 @@ class TriggersController < ApplicationController
 
   def update
     trigger = current_user.triggers.find(params[:id])
-    params[:trigger][:extra], params[:trigger][:fsq_name] = JSON.parse(params[:venue])
+    params[:trigger][:extra], params[:trigger][:fsq_name] = JSON.parse(params[:venue]) if trigger.action == "foursquare"
     trigger.update_attributes(params[:trigger])
     trigger.save!
     redirect_to ({:controller => :users, :action => :show, :id => current_user.username})
