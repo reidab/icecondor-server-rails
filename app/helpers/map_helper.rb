@@ -11,7 +11,6 @@ module MapHelper
   # the little overview map obscures such a big chunk of the main map that
   # it's likely to hide some of our markers, so it's off by default.
   def google_map(locations, options={})
-    return nil unless defined?(GoogleMap::GOOGLE_APPLICATION_ID)
     height = options.delete(:height)
     width = options.delete(:width)
     partial = options.delete(:partial)
