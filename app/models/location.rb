@@ -12,9 +12,9 @@ class Location < ActiveRecord::Base
   def longitude; geom.nil? ? 0.0 : geom.x; end
   def latitude; geom.nil? ? 0.0 : geom.y; end
   def altitude; geom.nil? ? 0.0 : geom.z; end
-  def longitude=(new_longitude); geom_assign(:x, new_longitude); end
-  def latitude=(new_latitude); geom_assign(:y, new_latitude); end
-  def altitude=(new_altitude); geom_assign(:z, new_altitude); end
+  def longitude=(new_longitude); geom_assign(:x, new_longitude.to_f); end
+  def latitude=(new_latitude); geom_assign(:y, new_latitude.to_f); end
+  def altitude=(new_altitude); geom_assign(:z, new_altitude.to_f); end
 
   def valid_location?
     !(geom.nil? or (geom.x == "0.0" and geom.y == "0.0"))
