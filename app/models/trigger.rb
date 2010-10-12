@@ -10,13 +10,14 @@ class Trigger < ActiveRecord::Base
   def check_location(location)
     if fence.contains?(location)
       if trigger!
-        action!
+        inside_action!
         logger.info("trigger #{name}: fence #{fence.name}: TRIGGERED #{action} #{extra}")
       else
         logger.info("trigger #{name}: fence #{fence.name}: SILENT")
       end
     else
       if untrigger!
+        outside_action!
         logger.info("trigger #{name}: fence #{fence.name}: RESET")
       end
     end
@@ -38,12 +39,21 @@ class Trigger < ActiveRecord::Base
     end
   end
 
-  def action!
+  def inside_action!
     case action
     when "email"
-      UserMailer.deliver_trigger_email(self, extra)
+      UserMailer.deliver_trigger_email(self, extra, "Inside")
     when "foursquare"
       user.foursquare.checkin({:vid => extra, :shout => fsq_shout})
+    when "blur"
+    end
+  end
+
+  def outside_action!
+    case action
+    when "email"
+      UserMailer.deliver_trigger_email(self, extra, "Outside")
+    when "foursquare"
     when "blur"
     end
   end
