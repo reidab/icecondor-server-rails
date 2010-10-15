@@ -65,4 +65,14 @@ class Trigger < ActiveRecord::Base
     else extra
     end
   end
+
+  def goog_static_map_url(location)
+    params = ["center=#{location.latitude},#{location.longitude}",
+              "zoom=14",
+              "size=256x256",
+              "sensor=false",
+              "markers=color:green%7Clabel:X%7C#{location.latitude},#{location.longitude}",
+              "path=color:0x00000000%7Cweight:5%7Cfillcolor:0x00FF0099%7C#{fence.geom.rings.first.points.map{|p|"#{p.y},#{p.x}"}.join("%7C")}"]
+    "http://maps.google.com/maps/api/staticmap?#{params.join("&")}"
+  end
 end
