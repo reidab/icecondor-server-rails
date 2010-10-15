@@ -27,11 +27,12 @@
 
  <div class="folder">
   <h4> Profile </h4>
-  OpenId: 
+  OpenID: 
   <% user.openidentities.each do |openid| %>
     <%= openid.url %> <br/>
   <% end %>
    Username: <%= user.username %> <br/>
+   <!-- Time zone: <%= user.timezone %> <br/> -->
  </div>
  <br clear="all" />
 
