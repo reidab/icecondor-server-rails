@@ -6,11 +6,12 @@
 <%= flash[:notice] %> <br/>
 <% end %>
 
-<p style="margin-top: 0px;">
+<p style="margin-top: 0px; margin-left: 3%">
 <% if @locations.size > 0 %>
-last <%= @locations.size %> locations for 
-<%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> 
-- most recent fix was 
+Mapping last <%= @locations.size %> locations for 
+<%= params[:id] %> <%= params[:lat] %> <%= params[:long] %> .
+<br/>
+Most recent fix was 
 <%= time_ago_in_words(@locations.first.timestamp) %> ago.
 and most recent communication was 
 <%= time_ago_in_words(@communicate.created_at) %> ago.
@@ -22,7 +23,7 @@ and most recent communication was
 <% end %>
 
 <!-- Google Maps -->
-<div id="map_canvas" style="width: 90%; height: 500px; margin-left:auto; margin-right: auto"></div>
+<div id="map_canvas" style="width: 80%; height: 400px; margin-left:auto; margin-right: auto"></div>
 
 <script type="text/javascript">
   function initialize() {
@@ -83,24 +84,25 @@ and most recent communication was
         alert("Status Code:" + response.Status.code);
           } else {
         place = response.Placemark[0];
-        $('nearest_address').innerHTML = "nearest street address: " + place.address;
+        $('nearest_address').innerHTML = "Nearest street address: " + place.address;
     }
   }
 </script>
 
-<div id="battery_graph" style="width: 90%; margin-left:auto; margin-right: auto">
+<div id="battery_graph" style="width: 90%; margin-left:auto; margin-right: auto; margin-top: 20px">
   <!-- Google Charts -->
   <% 
-  chart_points = @locations.map(&:batterylevel).map{|v| v.nil? ? 0 : v} 
+  chart_points = @locations.reverse.map(&:batterylevel).map{|v| v.nil? ? 0 : v} 
   max = chart_points.max
   min = chart_points.min
   %>
-  <img src="http://chart.apis.google.com/chart?cht=lc&chs=600x60&chd=t:<%=chart_points.join(',')%>&chds=<%=min%>,<%=max%>&chl=battery&chxt=y&chxr=0,<%=min%>,<%=max%>" />
+  <img src="http://chart.apis.google.com/chart?cht=lc&chs=600x60&chd=t:<%=chart_points.join(',')%>&chds=<%=min%>,<%=max%>&chl=%25%20battery%20remaining&chxt=y&chxr=0,<%=min%>,<%=max%>" />
 </div>
+
 <div id="speed_graph" style="width: 90%; margin-left:auto; margin-right: auto">
   <!-- Google Charts -->
   <% 
-  chart_points = @locations.map(&:velocity).map{|v| v.nil? ? 0 : v} 
+  chart_points = @locations.reverse.map(&:velocity).map{|v| v.nil? ? 0 : v} 
   max = chart_points.max
   min = chart_points.min
   %>
