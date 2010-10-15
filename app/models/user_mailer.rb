@@ -6,13 +6,13 @@ class UserMailer < ActionMailer::Base
     content_type "multipart/mixed"
 
     part "text/html" do |p| 
-      p.body = render_message("trigger_email", :message => "<h1>HTML content</h1>")  
+      p.body = render_message("trigger_email", :trigger => trigger, :inout => inout, :location => location)  
     end  
 
     part "text/plain" do |p| 
-      p.body = render_message("trigger_email", :message => "text content")  
+      p.body = render_message("trigger_email", :trigger => trigger, :inout => inout, :location => location)  
     end 
 
-    attachment :content_type => "image/jpeg",  :body => HTTParty.get("http://maps.google.com/maps/api/staticmap?center=45.5,-122.5&zoom=14&size=256x256&sensor=false"), :content_location => "map.jpg"
+    attachment :content_type => "image/jpeg",  :body => HTTParty.get("http://maps.google.com/maps/api/staticmap?center=#{location.latitude},#{location.longitude}&zoom=14&size=256x256&sensor=false"), :content_location => "map.jpg"
   end  
 end
