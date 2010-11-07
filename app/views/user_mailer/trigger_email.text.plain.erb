@@ -1,3 +1,5 @@
 User <%= @trigger.user.username %> is <%= @inout %> fence "<%= @trigger.fence.name %>".
 
+Location accuracy: <%=@location.accuracy%> meters.
+
 Map link: <%=@trigger.goog_static_map_url(@location)%>
