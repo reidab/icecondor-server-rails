@@ -1,20 +1,20 @@
-  <% if flash[:error] %>
+  <% if flash.has_key?(:error) %>
     <div class="flash error">
     <%=h flash[:error] %>
     </div>
   <% end %>
-  <% if flash[:notice] %>
-    <div style="background:yellow">
+  <% if flash.has_key?(:notice) %>
+    <div class="flash notice">
     <%=h flash[:notice] %>
     </div>
   <% end %>
-  <% if flash[:alert] %>
-    <div style="background:yellow">
+  <% if flash.has_key?(:alert) %>
+    <div class="flash alert">
     <%=h flash[:alert] %>
     </div>
   <% end %>
-  <% if flash[:success] %>
-    <div style="background:green">
+  <% if flash.has_key?(:success) %>
+    <div class="flash success">
     <%=h flash[:success] %>
     </div>
   <% end %>
