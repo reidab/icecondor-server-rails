@@ -31,7 +31,17 @@ class Openidentity < ActiveRecord::Base
     uri = URI.parse(url)
     case uri
     when URI::HTTP, URI::HTTPS
-      username = uri.host + uri.path
+      case uri.host
+      when "google.com", "www.google.com"
+        profile_name_match = uri.path.match(/^\/profiles\/(.*)/)
+        if profile_name_match
+          username = profile_name_match[1]
+        else
+          username = uri.path
+        end
+      else
+        username = uri.host + uri.path
+      end
     when URI::Generic
       if uri.path.blank?
         username = uri.opaque
