@@ -14,6 +14,10 @@ class SessionController < ApplicationController
         flash[:error] = "webfinger err: #{e}"
         redirect_to :root
         return
+      rescue SocketError => e
+        flash[:error] = "#{identifier}: #{e}"
+        redirect_to :root
+        return
       end
     else
       # URL
