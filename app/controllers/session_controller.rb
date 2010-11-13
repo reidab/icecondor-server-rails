@@ -2,21 +2,32 @@ class SessionController < ApplicationController
   include OpenidUtility
 
   def login
-    begin
-      identifier = params[:openid_identifier]
-      if identifier =~ RFC822::EMAIL
-        # email
+    identifier = params[:openid_identifier]
+    if identifier =~ RFC822::EMAIL
+      # email
+      logger.info "login email: #{identifier}"
+      begin
         finger = Redfinger.finger(identifier)
         openid_url = finger.open_id.first.to_s
-      else
-        # URL
-        openid_url = params[:openid_identifier]
-      end
-      if openid_url.nil?
-        flash[:error] = "Enter an OpenID identifier"
+        logger.info "first webfinger openid: #{openid_url}"
+      rescue Redfinger::ResourceNotFound => e
+        flash[:error] = "webfinger err: #{e}"
         redirect_to :root
         return
       end
+    else
+      # URL
+      logger.info "login openid: #{identifier}"
+      openid_url = identifier
+    end
+
+    if openid_url.nil?
+      flash[:error] = "Please use an e-mail address or an OpenID to login."
+      redirect_to :root
+      return
+    end
+
+    begin
       oidreq = consumer.begin(openid_url)
     rescue OpenID::OpenIDError => e
       flash[:error] = "Discovery failed for #{identifier}: #{e}"

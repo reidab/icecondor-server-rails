@@ -172,3 +172,19 @@ div.topfive p{
 }
 .outside {
 }
+.flash {
+  text-align: center;
+}
+.flash.error {
+  background:red;
+  color: white;
+}
+.flash.notice {
+  background:yellow
+}
+.flash.alert {
+  background:yellow
+}
+.flash.success {
+  background:yellow
+}

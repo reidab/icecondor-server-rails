@@ -3,7 +3,7 @@
 </style>
 <script>
   function show_openid_field() {
-    Element.replace('openidlink', '<%= text_field_tag 'openid_identifier' %>');
+    Element.replace('openidlink', 'e-mail address: <%= text_field_tag 'openid_identifier', nil, :size => 30 %> <%= image_tag 'openid_small_logo.png', :alt => "OpenID logo", :title => "an OpenID also works" %>');
     $('openid_identifier').focus();
   }
 </script>
@@ -11,17 +11,16 @@
   <span style="float: left">
   <%= link_to 'IceCondor', :root %>
   </span>
-  <span style="text-align: right">
+  <div style="text-align: right; padding-right: 1em">
   <% form_tag({:controller => :session, :action => :login}, {:id => 'loginform'}) do %>
-  <% if logged_in? %>
-    <% username = current_user.username %>
-    <%= link_to "#{username}@icecondor.com", :controller => :users,
-                           :action => username %>
-  <% else %>
-    <%= image_tag 'openid_small_logo.png' %> 
-    <%= link_to 'Login with OpenID', "#" , {:id => 'openidlink', 
+    <% if logged_in? %>
+      <% username = current_user.username %>
+      <%= link_to "#{username}@icecondor.com", :controller => :users,
+                                               :action => username %>
+    <% else %>
+      <%= link_to 'Login', "#" , {:id => 'openidlink', 
                                             :onclick => "show_openid_field()"} %>
+    <% end %>
   <% end %>
-  <% end %>
-  </span>
+  </div>
 </div>
