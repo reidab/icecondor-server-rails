@@ -1,3 +1,6 @@
+<% content_for :header do %>
+  <meta name="viewport" content="initial-scale=1.0" />
+<% end %>
 <div class="centered">
   Please login with your OpenID URL:
   <% form_tag({:controller => :session, :action => :login}, {:id => 'loginform'}) do %>
