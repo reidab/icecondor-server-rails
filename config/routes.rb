@@ -23,6 +23,9 @@ ActionController::Routing::Routes.draw do |map|
   map.test_request '/oauth/test_request',:controller=>'oauth',:action=>'test_request'
   map.oauth_clients '/oauth_clients',:controller=>'oauth',:action=>'clients_list'
 
+  # Session
+  map.logout '/logout',:controller=>'session',:action=>'logout'
+
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

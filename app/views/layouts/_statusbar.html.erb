@@ -17,6 +17,7 @@
       <% username = current_user.username %>
       <%= link_to "#{username}@icecondor.com", :controller => :users,
                                                :action => username %>
+      <%= link_to "logout", logout_path %>
     <% else %>
       <%= link_to 'Login', "#" , {:id => 'openidlink', 
                                             :onclick => "show_openid_field()"} %>
