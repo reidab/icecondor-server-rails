@@ -1,11 +1,10 @@
 <h3>Define a GeoFence. </h3>
 <p>
   <form action="<%=fences_path%>" method="post" onsubmit="return presave(this)">
-  New Fence Name: <input name="fence[name]" /> <br/>
-  <span id="count">0</span> points. <br/>
-  Click on the map at the corners of the area to be fenced. <br/>
-  <input type="submit" value="Save">
-  <input type="submit" value="Reset">
+    New Fence Name: <input name="fence[name]" /> <br/>
+    <input type="submit" value="Save">
+    <span id="count">0</span> points. <br/>
+    Click on the map at the corners of the area to be fenced. <br/>
   </form>
 </p>
 
@@ -60,10 +59,9 @@
    for(var i=0; i<fencePoints.length; i++) {
      form.appendChild(new Element('input', 
                                   {'name':'points[]', 
-                                   'value':''+fencePoints[i].lng()+','+fencePoints[i].lat()+','+"0"}));
+                                   'value':''+fencePoints[i].lng()+','+fencePoints[i].lat()+','+"0",
+                                   'style':'display:none'}));
    }
-   console.log(fencePoints);
-//   return false;
  }
 </script>
 

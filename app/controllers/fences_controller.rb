@@ -6,14 +6,24 @@ class FencesController < ApplicationController
   end
 
   def create
+    unless params[:points]
+      redirect_to :action => :new
+      flash[:error] = "Please mark the corners of the fence."
+      return
+    end
     points = params[:points].map{|sp| sp.split(',').map{|sp|sp.to_f}}
     logger.info(points.inspect)
     # close the ring
     points << points.first
     wgs84_srid = 4326
-    current_user.fences.create(:name => params[:fence][:name],
-                               :geom => Polygon.from_coordinates([points], wgs84_srid, true))
-    redirect_to :controller => :users, :action => :show, :id => current_user.username
+    begin
+      fence = current_user.fences.create!(:name => params[:fence][:name],
+                                 :geom => Polygon.from_coordinates([points], wgs84_srid, true))
+      redirect_to :controller => :users, :action => :show, :id => current_user.username
+    rescue ActiveRecord::RecordInvalid => e
+      flash[:error] = "#{e}"
+      redirect_to :action => :new
+    end
   end
 
   def destroy
