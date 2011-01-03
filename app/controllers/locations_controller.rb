@@ -38,7 +38,7 @@ class LocationsController < ApplicationController
       wants.json { render :json => @locations }
       wants.jsonp { render :json => "#{params[:callback]}(#{@locations.to_json})" }
       wants.rss
-      wants.html { render :layout => "googlemaps" }
+      wants.html
     end
   end
 
@@ -49,7 +49,7 @@ class LocationsController < ApplicationController
       @locations = Location.all(:conditions => {:user_id => @user.id}, :order => 'id desc', :limit => 1)
     end
     respond_to do |wants|
-      wants.html { render :layout => "googlemaps" }
+      wants.html
     end
   end
 
@@ -60,7 +60,7 @@ class LocationsController < ApplicationController
                                  :order => 'timestamp desc')
     end
     respond_to do |wants|
-      wants.html { render :layout => "googlemaps" }
+      wants.html
     end
   end
 
