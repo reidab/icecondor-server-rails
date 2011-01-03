@@ -53,7 +53,7 @@
   <h4> GeoFences <%= link_to "+", new_fence_path, :class => "bigplus" %> </h4>
   <ul id="fencelist">
     <% current_user.fences.each do |fence| %>
-      <li> <span><%= truncate(fence.name, :length => 20) %> 
+      <li> <span><%= link_to truncate(fence.name, :length => 20), edit_fence_path(fence) %> 
            <% if current_user.locations.last %>
            - <%= fence.contains?(current_user.locations.last) ? "<span class=\"inside\">Inside</span>" : "<span class=\"outside\">Outside</span>" %> 
            <% end %>
