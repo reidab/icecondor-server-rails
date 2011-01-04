@@ -1,5 +1,6 @@
 class FencesController < ApplicationController
   def new
+    @fence = Fence.new
     respond_to do |wants|
       wants.html { }
     end

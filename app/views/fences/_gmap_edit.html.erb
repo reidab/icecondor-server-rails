@@ -32,7 +32,7 @@
    map: map
   });
   fencePoly.handles = [];
-  fencePoly.setGeoJsonPath({});
+  fencePoly.setGeoJsonPath(<%=geojson%>);
 
   google.maps.event.addListener(map, 'click', mapClick);
   google.maps.event.addListener(fencePoly, 'click', mapClick);

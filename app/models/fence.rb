@@ -32,3 +32,11 @@ class Fence < ActiveRecord::Base
     {:srid => srid, :latitude => latlng[1], :longitude => latlng[0]}
   end
 end
+
+class GeoRuby::SimpleFeatures::Polygon
+  def to_geojson
+    {"type"=>"Polygon",
+     "coordinates"=> rings.map{|r| r.points.map{|p| [p.x,p.y]}}
+    }.to_json
+  end
+end
