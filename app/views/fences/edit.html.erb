@@ -6,7 +6,8 @@
 
 <h3>Edit a GeoFence. </h3>
 <% centerpoint = @fence.centerpoint %>
-<%= render :partial => "gmap_edit", :locals => {:geojson => @fence.geom.to_geojson,
+<%= render :partial => "gmap_edit", :locals => {:fence => @fence,
+                                                :geojson => @fence.geom.to_geojson,
                                                 :centerpoint => [@fence.centerpoint[:latitude],
                                                                  @fence.centerpoint[:longitude]]} %>
 

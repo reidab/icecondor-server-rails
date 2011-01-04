@@ -12,6 +12,7 @@
     centerpoint = [45.586, -122.668] #arbitrary
   end
 %>
-<%= render :partial => "gmap_edit", :locals => {:geojson => {},
+<%= render :partial => "gmap_edit", :locals => {:fence => @fence,
+                                                :geojson => "{coordinates:[[]]}",
                                                 :centerpoint => centerpoint} %>
 
