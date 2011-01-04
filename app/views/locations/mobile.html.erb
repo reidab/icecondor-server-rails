@@ -33,20 +33,23 @@
 
 </div>
 <script type="text/javascript">
-  function initialize() {
-    if (GBrowserIsCompatible()) {
-      geocoder = new GClientGeocoder();
-      point = new GLatLng(<%=@location.geom.y%>, <%=@location.geom.x%>)
-      $('nearest_address').innerHTML = "looking up street address... ";
-      geocoder.getLocations(point, showAddress);
-    }
-  }
-  function showAddress(response) {
-    if (!response || response.Status.code != 200) {
-        alert("Status Code:" + response.Status.code);
-          } else {
-        place = response.Placemark[0];
-        $('nearest_address').innerHTML = place.address;
+ document.observe("dom:loaded", initialize);
+
+ function initialize() {
+  <% if @location -%>
+   geocoder = new google.maps.Geocoder();
+   point = new google.maps.LatLng(<%=@location.geom.y%>, <%=@location.geom.x%>)
+   $('nearest_address').innerHTML = "looking up street address... ";
+   var geocodeOpts = {location: point};
+   geocoder.geocode(geocodeOpts, showAddress);
+  <% end -%>
+ }
+ function showAddress(addrs, status) {
+console.log(status);
+    if (status == "OK") {
+      pieces = addrs[0].address_components;
+      place = pieces[0].long_name + " " + pieces[1].long_name + "," +  pieces[2].long_name;
+      $('nearest_address').innerHTML = place;
     }
   }
 </script>
