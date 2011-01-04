@@ -12,7 +12,6 @@ class FencesController < ApplicationController
       return
     end
     points = params[:points].map{|sp| sp.split(',').map{|sp|sp.to_f}}
-    logger.info(points.inspect)
     # close the ring
     points << points.first
     wgs84_srid = 4326

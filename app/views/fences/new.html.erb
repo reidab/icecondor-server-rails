@@ -1,3 +1,8 @@
+<% content_for :header do %>
+  <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <%= javascript_include_tag "geopoly.js" %>
+<% end %>
+
 <h3>Define a GeoFence. </h3>
 <p>
   <form action="<%=fences_path%>" method="post" onsubmit="return presave(this)">
@@ -11,56 +16,9 @@
 <!-- Google Maps -->
 <div id="map_canvas" style="width: 90%; height: 500px; margin-left:auto; margin-right: auto"></div>
 
-<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"
-        type="text/javascript"></script>
-
 <script type="text/javascript">
  document.observe("dom:loaded",mapstart);
- var fencePoints = [];
  var fencePoly;
- var handleMoveListener;
- var mapMoveListener;
-
- google.maps.Polygon.prototype.push = function(latlng) {
-   var new_points = this.getPath();
-   var new_len = new_points.push(latlng);
-   this.setPath(new_points);
-   this.addHandle(latlng, new_len-1);
- }
-
- google.maps.Polygon.prototype.addHandle = function(latlng, idx) {
-   var cops = { center : latlng,
-                radius : 35,
-                map : this.getMap() }
-   var handle = new google.maps.Circle(cops)
-   handle.polyFenceIndex = idx;   
-   google.maps.event.addListener(handle, 'mousedown', handle.mouseDown);
-   google.maps.event.addListener(handle, 'mouseup', handle.mouseUp);
-   this.handles.push(handle);
- }
-
- google.maps.Circle.prototype.mouseDown = function(event, pidx) {
-  console.log("down on "+this.polyFenceIndex);
-  this.getMap().setOptions({draggable: false});
-  handleMoveListener = google.maps.event.addListener(this, 'mousemove', this.handleMove);
- }
-
- google.maps.Circle.prototype.mouseUp = function(event) {
-  console.log("up on "+this.polyFenceIndex);
-  this.getMap().setOptions({draggable: true});
-  google.maps.event.removeListener(handleMoveListener);
- }
-
- google.maps.Circle.prototype.handleMove = function(event) {
-  this.setCenter(event.latLng);
-  var new_points = fencePoly.getPath();
-  new_points.setAt(this.polyFenceIndex, event.latLng);
-  fencePoly.setPath(new_points);
- }
-
- google.maps.Polygon.prototype.handleClick = function(event) {
-  console.log("move");
- }
 
  function mapstart() {
     var latlng = new google.maps.LatLng(
@@ -93,15 +51,16 @@
 
  function mapClick(event) {
    fencePoly.push(event.latLng);
-   document.getElementById("count").innerHTML=""+fencePoints.length;
+   document.getElementById("count").innerHTML=""+fencePoly.getPath().length;
  }
 
-
  function presave(form) {
-   for(var i=0; i<fencePoints.length; i++) {
+   var points = fencePoly.getPath();
+   for(var i=0, len=points.length ; i<len; i++) {
+     var point = points.getAt(i);
      form.appendChild(new Element('input', 
                                   {'name':'points[]', 
-                                   'value':''+fencePoints[i].lng()+','+fencePoints[i].lat()+','+"0",
+                                   'value':''+point.lng()+','+point.lat()+','+"0",
                                    'style':'display:none'}));
    }
  }
