@@ -26,6 +26,10 @@ class FencesController < ApplicationController
     end
   end
 
+  def edit
+    @fence = Fence.find(params[:id].to_i)
+  end
+
   def destroy
     current_user.fences.find(params[:id]).destroy
     redirect_to({:controller => :users, :action => :show, :id => current_user.username})

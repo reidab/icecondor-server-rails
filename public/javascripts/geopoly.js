@@ -19,6 +19,15 @@
  }
 
  google.maps.Polygon.prototype.setGeoJsonPath = function(geojson) {
+  var points = geojson.coordinates[0];
+  var bounds = new google.maps.LatLngBounds();
+  for(var i=0,len=points.length; i<len; i++) {
+    var point = points[i];
+    point = new google.maps.LatLng(point[0], point[1]);
+    this.push(point);
+    bounds.extend(point);
+  }
+  this.getMap().fitBounds(bounds);
  }
 
  google.maps.Circle.prototype.mouseDown = function(event, pidx) {
