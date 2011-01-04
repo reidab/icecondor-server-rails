@@ -1,0 +1,40 @@
+/* geopoly.js edit a polygon on top of a google map */
+
+ google.maps.Polygon.prototype.push = function(latlng) {
+   var new_points = this.getPath();
+   var new_len = new_points.push(latlng);
+   this.setPath(new_points);
+   this.addHandle(latlng, new_len-1);
+ }
+
+ google.maps.Polygon.prototype.addHandle = function(latlng, idx) {
+   var cops = { center : latlng,
+                radius : 35,
+                map : this.getMap() }
+   var handle = new google.maps.Circle(cops)
+   handle.polyFenceIndex = idx;   
+   google.maps.event.addListener(handle, 'mousedown', handle.mouseDown);
+   google.maps.event.addListener(handle, 'mouseup', handle.mouseUp);
+   this.handles.push(handle);
+ }
+
+ google.maps.Polygon.prototype.setGeoJsonPath = function(geojson) {
+ }
+
+ google.maps.Circle.prototype.mouseDown = function(event, pidx) {
+  this.getMap().setOptions({draggable: false});
+  this.handleMoveListener = google.maps.event.addListener(this, 'mousemove', this.mouseMove);
+ }
+
+ google.maps.Circle.prototype.mouseUp = function(event) {
+  this.getMap().setOptions({draggable: true});
+  google.maps.event.removeListener(this.handleMoveListener);
+ }
+
+ google.maps.Circle.prototype.mouseMove = function(event) {
+  this.setCenter(event.latLng);
+  var new_points = fencePoly.getPath();
+  new_points.setAt(this.polyFenceIndex, event.latLng);
+  fencePoly.setPath(new_points);
+ }
+

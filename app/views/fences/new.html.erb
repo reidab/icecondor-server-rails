@@ -3,66 +3,15 @@
   <%= javascript_include_tag "geopoly.js" %>
 <% end %>
 
+
 <h3>Define a GeoFence. </h3>
-<p>
-  <form action="<%=fences_path%>" method="post" onsubmit="return presave(this)">
-    New Fence Name: <input name="fence[name]" /> <br/>
-    <input type="submit" value="Save">
-    <span id="count">0</span> points. <br/>
-    Click on the map at the corners of the area to be fenced. <br/>
-  </form>
-</p>
-
-<!-- Google Maps -->
-<div id="map_canvas" style="width: 90%; height: 500px; margin-left:auto; margin-right: auto"></div>
-
-<script type="text/javascript">
- document.observe("dom:loaded",mapstart);
- var fencePoly;
-
- function mapstart() {
-    var latlng = new google.maps.LatLng(
-       <% if current_user.locations.count > 0 %>
-         <%= current_user.locations.last.latitude%>, <%= current_user.locations.last.longitude %>
-       <% else %>
-         45.586, -122.668
-       <% end %>
-       );
-    var myOptions = {
-      zoom: 13,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-  fencePoly = new google.maps.Polygon({
-    strokeColor: "#FF0000",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: "#FF0000",
-    fillOpacity: 0.35,
-    map: map
-  });
-  fencePoly.handles = [];
-
-  google.maps.event.addListener(map, 'click', mapClick);
-  google.maps.event.addListener(fencePoly, 'click', mapClick);
- }
-
- function mapClick(event) {
-   fencePoly.push(event.latLng);
-   document.getElementById("count").innerHTML=""+fencePoly.getPath().length;
- }
-
- function presave(form) {
-   var points = fencePoly.getPath();
-   for(var i=0, len=points.length ; i<len; i++) {
-     var point = points.getAt(i);
-     form.appendChild(new Element('input', 
-                                  {'name':'points[]', 
-                                   'value':''+point.lng()+','+point.lat()+','+"0",
-                                   'style':'display:none'}));
-   }
- }
-</script>
+<%
+  if current_user.locations.count > 0 
+    centerpoint = [current_user.locations.last.latitude, current_user.locations.last.longitude]
+  else
+    centerpoint = [45.586, -122.668] #arbitrary
+  end
+%>
+<%= render :partial => "gmap_edit", :locals => {:fence => @fence,
+                                                :centerpoint => centerpoint} %>
 
