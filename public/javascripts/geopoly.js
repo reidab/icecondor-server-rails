@@ -31,14 +31,17 @@
   this.getMap().fitBounds(bounds);
  }
 
- google.maps.Circle.prototype.mouseDown = function(event, pidx) {
+ google.maps.Circle.prototype.mouseDown = function(event) {
   this.getMap().setOptions({draggable: false});
-  this.handleMoveListener = google.maps.event.addListener(this, 'mousemove', this.mouseMove);
+  if(!this.handleMoveListener) {
+    this.handleMoveListener = google.maps.event.addListener(this, 'mousemove', this.mouseMove);
+  }
  }
 
  google.maps.Circle.prototype.mouseUp = function(event) {
   this.getMap().setOptions({draggable: true});
   google.maps.event.removeListener(this.handleMoveListener);
+  this.handleMoveListener = null;
  }
 
  google.maps.Circle.prototype.mouseMove = function(event) {
@@ -52,5 +55,5 @@
   //resize the handle
   var map_bounds = this.getMap().getBounds();   
   var map_width = google.maps.geometry.spherical.computeDistanceBetween(map_bounds.getNorthEast(), map_bounds.getSouthWest());
-  this.setRadius(map_width/100);
+  this.setRadius(map_width/80);
  }
