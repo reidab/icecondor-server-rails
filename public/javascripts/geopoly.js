@@ -9,12 +9,13 @@
 
  google.maps.Polygon.prototype.addHandle = function(latlng, idx) {
    var cops = { center : latlng,
-                radius : 35,
+                radius : 1,
                 map : this.getMap() }
    var handle = new google.maps.Circle(cops)
    handle.polyFenceIndex = idx;   
    google.maps.event.addListener(handle, 'mousedown', handle.mouseDown);
    google.maps.event.addListener(handle, 'mouseup', handle.mouseUp);
+   google.maps.event.addListener(this.getMap(), 'idle', function(handle){return function(){handle.mapIdle()}}(handle));
    this.handles.push(handle);
  }
 
@@ -47,3 +48,9 @@
   fencePoly.setPath(new_points);
  }
 
+ google.maps.Circle.prototype.mapIdle = function() {
+  //resize the handle
+  var map_bounds = this.getMap().getBounds();   
+  var map_width = google.maps.geometry.spherical.computeDistanceBetween(map_bounds.getNorthEast(), map_bounds.getSouthWest());
+  this.setRadius(map_width/100);
+ }
