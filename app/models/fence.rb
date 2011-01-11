@@ -36,7 +36,7 @@ end
 class GeoRuby::SimpleFeatures::Polygon
   def to_geojson
     {"type"=>"Polygon",
-     "coordinates"=> rings.map{|r| r.points.map{|p| [p.y,p.x]}}
+     "coordinates"=> rings.map{|r| r.points[0..-2].map{|p| [p.y,p.x]}}
     }.to_json
   end
 end

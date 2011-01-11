@@ -57,7 +57,7 @@
            <% if current_user.locations.last %>
            - <%= fence.contains?(current_user.locations.last) ? "<span class=\"inside\">Inside</span>" : "<span class=\"outside\">Outside</span>" %> 
            <% end %>
-           - <%= fence.count_points %> pts 
+           - <%= fence.count_points-1 %> pts 
            - <%= "%0.2f" % (fence.area_in_sq_ft) %> sq.km. 
            <%= link_to "delete", fence, :method => :delete, :class => "commandword" %>
            </span>
