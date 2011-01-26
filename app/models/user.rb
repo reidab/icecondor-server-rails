@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :locations, :dependent => :destroy
   has_many :fences, :dependent => :destroy
   has_many :triggers, :dependent => :destroy
+  has_many :scripts, :dependent => :destroy
 
   before_create :set_defaults
 
