@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resources :fences
   map.resources :triggers
+  map.resources :scripts
   map.root :controller => "dashboard", :action => "map"
 
   # Watch
