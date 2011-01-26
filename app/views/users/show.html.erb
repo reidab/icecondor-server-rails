@@ -4,15 +4,15 @@
  
  <div class="folder">
   <h4> Position </h4>
-  <% if current_user.locations.count > 0 %>
-  Last update: <%= time_ago_in_words(current_user.locations.last.created_at) %> ago <br/>
+  <% if user.locations.count > 0 %>
+  Last update: <%= time_ago_in_words(user.locations.last.created_at) %> ago <br/>
   <% end %>
   Location records: <%= number_with_delimiter(Location.count_for_user(user)) %>  <br/>
-  <% if current_user.locations.last 
-       ifences = current_user.inside_fences%>
+  <% if user.locations.last 
+       ifences = user.inside_fences%>
       Inside Fence<%= ifences.size > 1 ? 's' : '' %>: 
       <%= ifences.map{|inside_fence| inside_fence.name}.join(',') %> <br/>
-      <% if current_user.blur? %>
+      <% if user.blur? %>
         Position Blur is on.
       <% end %>
   <% end %>
@@ -52,10 +52,10 @@
  <div class="folder">
   <h4> GeoFences <%= link_to "+", new_fence_path, :class => "bigplus" %> </h4>
   <ul id="fencelist">
-    <% current_user.fences.each do |fence| %>
+    <% user.fences.each do |fence| %>
       <li> <span><%= link_to truncate(fence.name, :length => 20), edit_fence_path(fence) %> 
-           <% if current_user.locations.last %>
-           - <%= fence.contains?(current_user.locations.last) ? "<span class=\"inside\">Inside</span>" : "<span class=\"outside\">Outside</span>" %> 
+           <% if user.locations.last %>
+           - <%= fence.contains?(user.locations.last) ? "<span class=\"inside\">Inside</span>" : "<span class=\"outside\">Outside</span>" %> 
            <% end %>
            - <%= fence.count_points-1 %> pts 
            - <%= "%0.2f" % (fence.area_in_sq_ft) %> sq.km. 
@@ -88,7 +88,7 @@
   <h4> Misc. </h4>
   <ul>
   <li>
-    <% if current_user.oauth_access_for?("foursquare") %>
+    <% if user.oauth_access_for?("foursquare") %>
       FourSquare Connected.
       <%= link_to "disconnect", {:controller => :oauth, :action => :disconnect, :id => "foursquare"},
                                 {:class => "commandword"} %> 
