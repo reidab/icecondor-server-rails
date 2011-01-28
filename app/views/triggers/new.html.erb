@@ -1,20 +1,17 @@
 Upon entering the GeoFence "<%= @fence.name %>", take the following action:
 <div id="triggerbuttons">
   <ul>
+   <% options = [["Send an email", :email],
+                 ["Check in to Foursquare", :foursquare],
+                 ["Blur my location", :blur],
+                 ["Execute a script", :script]] %>
+
+    <% options.each do |option| %>
     <li>
-      <%= button_to("Send an email", {:action => :create, 
-                                      :trigger => {:action => :email, :fence_id => @fence.id}}, 
+      <%= button_to(option.first, {:action => :create,
+                                      :trigger => {:action => option.last, :fence_id => @fence.id}},
                                      {:class=>"wideroundsubmit"}) %>
     </li>
-    <li>
-      <%= button_to("Check in to Foursquare", {:action => :create, 
-                                               :trigger => {:action => :foursquare, :fence_id => @fence.id}}, 
-                                              {:class=>"wideroundsubmit"}) %>
-    </li>
-    <li>
-      <%= button_to("Blur my location", {:action => :create, 
-                                         :trigger => {:action => :blur, :fence_id => @fence.id}}, 
-                                        {:class=>"wideroundsubmit"}) %>
-    </li>
+    <% end  %>
   <ul>
 </div>

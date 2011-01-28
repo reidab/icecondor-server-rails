@@ -1,6 +1,7 @@
 class Trigger < ActiveRecord::Base
   belongs_to :user
   belongs_to :fence  
+  belongs_to :script
   before_create :default_values
 
   def default_values
@@ -62,6 +63,12 @@ class Trigger < ActiveRecord::Base
     case action
     when "foursquare"
       fsq_name
+    when "script"
+      if script
+        script.name
+      else
+        "##{script_id} missing"
+      end
     else extra
     end
   end
