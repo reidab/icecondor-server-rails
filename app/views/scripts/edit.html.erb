@@ -1,83 +1,8 @@
 <% form_for @script, {:html => {:onsubmit=>"return presave(this)"}} do |form| %>
 
   Name: <%= form.text_field :name %> <br/>
-  <%= form.submit %> 
+  Code: <%= form.text_area :code %> <br/>
+  <%= form.submit %>
+
 <% end %>
 
-    <div id="jump"></div>
-
-    <table id="controls">
-      <tr>
-        <td>
-        <label for="doc">Document:</label>
-        <select id="doc" size="1">
-          <option value="js">JS Document</option>
-          <option value="html">HTML Document</option>
-          <option value="css">CSS Document</option>
-          <option value="python">Python Document</option>
-          <option value="php">PHP Document</option>
-        </select>
-      </td>
-      <td>
-        <label for="mode">Mode:</label>
-        <select id="mode" size="1">
-          <option value="text">Plain Text</option>
-          <option value="javascript">JavaScript</option>
-          <option value="xml">XML</option>
-          <option value="html">HTML</option>
-          <option value="css">CSS</option>
-          <option value="python">Python</option>
-          <option value="php">PHP</option>
-        </select>
-      </td>
-      <td>
-        <label for="theme">Theme:</label>
-        <select id="theme" size="1">
-          <option value="ace/theme/textmate">TextMate</option>
-          <option value="ace/theme/eclipse">Eclipse</option>
-          <option value="ace/theme/dawn">Dawn</option>
-          <option value="ace/theme/idle_fingers">idleFingers</option>
-          <option value="ace/theme/pastel_on_dark">Pastel on dark</option>
-          <option value="ace/theme/twilight">Twilight</option>
-        </select>
-      </td>
-      <td>
-        <label for="select_style">Full line selections</label>
-        <input type="checkbox" name="select_style" id="select_style" checked>
-      </td>
-      <td>
-        <label for="highlight_active">Highlight active line</label>
-        <input type="checkbox" name="highlight_active" id="highlight_active" checked>
-      </td>
-      <td>
-        <label for="show_hidden">Show invisibles</label>
-        <input type="checkbox" name="show_hidden" id="show_hidden">
-      </td>
-      <td align="right">
-        <img src="demo/logo.png">
-      </td>
-      </tr>
-    </table>
-
-
-  <div id="editor"> 
-  </div>
-
-  <script type="text/editor" id="jstext"><%= @script.code %></script>
-  <script type="text/editor" id="csstext"></script>
-  <script type="text/editor" id="htmltext"></script>
-  <script type="text/editor" id="pythontext"> </script>
-  <script type="text/editor" id="phptext"> </script>
-
-  <input id="cockpitInput" type="text"/>
-
-
-<%= javascript_include_tag "ace/require.js" %>
-<%= javascript_include_tag "ace/boot.js" %>
-<script>
-function presave() {
-  console.log("presave!");
-  console.log($('jstext').innerHTML);
-  return false;
-}
-</script>

@@ -88,6 +88,14 @@
   <h4> Scripts <%= link_to "+", scripts_path, 
                            :class => "bigplus",
                            :method => :post %> </h4>
+  <ul id="fencelist">
+    <% user.scripts.each do |script| %>
+      <li> <span><%= link_to truncate(script.name, :length => 20), edit_script_path(script) %> 
+           <%= link_to "run", run_script_path(script), :class => "commandword" %>
+           <%= link_to "delete", script, :method => :delete, :class => "commandword" %>
+           </span>
+    <% end %>
+  </ul>
 
  </div>
 
