@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :fences
   map.resources :triggers
   map.resources :scripts, :member => { :run => :get }
+  map.resources :friendships
   map.root :controller => "dashboard", :action => "map"
 
   # Watch

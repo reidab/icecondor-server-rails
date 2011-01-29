@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :fences, :dependent => :destroy
   has_many :triggers, :dependent => :destroy
   has_many :scripts, :dependent => :destroy
+  has_many :friends, :through => :friendships
+  has_many :friendships
 
   before_create :set_defaults
 
