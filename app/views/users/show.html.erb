@@ -100,13 +100,13 @@
  </div>
 
   <div class="folder">
-    <h4> Friends <%= link_to "+", friendships_path,
-                           :class => "bigplus",
-                           :method => :post %> </h4>
+    <h4> Friends <%= link_to "+", new_friendship_path,
+                           :class => "bigplus"
+                            %> </h4>
       <ul id="fencelist">
       <% user.friends.each do |friend| %>
         <li> <span><%= link_to truncate(friend.username, :length => 20), :id => friend.username %>
-               <%= link_to "delete", {:controller => :friendships,
+               <%= link_to "delete",  {:controller => :friendships,
                                       :id => friend.username}, :method => :delete, :class => "commandword" %>
              </span> </li>
       <% end %>
