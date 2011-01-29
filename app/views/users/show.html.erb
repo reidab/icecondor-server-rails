@@ -1,4 +1,4 @@
-<% user = current_user %>
+<% user = @user %>
 
 <div class="folderfolder">
  
@@ -93,12 +93,27 @@
       <li> <span><%= link_to truncate(script.name, :length => 20), edit_script_path(script) %> 
            <%= link_to "run", run_script_path(script), :class => "commandword" %>
            <%= link_to "delete", script, :method => :delete, :class => "commandword" %>
-           </span>
+           </span> </li>
     <% end %>
   </ul>
 
  </div>
 
+  <div class="folder">
+    <h4> Friends <%= link_to "+", friendships_path,
+                           :class => "bigplus",
+                           :method => :post %> </h4>
+      <ul id="fencelist">
+      <% user.friends.each do |friend| %>
+        <li> <span><%= link_to truncate(friend.username, :length => 20), :id => friend.username %>
+               <%= link_to "delete", {:controller => :friendships,
+                                      :id => friend.username}, :method => :delete, :class => "commandword" %>
+             </span> </li>
+      <% end %>
+  </ul>
+
+  </div>
+ 
  <div class="folder">
   <h4> Misc. </h4>
   <ul>
