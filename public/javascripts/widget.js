@@ -6,7 +6,10 @@
 
   function icPosition(data) {
     var ic = document.getElementById('icecondor');
-    ic.innerHTML = "Last IceCondor location updated at "+data[0].location.timestamp;
+    var utctime = Date.parse(data[0].location.timestamp);
+    var offset = new Date().getTimezoneOffset();
+    var datetime = new Date(utctime-(offset*60*1000))
+    ic.innerHTML = "Last IceCondor location updated at "+datetime;
   }
 
   function add_script_tag(url) {
