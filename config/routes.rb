@@ -28,6 +28,8 @@ ActionController::Routing::Routes.draw do |map|
   # Session
   map.logout '/logout',:controller=>'session',:action=>'logout'
 
+  map.host_meta '/.well-known/host-meta', :controller => :webfinger, :action => :host_meta
+
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
