@@ -28,7 +28,9 @@
     this.push(point);
     bounds.extend(point);
   }
-  this.getMap().fitBounds(bounds);
+  if (points.length > 0) {
+    this.getMap().fitBounds(bounds);
+  }
  }
 
  google.maps.Circle.prototype.mouseDown = function(event) {
