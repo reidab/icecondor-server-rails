@@ -1,4 +1,8 @@
-code: <%=h @script.code %> <br/>
+<span style="float:left; margin-right: 1em">code:</span>
+<pre>
+<%=h @script.code %>
+</pre>
+
 result: <%=h @result %> <br/>
 <% if @error %>
 error: <%=h @error  %>

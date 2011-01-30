@@ -1,7 +1,9 @@
 <% form_for @script, {:html => {:onsubmit=>"return presave(this)"}} do |form| %>
 
   Name: <%= form.text_field :name %> <br/>
-  Code: <%= form.text_area :code %> <br/>
+
+  <span style="vertical-align: top">Code:</span> 
+  <%= form.text_area :code, :size => "80x10" %> <br/>
   <%= form.submit %>
 
 <% end %>
