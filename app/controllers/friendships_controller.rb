@@ -4,10 +4,18 @@ class FriendshipsController < ApplicationController
   end
 
   def create
+    accturl = "acct:#{params[:email]}"
+    oid = Openidentity.lookup_or_create(accturl)
+    if oid
+      friend = oid.user
+    else
+
+    end
+    
     begin
-      finger = Redfinger.finger(params[:email])
-      url = finger.relmap('http://locationcommons.org/spec/1.0#at').first.href
-      uri = URI.parse(url)
+      #finger = Redfinger.finger(params[:email])
+      #url = finger.relmap('http://locationcommons.org/spec/1.0#at').first.href
+      #uri = URI.parse(url)
     rescue Redfinger::ResourceNotFound => e
       flash[:error] = "webfinger err: #{e}"
     rescue SocketError => e

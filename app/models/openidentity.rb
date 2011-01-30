@@ -44,7 +44,11 @@ class Openidentity < ActiveRecord::Base
       end
     when URI::Generic
       if uri.path.blank?
-        username = uri.opaque
+        if uri.scheme == "acct"
+          username = uri.opaque.split('@').first
+          else
+          username = uri.opaque
+        end
       else
         username = uri.path
       end
