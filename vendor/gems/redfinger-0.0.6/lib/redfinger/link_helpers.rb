@@ -22,8 +22,6 @@ module Redfinger
       relmap('http://gmpg.org/xfn/', true)
     end
     
-    protected
-    
     def relmap(uri, substring=false)
       @doc.css("Link[rel#{'^' if substring}=\"#{uri}\"]").map{|e| Link.new(e)}
     end
