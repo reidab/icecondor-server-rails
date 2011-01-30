@@ -6,11 +6,7 @@ class FriendshipsController < ApplicationController
   def create
     accturl = "acct:#{params[:email]}"
     oid = Openidentity.lookup_or_create(accturl)
-    if oid
-      friend = oid.user
-    else
-
-    end
+    friend = oid.user
     
     begin
       #finger = Redfinger.finger(params[:email])
