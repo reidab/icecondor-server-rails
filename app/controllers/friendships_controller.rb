@@ -4,18 +4,14 @@ class FriendshipsController < ApplicationController
   end
 
   def create
-    username, domain = params[:email].split('@')
-    case domain
-    when "icecondor.com"
-      friend = User.find_by_username(username)
-    else
-      begin
-        finger = Redfinger.finger(params[:email])
-      rescue Redfinger::ResourceNotFound => e
-        flash[:error] = "webfinger err: #{e}"
-      rescue SocketError => e
-        flash[:error] = "#{identifier}: #{e}"
-      end
+    begin
+      finger = Redfinger.finger(params[:email])
+      url = f.relmap('http://locationcommons.org/spec/1.0#at').first.href
+      uri = URI.parse(url)
+    rescue Redfinger::ResourceNotFound => e
+      flash[:error] = "webfinger err: #{e}"
+    rescue SocketError => e
+      flash[:error] = "#{identifier}: #{e}"
     end
 
     if friend
