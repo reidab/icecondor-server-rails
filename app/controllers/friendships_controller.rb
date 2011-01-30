@@ -6,7 +6,7 @@ class FriendshipsController < ApplicationController
   def create
     begin
       finger = Redfinger.finger(params[:email])
-      url = f.relmap('http://locationcommons.org/spec/1.0#at').first.href
+      url = finger.relmap('http://locationcommons.org/spec/1.0#at').first.href
       uri = URI.parse(url)
     rescue Redfinger::ResourceNotFound => e
       flash[:error] = "webfinger err: #{e}"
