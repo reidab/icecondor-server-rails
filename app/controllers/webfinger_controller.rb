@@ -2,7 +2,9 @@ class WebfingerController < ApplicationController
   layout nil
 
   def xrd
-    @user = User.find_by_username(params[:acct].split('@').first)
+    username = params[:acct].split('@').first
+    logger.info("looking up username #{username}")
+    @user = User.find_by_username(username)
     render :status => 404, :nothing => true unless @user
   end
 end
